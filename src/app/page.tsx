@@ -1,9 +1,9 @@
-
+import Sidebar from "../components/Sidebar/Sidebar"
 
 export default function Home() {
   return (
     <div>
-      "Hi"
+      <Sidebar name={"jonny"} picture="" />
     </div>
   )
 }

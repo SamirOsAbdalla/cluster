@@ -1,0 +1,118 @@
+.sidebar__wrapper {
+    width: 5em;
+    padding: 1em;
+    background-color: blanchedalmond;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 3em;
+    gap: 2em;
+}
+
+.sidebar__title {
+    display: none;
+}
+
+.sidebar__profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: none;
+}
+
+.sidebar__profile__picture {
+    border-radius: 50%;
+    background-size: cover;
+    border: none;
+    background-color: grey;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: .5em;
+}
+
+.sidebar__person {
+    height: 40px;
+    width: 40px;
+    color: white;
+}
+
+.sidebar__profile__name {
+    display: none
+}
+
+.sidebar__link__text {
+    display: none;
+}
+
+.sidebar__links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1em;
+}
+
+.sidebar__link {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: .5em;
+    font-size: 1.1em;
+    padding: 1em 1.5em;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.sidebar__link__icon {
+    font-size: 1.4em;
+}
+
+.sidebar__link:hover {
+    background-color: blueviolet;
+}
+
+.sidebar__button {
+    align-items: center;
+    border-radius: 7px;
+    border-width: 0;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+    box-sizing: border-box;
+    color: #36395A;
+    cursor: pointer;
+    display: inline-flex;
+    height: 48px;
+    justify-content: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 18px;
+}
+
+.active {
+    width: 250px;
+}
+
+.sidebar__wrapper.active .sidebar__links .sidebar__link .sidebar__link__text {
+    display: block;
+}
+
+.sidebar__wrapper.active .sidebar__links .sidebar__link .sidebar__link__icon {
+    font-size: 1em;
+
+}
+
+.sidebar__wrapper.active .sidebar__title {
+    display: block;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.sidebar__wrapper.active .sidebar__profile .sidebar__profile__name {
+
+    display: block;
+    font-size: 1em;
+}
