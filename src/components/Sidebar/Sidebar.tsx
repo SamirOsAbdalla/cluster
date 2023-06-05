@@ -4,9 +4,10 @@ import React from 'react'
 import Link from 'next/link';
 import { RxDashboard } from 'react-icons/rx'
 import { BsFillPersonFill } from "react-icons/bs"
-import { BiTask } from "react-icons/bi"
+import { BiTask, BiLogOut } from "react-icons/bi"
 import { AiOutlineMail } from "react-icons/ai"
 import { GoGear } from "react-icons/go"
+import { FcFilmReel } from "react-icons/fc"
 import "./Sidebar.css"
 import Image from 'next/image';
 
@@ -16,19 +17,25 @@ type SidebarProps = {
     picture: string;
 }
 
-const sidebarToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
+const sidebarToggle = (e: React.MouseEvent<HTMLElement>) => {
     const sidebar = document.querySelector(".sidebar__wrapper")
     sidebar?.classList.toggle("active")
 }
 export default function Sidebar(props: SidebarProps) {
     return (
         <nav className="sidebar__wrapper">
-            <button onClick={(e) => sidebarToggle(e)}>
-                Hi
-            </button>
-            <h1 className='sidebar__title' >
-                Titley
-            </h1>
+            <div className="sidebar__heading">
+                <div className="sidebar__heading__left">
+                    <FcFilmReel className="sidebar__title__icon" />
+                    <h1 className='sidebar__title' >
+                        Titley
+                    </h1>
+
+                </div>
+                <div className="sidebar__menu" onClick={(e) => sidebarToggle(e)}>
+                    <div className="sidebar__menu__burger"></div>
+                </div>
+            </div>
             <div className="sidebar__profile">
                 {props.picture ?
                     <img src={props.picture} className="sidebar__profile__picture" />
@@ -48,19 +55,19 @@ export default function Sidebar(props: SidebarProps) {
                         Dashboard
                     </div>
                 </Link>
-                <Link href="/dashboard" className="sidebar__link">
+                <Link href="/tasks" className="sidebar__link">
                     <BiTask className="sidebar__link__icon" />
                     <div className="sidebar__link__text">
                         Tasks
                     </div>
                 </Link>
-                <Link href="/dashboard" className="sidebar__link">
+                <Link href="/inbox" className="sidebar__link">
                     <AiOutlineMail className="sidebar__link__icon" />
                     <div className="sidebar__link__text">
                         Inbox
                     </div>
                 </Link>
-                <Link href="/dashboard" className="sidebar__link">
+                <Link href="/settings" className="sidebar__link">
                     <GoGear className="sidebar__link__icon" />
                     <div className="sidebar__link__text">
                         Settings
@@ -68,8 +75,10 @@ export default function Sidebar(props: SidebarProps) {
                 </Link>
             </div>
             <button className="sidebar__button">
-                Log in
+                <BiLogOut />
+                <span className="sidebar__button__text">Log out</span>
             </button>
+
         </nav >
     )
 }
