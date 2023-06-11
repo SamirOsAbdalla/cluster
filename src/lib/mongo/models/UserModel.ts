@@ -1,5 +1,5 @@
-import { Schema, model, connect } from 'mongoose';
-
+import { Schema, model } from 'mongoose';
+import * as bcrypt from "bcrypt"
 interface InboxInterface {
     message: string;
     projectName: string;
@@ -28,5 +28,13 @@ export const userSchema = new Schema<UserInterface>({
     inbox: { type: inboxSchema }
 })
 
-//add password validation
+userSchema.pre("save", async function (next: (err?: Error) => void) {
+    if (!this.isModified("password")) {
+        next();
+    }
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt)
+})
+
+
 export const UserModel = model<UserInterface>("User", userSchema)
