@@ -10,7 +10,7 @@ import { GoGear } from "react-icons/go"
 import { FcFilmReel } from "react-icons/fc"
 import "./Sidebar.css"
 import Image from 'next/image';
-
+import LoginButton from '../LoginButton/LoginButton';
 
 type SidebarProps = {
     name: string;
@@ -74,11 +74,7 @@ export default function Sidebar(props: SidebarProps) {
                     </div>
                 </Link>
             </div>
-            <button className="sidebar__button">
-                <BiLogOut />
-                <span className="sidebar__button__text">Log out</span>
-            </button>
-
+            <LoginButton />
         </nav >
     )
 }
