@@ -11,7 +11,8 @@ import { FcFilmReel } from "react-icons/fc"
 import "./Sidebar.css"
 import Image from 'next/image';
 import LoginButton from '../LoginButton/LoginButton';
-
+import { useSession } from 'next-auth/react';
+import { usePathname } from 'next/navigation';
 
 type SidebarProps = {
     name: string;
@@ -22,7 +23,17 @@ const sidebarToggle = (e: React.MouseEvent<HTMLElement>) => {
     const sidebar = document.querySelector(".sidebar__wrapper")
     sidebar?.classList.toggle("active")
 }
-export default function Sidebar(props: SidebarProps) {
+export default function Sidebar() {
+    const { data: session } = useSession()
+    let name = session?.user.name
+    console.log(session?.user)
+    const pathname = usePathname()
+    if (pathname == "/signIn") {
+        return (
+            <>
+            </>
+        )
+    }
     return (
         <nav className="sidebar__wrapper">
             <div className="sidebar__heading">
@@ -38,15 +49,11 @@ export default function Sidebar(props: SidebarProps) {
                 </div>
             </div>
             <div className="sidebar__profile">
-                {props.picture ?
-                    <img src={props.picture} className="sidebar__profile__picture" />
-                    :
-                    <div className="sidebar__profile__picture">
-                        <BsFillPersonFill className="sidebar__person" />
-                    </div>
-                }
+                <div className="sidebar__profile__picture">
+                    <BsFillPersonFill className="sidebar__person" />
+                </div>
                 <div className="sidebar__profile__name">
-                    {props.name}
+                    {name}
                 </div>
             </div>
             <div className="sidebar__links">

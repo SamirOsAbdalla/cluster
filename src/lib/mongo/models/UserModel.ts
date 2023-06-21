@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, models } from 'mongoose';
 import * as bcrypt from "bcrypt"
 interface InboxInterface {
     message: string;
@@ -37,4 +37,5 @@ userSchema.pre("save", async function (next: (err?: Error) => void) {
 })
 
 
-export const UserModel = model<UserInterface>("User", userSchema)
+const UserModel = models.User || model<UserInterface>("User", userSchema)
+export default UserModel

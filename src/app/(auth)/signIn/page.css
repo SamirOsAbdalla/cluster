@@ -1,0 +1,95 @@
+.login__form__wrapper {
+    background-color: aquamarine;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login__form__container {
+    background-color: aliceblue;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding: 0em 4em 4em 4em;
+    border-radius: 5px;
+    position: relative;
+    width: 500px;
+}
+
+
+.login__header h1 {
+    display: flex;
+    justify-content: center;
+    font-size: 2.6em;
+    padding-bottom: .3em;
+}
+
+.login__header div {
+    font-size: .9em;
+    font-weight: none;
+    text-align: center;
+}
+
+.login__header {
+    padding-bottom: 2em;
+}
+
+.login__form {
+    padding-bottom: 2em;
+    width: 80%;
+}
+
+.login__logo__container {
+    background-color: brown;
+    border-radius: 50%;
+    padding: 10px;
+    position: relative;
+    top: -45px;
+}
+
+.login__logo {
+    width: 60px;
+    height: 60px;
+}
+
+.login__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 1em;
+}
+
+.form__item {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 80%;
+}
+
+.form__icon {
+    position: absolute;
+    left: .5em;
+    top: 1em;
+}
+
+.login__form input {
+    padding: 1.2em 0em 1.2em 2.4em;
+    border-radius: 10px;
+    border: none;
+    width: 100%;
+}
+
+.login__button {
+    max-width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1em 6em;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+}

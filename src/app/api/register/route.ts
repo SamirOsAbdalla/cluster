@@ -9,7 +9,6 @@ interface RequestBody {
 }
 
 export async function POST(request: Request) {
-
     await db.connect()
     try {
         const { name, email, password } = await request.json()

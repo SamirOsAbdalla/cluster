@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-          <Sidebar name={"jonny"} picture="" />
+          <Sidebar />
           {children}
         </Providers>
       </body>
