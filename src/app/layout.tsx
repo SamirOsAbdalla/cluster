@@ -1,6 +1,7 @@
 import './globals.css'
 import { Roboto } from 'next/font/google'
 import Providers from '@/components/Providers'
+import Sidebar from "../components/Sidebar/Sidebar"
 
 const inter = Roboto({ subsets: ['latin'], weight: "700" })
 
@@ -18,6 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Providers>
+          <Sidebar name={"jonny"} picture="" />
           {children}
         </Providers>
       </body>

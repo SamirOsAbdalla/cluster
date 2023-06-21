@@ -12,6 +12,7 @@ import "./Sidebar.css"
 import Image from 'next/image';
 import LoginButton from '../LoginButton/LoginButton';
 
+
 type SidebarProps = {
     name: string;
     picture: string;
