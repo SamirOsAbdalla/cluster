@@ -26,7 +26,7 @@ const sidebarToggle = (e: React.MouseEvent<HTMLElement>) => {
 export default function Sidebar() {
     const { data: session } = useSession()
     let name = session?.user.name
-    console.log(session?.user)
+
     const pathname = usePathname()
     if (pathname == "/signIn") {
         return (

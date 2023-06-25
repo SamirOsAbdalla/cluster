@@ -80,7 +80,7 @@ const handler = NextAuth({
         }
     },
     pages: {
-        signIn: "/signIn"
+        signIn: "/signIn",
     },
 })
 

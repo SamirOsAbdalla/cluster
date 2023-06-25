@@ -1,4 +1,4 @@
-import { UserModel } from "@/lib/mongo/models/UserModel";
+import UserModel from "@/lib/mongo/models/UserModel";
 import { db } from "@/lib/mongo/util/connectMongo";
 import mongoose from 'mongoose';
 
