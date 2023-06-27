@@ -9,11 +9,18 @@ interface ReqBody {
     email: string;
     password: string;
 }
+
+interface Tmp {
+    name: string,
+    email: string,
+    accessToken: string
+}
 const handler = NextAuth({
     providers: [
         CredentialsProvider({
             // The name to display on the sign in form (e.g. 'Sign in with...')
             name: 'Credentials',
+            type: "credentials",
             // The credentials is used to generate a suitable form on the sign in page.
             // You can specify whatever fields you are expecting to be submitted.
             // e.g. domain, username, password, 2FA token, etc.
@@ -23,15 +30,6 @@ const handler = NextAuth({
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials, req) {
-                // console.log("Authorize")
-                // const res = await fetch("http://localhost:3000/api/login", {
-                //     method: 'POST',
-                //     body: JSON.stringify({
-                //         email: credentials?.email,
-                //         password: credentials?.password
-                //     }),
-                //     headers: { "Content-Type": "application/json" }
-                // })
 
                 await db.connect()
                 let email = credentials?.email;
@@ -43,26 +41,16 @@ const handler = NextAuth({
                 }
 
                 const user = await UserModel.findOne({ email })
-
-                if (user && (await bcrypt.compare(password, user.password))) {
-                    const { password, ...userWithoutPassword } = user;
-                    const accessToken = signJwtAccessToken(userWithoutPassword)
-                    const result = {
-                        ...userWithoutPassword,
-                        accessToken
-                    }
-                    return result
-
-                } else {
+                if (!user || !(await bcrypt.compare(password, user.password))) {
                     return null
+                } else {
+                    const { password, ...currentUser } = user._doc
+                    const accessToken = signJwtAccessToken(currentUser)
+                    return ({
+                        ...currentUser,
+                        accessToken
+                    })
                 }
-                // // If no error and we have user data, return it
-                // if (res.ok && user) {
-
-                //     return user
-                // }
-                // // Return null if user data could not be retrieved
-                // return null
             }
         })
     ],
@@ -72,11 +60,11 @@ const handler = NextAuth({
     },
     callbacks: {
         async jwt({ token, user }) {
-            return { ...token, ...user }
+            return { ...token, ...user };
         },
         async session({ session, token }) {
-            session.user = token as any
-            return session
+            session.user = token as any;
+            return session;
         }
     },
     pages: {

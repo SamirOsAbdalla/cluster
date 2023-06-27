@@ -1,8 +1,7 @@
+import LoginForm from "@/components/LoginForm/LoginForm";
 
 export default function Signup() {
     return (
-        <div>
-            Signup
-        </div>
+        <LoginForm type="signup" />
     )
 }

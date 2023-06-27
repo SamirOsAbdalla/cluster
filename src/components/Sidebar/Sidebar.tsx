@@ -24,11 +24,11 @@ const sidebarToggle = (e: React.MouseEvent<HTMLElement>) => {
     sidebar?.classList.toggle("active")
 }
 export default function Sidebar() {
-    const { data: session } = useSession()
-    let name = session?.user.name
+    const data = useSession()
+    const name = data?.data?.user.name
 
     const pathname = usePathname()
-    if (pathname == "/signIn") {
+    if (pathname == "/signIn" || pathname == "/signup") {
         return (
             <>
             </>

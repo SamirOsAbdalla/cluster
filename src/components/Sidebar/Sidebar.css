@@ -10,7 +10,7 @@
      padding-top: 3em;
      gap: 2em;
      border-radius: 0px 5px 5px 0px;
-     transition: all 0.1s ease-in;
+     transition: all 0.07s ease-in;
  }
 
  .sidebar__title__icon,
@@ -99,6 +99,7 @@
      align-items: flex-start;
      justify-content: center;
      gap: 1em;
+
  }
 
  .sidebar__link {
