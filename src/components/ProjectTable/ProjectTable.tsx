@@ -1,17 +1,29 @@
+"use client"
+
 import React from 'react'
+import { useEffect } from 'react'
+import { useState } from 'react'
+import { useSession } from 'next-auth/react'
 import "./ProjectTable.css"
 import { BsFillTrashFill, BsFillGearFill } from 'react-icons/bs'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
+import NewProjectModal from '../NewProjectModal/NewProjectModal'
 export default function ProjectTable() {
+
+    const [modalOpen, setModalOpen] = useState(false)
     return (
         <div className="table__wrapper">
             <div className="project__heading">
                 <h1>My Projects</h1>
-                <button>
+                <button onClick={(e) => {
+                    const modalStatus = modalOpen
+                    setModalOpen(!modalStatus)
+                }}>
                     <AiOutlinePlusCircle />
                     <span>New Project</span>
                 </button>
             </div>
+            {modalOpen && <NewProjectModal modalOpen={modalOpen} />}
             <table className="table">
                 <thead>
                     <tr>

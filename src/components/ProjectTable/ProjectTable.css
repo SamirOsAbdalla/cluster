@@ -6,7 +6,6 @@
     align-items: center;
     width: 70%;
     margin-left: 9em;
-
 }
 
 .project__heading {
@@ -87,10 +86,6 @@ table tbody td {
 
     .table__wrapper {
         margin-left: 8em;
-    }
-
-    tbody {
-        width: 100%;
     }
 
     td {

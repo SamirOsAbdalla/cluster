@@ -1,7 +1,7 @@
  .sidebar__wrapper {
      width: 5em;
      background-color: #ecf9fd;
-     min-height: 100vh;
+     height: 100vh;
      padding: 1em;
      display: flex;
      flex-direction: column;
@@ -12,6 +12,9 @@
      transition: all 0.07s ease-in;
      position: fixed;
      top: 0;
+     z-index: 9999;
+     overflow-y: auto;
+     overflow-x: hidden;
  }
 
  .sidebar__title__icon,
@@ -153,6 +156,7 @@
 
  .active {
      width: 250px;
+
  }
 
  .sidebar__wrapper.active .sidebar__links .sidebar__link .sidebar__link__text {

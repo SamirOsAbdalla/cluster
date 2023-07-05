@@ -1,4 +1,4 @@
-import { Schema, model, connect } from 'mongoose';
+import { Schema, model, connect, models } from 'mongoose';
 import { UserInterface, userSchema } from './UserModel';
 import { FcDataEncryption } from 'react-icons/fc';
 
@@ -39,16 +39,21 @@ const taskSchema = new Schema<TaskInterface>({
 
 interface ProjectInterface {
     name: string;
+    creator: string;
     description: string;
-    members: UserInterface;
+    members: string[];
+    tasks: TaskInterface[]
     dateCreated: Date;
 }
 
 const projectSchema = new Schema<ProjectInterface>({
     name: { type: String, required: true },
+    creator: { type: String, required: true },
     description: { type: String, required: true },
-    members: [userSchema],
+    members: [String],
+    tasks: [taskSchema],
     dateCreated: { type: Date, default: new Date() },
 })
 
-const ProjectModel = model<ProjectInterface>("Project", projectSchema)
+const ProjectModel = models.Project || model<ProjectInterface>("Project", projectSchema)
+export default ProjectModel
