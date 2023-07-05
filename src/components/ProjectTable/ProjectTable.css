@@ -1,0 +1,108 @@
+.table__wrapper {
+    padding-top: 3em;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 70%;
+    margin-left: 9em;
+
+}
+
+.project__heading {
+    position: relative;
+    display: flex;
+    align-items: center;
+    left: 2em;
+    gap: 2em;
+    width: 50em;
+    max-width: 100%;
+    margin-bottom: 1em;
+}
+
+.table {
+    display: block;
+    table-layout: auto;
+    border-collapse: collapse;
+    box-shadow: 0px 10px 10px #ccc;
+    border-radius: 10px;
+    width: 50em;
+    max-width: 100%;
+    margin: auto;
+}
+
+.table thead {
+    background-color: #ccc;
+    color: #222
+}
+
+.th__left {
+    border-radius: 10px 0px 0px 0px;
+}
+
+.td__right {
+    padding-left: 10px;
+}
+
+.th__right {
+    border-radius: 0px 10px 0px 0px;
+}
+
+.table th,
+.table td {
+    padding: 0.8rem;
+}
+
+.table td {
+    border-top: 0.5px solid #ddd;
+    text-overflow: ellipsis;
+
+}
+
+.table tbody tr:hover {
+    background-color: #eee;
+}
+
+.expand {
+    width: 100%;
+}
+
+table tbody td {
+    text-align: center;
+}
+
+.action__cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .3em;
+}
+
+@media screen and (max-width:600px) {
+
+    .project__heading {
+        position: static;
+        justify-content: center;
+    }
+
+    .table__wrapper {
+        margin-left: 8em;
+    }
+
+    tbody {
+        width: 100%;
+    }
+
+    td {
+        display: block;
+    }
+
+    th {
+        display: none;
+    }
+
+    td::before {
+        content: attr(data-cell);
+        text-transform: capitalize;
+    }
+}
