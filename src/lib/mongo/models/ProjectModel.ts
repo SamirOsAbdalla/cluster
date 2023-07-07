@@ -2,7 +2,7 @@ import { Schema, model, connect, models } from 'mongoose';
 import { UserInterface, userSchema } from './UserModel';
 import { FcDataEncryption } from 'react-icons/fc';
 
-interface CommentInterface {
+export interface CommentInterface {
     message: string;
     creator: string;
     dateCreated: Date;
@@ -15,7 +15,7 @@ const commentSchema = new Schema<CommentInterface>({
 })
 
 
-interface TaskInterface {
+export interface TaskInterface {
     name: string;
     description: string;
     creator: string;
@@ -25,21 +25,31 @@ interface TaskInterface {
     comments: CommentInterface[]
 }
 
+export interface MemberInterface {
+    memberEmail: string;
+    memberName: string
+}
+
+const memberSchema = new Schema<MemberInterface>({
+    memberEmail: { type: String, required: true },
+    memberName: { type: String, required: true },
+})
+
 
 
 const taskSchema = new Schema<TaskInterface>({
     name: { type: String, required: true },
     description: { type: String, required: true },
-    creator: { type: String, required: true },
+    creator: memberSchema,
     dateCreated: { type: Date, default: new Date() },
     priority: { type: String, required: true },
     status: { type: String, required: true },
     comments: [commentSchema]
 })
 
-interface ProjectInterface {
+export interface ProjectInterface {
     name: string;
-    creator: string;
+    creator: MemberInterface;
     description: string;
     members: string[];
     tasks: TaskInterface[]
@@ -48,9 +58,9 @@ interface ProjectInterface {
 
 const projectSchema = new Schema<ProjectInterface>({
     name: { type: String, required: true },
-    creator: { type: String, required: true },
+    creator: memberSchema,
     description: { type: String, required: true },
-    members: [String],
+    members: [memberSchema],
     tasks: [taskSchema],
     dateCreated: { type: Date, default: new Date() },
 })

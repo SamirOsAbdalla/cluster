@@ -19,11 +19,11 @@ interface LoginProps {
 }
 export default function LoginForm({ type }: LoginProps) {
     const router = useRouter()
-    const [email, setEmail] = useState("")
-    const [firstName, setFirstName] = useState("")
-    const [lastName, setLastName] = useState("")
-    const [error, setError] = useState("")
-    const [password, setPassword] = useState("")
+    const [email, setEmail] = useState<string>("")
+    const [firstName, setFirstName] = useState<string>("")
+    const [lastName, setLastName] = useState<string>("")
+    const [error, setError] = useState<string>("")
+    const [password, setPassword] = useState<string>("")
 
     useEffect(() => {
         setError("")
