@@ -1,4 +1,5 @@
-import UserModel from "@/lib/mongo/models/UserModel";
+import { MemberInterface } from "@/lib/mongo/models/ProjectModel";
+import UserModel, { InboxInterface } from "@/lib/mongo/models/UserModel";
 import { db } from "@/lib/mongo/util/connectMongo";
 import mongoose from 'mongoose';
 
@@ -14,13 +15,16 @@ export async function POST(request: Request) {
         const { name, email, password } = await request.json()
         const userResult = await UserModel.findOne({ email })
 
+        let inbox: InboxInterface[] = []
         if (userResult) {
+            console.log("hi")
             throw new Error("User already exists")
         } else {
             let user = await UserModel.create({
                 name,
                 email,
-                password
+                password,
+                inbox: inbox
             })
 
             if (user) {

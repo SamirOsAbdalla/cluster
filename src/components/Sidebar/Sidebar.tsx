@@ -57,7 +57,7 @@ export default function Sidebar() {
                 </div>
             </div>
             <div className="sidebar__links">
-                <Link href="/dashboard" className="sidebar__link">
+                <Link href="/" className="sidebar__link">
                     <RxDashboard className="sidebar__link__icon" />
                     <div className="sidebar__link__text">
                         Dashboard

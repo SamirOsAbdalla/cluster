@@ -50,7 +50,7 @@ export default function NewProjectModal({ modalOpen, setModalOpen, projects, set
                 projectName,
                 projectDescription,
                 creator: creatorObject,
-                members: allMembers
+                members: allMembers,
             }
             //make api call to backend 
             const resp = await fetch("http://localhost:3000/api/createNewProject", {
@@ -62,16 +62,37 @@ export default function NewProjectModal({ modalOpen, setModalOpen, projects, set
                 body: JSON.stringify(newProject),
             });
 
+            let addedProject;
             if (resp) {
                 setNewMember("")
                 setProjectDescription("")
                 setProjectName("")
-                setAddedMembers(new Set())
                 setModalOpen(!modalOpen)
 
-                const addedProject = await resp.json()
+                addedProject = await resp.json()
                 setProjects([...projects, addedProject])
             }
+
+            if (addedMembers) {
+
+                const inboxBody = {
+                    projectCreator: creatorName,
+                    projectCreatorEmail: creatorEmail,
+                    addedMembers: Array.from(addedMembers),
+                    projectName: projectName,
+                    projectId: addedProject._id
+                }
+                const response = await fetch("http://localhost:3000/api/sendInvites", {
+                    method: "POST",
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(inboxBody),
+                });
+                setAddedMembers(new Set())
+            }
+
         }
 
         //add new project to Project table(create state)
@@ -128,7 +149,7 @@ export default function NewProjectModal({ modalOpen, setModalOpen, projects, set
                         </div>
                         <div>
                             <input
-                                type="text"
+                                type="email"
                                 value={newMember}
                                 onChange={(e) => (setNewMember(e.target.value))}
                             />

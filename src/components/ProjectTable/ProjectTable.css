@@ -1,11 +1,15 @@
 .table__wrapper {
-    padding-top: 3em;
+    padding: 3em;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    width: 70%;
-    margin-left: 9em;
+    max-width: 80em;
+    margin-left: 6em;
+}
+
+.action__logo {
+    cursor: pointer;
 }
 
 .project__heading {
@@ -17,6 +21,7 @@
     width: 50em;
     max-width: 100%;
     margin-bottom: 1em;
+    flex-wrap: wrap;
 }
 
 .table {
@@ -27,7 +32,6 @@
     border-radius: 10px;
     width: 50em;
     max-width: 100%;
-    margin: auto;
 }
 
 .table thead {
@@ -86,10 +90,15 @@ tbody tr:nth-child(even) {
     .project__heading {
         position: static;
         justify-content: center;
+        flex-direction: column;
     }
 
     .table__wrapper {
-        margin-left: 6em;
+        margin-left: 5.5em;
+    }
+
+    .table {
+        width: 80%;
     }
 
     .table td {

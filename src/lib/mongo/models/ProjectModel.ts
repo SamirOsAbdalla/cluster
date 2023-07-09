@@ -22,7 +22,8 @@ export interface TaskInterface {
     dateCreated: Date;
     priority: string;
     status: "Completed" | "In Progress";
-    comments: CommentInterface[]
+    comments: CommentInterface[];
+    _id?: string
 }
 
 export interface MemberInterface {

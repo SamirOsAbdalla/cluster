@@ -9,6 +9,7 @@ import { BsFillTrashFill, BsFillGearFill } from 'react-icons/bs'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
 import NewProjectModal from '../NewProjectModal/NewProjectModal'
 import { ProjectInterface, TaskInterface, CommentInterface, MemberInterface } from '@/lib/mongo/models/ProjectModel'
+import ProjectDetailModal from '../ProjectDetailModal/ProjectDetailModal'
 export default function ProjectTable() {
     const data = useSession()
     const creatorEmail = data?.data?.user.email
@@ -39,7 +40,23 @@ export default function ProjectTable() {
     }, [creatorName])
 
     const [modalOpen, setModalOpen] = useState(false)
+    const [projectDetailModal, setProjectDetailModal] = useState<boolean>(false)
     const [projects, setProjects] = useState<ProjectInterface[]>([])
+    const [currentProjectModal, setCurrentProjectModal] = useState<ProjectInterface | null>(null)
+
+    const handleGearClick = (project: ProjectInterface) => {
+        if (modalOpen) {
+            setModalOpen(false)
+        }
+
+        if (projectDetailModal) {
+            setProjectDetailModal(false)
+            setCurrentProjectModal(null)
+        } else {
+            setProjectDetailModal(true)
+            setCurrentProjectModal(project)
+        }
+    }
     return (
         <div className="table__wrapper">
             <div className="project__heading">
@@ -58,6 +75,7 @@ export default function ProjectTable() {
                 modalOpen={modalOpen}
                 setModalOpen={setModalOpen}
             />}
+            {projectDetailModal && <ProjectDetailModal project={currentProjectModal} />}
             <table className="table">
                 <thead>
                     <tr>
@@ -69,16 +87,16 @@ export default function ProjectTable() {
                 </thead>
                 <tbody>
                     {
-                        projects.map((project: any) => (
-                            <React.Fragment key={project.dateCreated}>
+                        projects.map((project: ProjectInterface) => (
+                            <React.Fragment key={project.dateCreated as any}>
                                 <tr>
                                     <td data-cell="name: ">{project.name}</td>
                                     <td data-cell="description: " className="description__cell">{project.description}</td>
                                     <td data-cell="creator: ">{project.creator.memberName}</td>
                                     <td >
                                         <span className="action__cell td__right">
-                                            <BsFillTrashFill />
-                                            <BsFillGearFill />
+                                            <BsFillTrashFill className="action__logo" />
+                                            <BsFillGearFill onClick={() => handleGearClick(project)} className="action__logo" />
                                         </span>
                                     </td>
                                 </tr>

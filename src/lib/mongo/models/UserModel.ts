@@ -1,15 +1,18 @@
 import { Schema, model, models } from 'mongoose';
 import * as bcrypt from "bcrypt"
-interface InboxInterface {
-    message: string;
+export interface InboxInterface {
     projectName: string;
-    sender: string;
+    senderEmail: string;
+    senderName: string;
+    projectId: string;
+    _id?: string
 }
 
 const inboxSchema = new Schema<InboxInterface>({
-    message: { type: String, required: true },
     projectName: { type: String, required: true },
-    sender: { type: String, required: true }
+    projectId: { type: String, required: true },
+    senderEmail: { type: String, required: true },
+    senderName: { type: String, required: true }
 })
 
 export interface UserInterface {
@@ -25,7 +28,7 @@ export const userSchema = new Schema<UserInterface>({
     email: { type: String, required: true },
     password: { type: String, required: true },
     picture: { type: String, required: false },
-    inbox: { type: inboxSchema }
+    inbox: { type: [inboxSchema] }
 })
 
 userSchema.pre("save", async function (next: (err?: Error) => void) {

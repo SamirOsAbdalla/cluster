@@ -10,7 +10,7 @@ export async function POST(request: Request) {
 
 
     const body: MemberInterface = await request.json()
-    const allProjects = await ProjectModel.find({ members: { memberEmail: `${body.memberEmail}` } })
+    const allProjects = await ProjectModel.find({ members: { $elemMatch: { memberEmail: `${body.memberEmail}` } } })
 
     if (allProjects) {
         return new Response(JSON.stringify(allProjects))
