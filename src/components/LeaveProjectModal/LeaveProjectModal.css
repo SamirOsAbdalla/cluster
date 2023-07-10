@@ -1,0 +1,25 @@
+.leavemodal__wrapper {
+    background-color: aquamarine;
+    padding: 2em;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    flex-direction: column;
+    gap: 2em;
+    top: 10em;
+}
+
+.leave__circle {
+    align-self: flex-end;
+    cursor: pointer
+}
+
+.leave__buttons {
+    display: flex;
+    gap: 1em;
+    flex-wrap: wrap
+}
+
+.leave__button {
+    cursor: pointer
+}

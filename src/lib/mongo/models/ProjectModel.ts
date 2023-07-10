@@ -49,6 +49,7 @@ const taskSchema = new Schema<TaskInterface>({
 })
 
 export interface ProjectInterface {
+    _id?: string;
     name: string;
     creator: MemberInterface;
     description: string;
