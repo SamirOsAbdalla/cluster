@@ -14,6 +14,36 @@ export default function InvitationButton({ type, projectId, inbox, setInbox, inv
     const data = useSession()
     const userEmail = data?.data?.user.email
     const userName = data?.data?.user.name
+
+    const removeInvitation = async () => {
+
+        const inviteBody = {
+            inviteId,
+            userEmail
+        }
+        //backend call to remove invitation from user inbox list
+        const acceptInviteResp = await fetch("http://localhost:3000/api/removeInvitation", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(inviteBody),
+        });
+        const inviteResponse = await acceptInviteResp.json()
+        if (inviteResponse) {
+
+        } else {
+            //show error page
+        }
+
+        //remove item from current list of inbox items
+        let tmpInbox = inbox.filter((invite: InboxInterface) => {
+            return invite._id !== inviteId
+        })
+
+        setInbox(tmpInbox)
+    }
     const handleAccept = async () => {
         if (userEmail && userName) {
             const project = {
@@ -37,36 +67,14 @@ export default function InvitationButton({ type, projectId, inbox, setInbox, inv
                 //show error page
             }
 
+            await removeInvitation()
 
-
-            const inviteBody = {
-                inviteId,
-                userEmail
-            }
-            //backend call to remove invitation from user inbox list
-            const acceptInviteResp = await fetch("http://localhost:3000/api/acceptInvitation", {
-                method: "POST",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(inviteBody),
-            });
-            const inviteResponse = await acceptInviteResp.json()
-            if (inviteResponse) {
-
-            } else {
-                //show error page
-            }
-
-            //remove item from current list of inbox items
-            let tmpInbox = inbox.filter((invite: InboxInterface) => {
-                return invite._id !== inviteId
-            })
-            setInbox(tmpInbox)
         }
     }
 
+    const handleRejection = async () => {
+        await removeInvitation()
+    }
 
     if (type == "accept") {
         return (
@@ -76,7 +84,7 @@ export default function InvitationButton({ type, projectId, inbox, setInbox, inv
         )
     }
     return (
-        <button className="invbutton">
+        <button onClick={handleRejection} data-testid="reject__button" className="invbutton">
             Reject
         </button>
     )

@@ -141,7 +141,7 @@ export default function NewProjectModal({ modalOpen, setModalOpen, projects,
                             </div>
                             <button type="button" onClick={() => {
 
-                                if (newMember == "") {
+                                if (newMember == "" || newMember == creatorEmail) {
                                     return;
                                 }
                                 const newSet = new Set(addedMembers)

@@ -16,6 +16,9 @@ export default function Inbox() {
     useEffect(() => {
         const fetchInbox = async () => {
 
+            if (!userEmail) {
+                return;
+            }
             const user = {
                 userEmail: userEmail
             }
@@ -39,6 +42,7 @@ export default function Inbox() {
         fetchInbox()
 
     }, [userEmail])
+
     return (
         <div className="inbox__wrapper">
             {inbox.map((inboxItem: InboxInterface) => (

@@ -87,11 +87,12 @@ export default function ProjectTable() {
         }
     }
 
+
     return (
         <div className="table__wrapper">
             <div className="project__heading">
                 <h1>My Projects</h1>
-                <button onClick={(e) => {
+                <button className="new__project__button" onClick={(e) => {
                     const modalStatus = modalOpen
                     setModalOpen(!modalStatus)
                     if (projectDetailModal) {
@@ -144,8 +145,8 @@ export default function ProjectTable() {
                                     <td data-cell="creator: ">{project.creator.memberName}</td>
                                     <td >
                                         <span className="action__cell td__right">
-                                            <BsFillTrashFill onClick={() => handleTrashClick(project)} className="action__logo" />
-                                            <BsFillGearFill onClick={() => handleGearClick(project)} className="action__logo" />
+                                            <BsFillTrashFill data-testid="projecttable__leave" onClick={() => handleTrashClick(project)} className="action__logo" />
+                                            <BsFillGearFill data-testid="projecttable__gear" onClick={() => handleGearClick(project)} className="action__logo" />
                                         </span>
                                     </td>
                                 </tr>
