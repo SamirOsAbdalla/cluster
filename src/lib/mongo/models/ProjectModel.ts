@@ -6,6 +6,7 @@ export interface CommentInterface {
     message: string;
     creator: string;
     dateCreated: Date;
+    _id?: string
 }
 
 const commentSchema = new Schema<CommentInterface>({

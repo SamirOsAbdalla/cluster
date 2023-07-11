@@ -10,9 +10,13 @@ interface Props {
     setProjects: Dispatch<SetStateAction<ProjectInterface[]>>,
     leaveProjectModal: boolean,
     setLeaveProjectModal: Dispatch<SetStateAction<boolean>>,
-    currentProject: ProjectInterface | null
+    currentProject: ProjectInterface | null,
+    currentPage: number,
+    setCurrentPage: Dispatch<SetStateAction<number>>,
+    projectsPerPage: number
 }
-export default function LeaveProjectModal({ currentProject, leaveProjectModal, setLeaveProjectModal, projects, setProjects }: Props) {
+export default function LeaveProjectModal({ currentProject, leaveProjectModal, setLeaveProjectModal,
+    projects, setProjects, currentPage, setCurrentPage, projectsPerPage }: Props) {
     let typecastedProject = currentProject as ProjectInterface
     const data = useSession()
     const userEmail = data?.data?.user.email
@@ -41,6 +45,9 @@ export default function LeaveProjectModal({ currentProject, leaveProjectModal, s
         const finalResponse = await resp.json()
         if (finalResponse) {
             const tmpProjects = projects.filter(project => project._id != typecastedProject._id)
+            if (tmpProjects.length % projectsPerPage == 0 && tmpProjects.length > 1) {
+                setCurrentPage((prevState) => prevState - 1)
+            }
             setLeaveProjectModal(false)
             setProjects(tmpProjects)
         } else {

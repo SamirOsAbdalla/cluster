@@ -85,6 +85,21 @@ tbody tr:nth-child(even) {
     background-color: bisque;
 }
 
+.pagination__list {
+    display: flex;
+}
+
+.pagination__item {
+    padding: 1em;
+    border: 1px solid black;
+    list-style: none;
+    cursor: pointer
+}
+
+.active__pagination__item {
+    background-color: aquamarine;
+}
+
 @media screen and (max-width:600px) {
 
     .project__heading {

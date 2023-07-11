@@ -11,6 +11,7 @@ import NewProjectModal from '../NewProjectModal/NewProjectModal'
 import { ProjectInterface, TaskInterface, CommentInterface, MemberInterface } from '@/lib/mongo/models/ProjectModel'
 import ProjectDetailModal from '../ProjectDetailModal/ProjectDetailModal'
 import LeaveProjectModal from '../LeaveProjectModal/LeaveProjectModal'
+import TablePagination from '../TablePagination/TablePagination'
 export default function ProjectTable() {
     const data = useSession()
     const creatorEmail = data?.data?.user.email
@@ -40,11 +41,20 @@ export default function ProjectTable() {
         fetchProjects()
     }, [creatorName])
 
+
+    //refactor to maybe use enums for state instead of bool
     const [modalOpen, setModalOpen] = useState(false)
     const [projectDetailModal, setProjectDetailModal] = useState<boolean>(false)
     const [projects, setProjects] = useState<ProjectInterface[]>([])
     const [currentProjectModal, setCurrentProjectModal] = useState<ProjectInterface | null>(null)
     const [leaveProjectModal, setLeaveProjectModal] = useState<boolean>(false)
+    const [currentPage, setCurrentPage] = useState<number>(1)
+
+    const projectsPerPage = 5;
+    const totalNumberOfPages = Math.ceil(projects.length / projectsPerPage)
+    const lastIndex = currentPage * projectsPerPage;
+    const firstIndex = lastIndex - projectsPerPage
+    const displayedProjects = projects.slice(firstIndex, lastIndex)
     const handleGearClick = (project: ProjectInterface) => {
         if (modalOpen) {
             setModalOpen(false)
@@ -76,6 +86,7 @@ export default function ProjectTable() {
             setLeaveProjectModal(true)
         }
     }
+
     return (
         <div className="table__wrapper">
             <div className="project__heading">
@@ -93,6 +104,9 @@ export default function ProjectTable() {
                 </button>
             </div>
             {modalOpen && <NewProjectModal
+                currentPage={currentPage}
+                projectsPerPage={projectsPerPage}
+                setCurrentPage={setCurrentPage}
                 projects={projects}
                 setProjects={setProjects}
                 modalOpen={modalOpen}
@@ -103,6 +117,9 @@ export default function ProjectTable() {
                 setProjectDetailModal={setProjectDetailModal}
             />}
             {leaveProjectModal && <LeaveProjectModal
+                projectsPerPage={projectsPerPage}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
                 projects={projects}
                 setProjects={setProjects}
                 leaveProjectModal={leaveProjectModal}
@@ -119,7 +136,7 @@ export default function ProjectTable() {
                 </thead>
                 <tbody>
                     {
-                        projects.map((project: ProjectInterface) => (
+                        displayedProjects.map((project: ProjectInterface) => (
                             <React.Fragment key={project.dateCreated as any}>
                                 <tr>
                                     <td data-cell="name: ">{project.name}</td>
@@ -137,6 +154,11 @@ export default function ProjectTable() {
                     }
                 </tbody>
             </table>
+            <TablePagination
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                totalNumberOfPages={totalNumberOfPages}
+            />
         </div>
     )
 }

@@ -13,7 +13,10 @@ interface Props {
     modalOpen: boolean,
     setModalOpen: Dispatch<SetStateAction<boolean>>,
     projects: ProjectInterface[],
-    setProjects: Dispatch<SetStateAction<ProjectInterface[]>>
+    setProjects: Dispatch<SetStateAction<ProjectInterface[]>>,
+    setCurrentPage: Dispatch<SetStateAction<number>>,
+    currentPage: number,
+    projectsPerPage: number
 }
 
 interface ProjectModalType {
@@ -22,7 +25,8 @@ interface ProjectModalType {
     projectCreator: string;
     projectMembers: string;
 }
-export default function NewProjectModal({ modalOpen, setModalOpen, projects, setProjects }: Props) {
+export default function NewProjectModal({ modalOpen, setModalOpen, projects,
+    setProjects, setCurrentPage, currentPage, projectsPerPage }: Props) {
     const data = useSession()
     const creatorEmail = data?.data?.user.email
     const creatorName = data?.data?.user.name
@@ -70,6 +74,7 @@ export default function NewProjectModal({ modalOpen, setModalOpen, projects, set
                 setModalOpen(!modalOpen)
 
                 addedProject = await resp.json()
+                setCurrentPage(Math.ceil((projects.length + 1) / projectsPerPage))
                 setProjects([...projects, addedProject])
             }
 
