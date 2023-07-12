@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
-import { InboxInterface } from '@/lib/mongo/models/UserModel'
+import { InboxInterface, InboxItemInterface } from '@/lib/mongo/models/InboxModel'
 import "./inbox.css"
 import React from 'react'
 import InboxItem from '@/components/InboxItem/InboxItem'
@@ -11,7 +11,7 @@ export default function Inbox() {
     const userEmail = data?.data?.user.email
     const userName = data?.data?.user.name
 
-    const [inbox, setInbox] = useState<InboxInterface[]>([])
+    const [inbox, setInbox] = useState<InboxItemInterface[]>([])
     const [error, setError] = useState<string>("")
     useEffect(() => {
         const fetchInbox = async () => {
@@ -22,7 +22,7 @@ export default function Inbox() {
             const user = {
                 userEmail: userEmail
             }
-            const response = await fetch("http://localhost:3000/api/fetchInbox", {
+            const response = await fetch("http://localhost:3000/api/inbox/fetchInbox", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
@@ -33,7 +33,8 @@ export default function Inbox() {
 
             const respObject = await response.json()
             if (respObject) {
-                setInbox(respObject)
+                let typecastedResp = respObject as InboxInterface
+                setInbox(typecastedResp.inboxItems)
             } else {
                 setError("failedInbox")
             }
@@ -45,16 +46,16 @@ export default function Inbox() {
 
     return (
         <div className="inbox__wrapper">
-            {inbox.map((inboxItem: InboxInterface) => (
+            {inbox.map((inboxItem: InboxItemInterface) => (
                 <InboxItem
                     key={inboxItem._id}
                     inbox={inbox}
                     setInbox={setInbox}
-                    projectName={inboxItem.projectName}
-                    projectSenderName={inboxItem.senderName}
-                    projectSenderEmail={inboxItem.senderEmail}
-                    projectId={inboxItem.projectId}
-                    inviteId={inboxItem._id as string}
+                    groupName={inboxItem.groupName}
+                    groupSenderName={inboxItem.senderName}
+                    groupSenderEmail={inboxItem.senderEmail}
+                    groupId={inboxItem.groupId}
+                    inviteItemId={inboxItem._id as string}
                 />
             ))}
         </div>

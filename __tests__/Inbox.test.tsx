@@ -4,7 +4,7 @@ import InboxItem from "@/components/InboxItem/InboxItem"
 import Inbox from "@/app/inbox/page"
 import { SessionProvider } from "next-auth/react"
 describe("Inbox", () => {
-    it("Click on new project button and render the modal", async () => {
+    it("Click on new group button and render the modal", async () => {
         const testFunction: any = () => {
         }
         render(

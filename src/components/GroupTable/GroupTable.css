@@ -1,0 +1,145 @@
+.table__wrapper {
+    padding: 3em;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    max-width: 80em;
+    margin-left: 6em;
+}
+
+.action__logo {
+    cursor: pointer;
+}
+
+.group__heading {
+    position: relative;
+    display: flex;
+    align-items: center;
+    left: 2em;
+    gap: 2em;
+    width: 50em;
+    max-width: 100%;
+    margin-bottom: 1em;
+    flex-wrap: wrap;
+}
+
+.table {
+    display: block;
+
+    border-collapse: collapse;
+    box-shadow: 0px 10px 10px #ccc;
+    border-radius: 10px;
+    width: 50em;
+    max-width: 100%;
+}
+
+.table thead {
+    background-color: #ccc;
+    color: #222
+}
+
+.th__left {
+    border-radius: 10px 0px 0px 0px;
+}
+
+.td__right {
+    padding-left: 10px;
+}
+
+.th__right {
+    border-radius: 0px 10px 0px 0px;
+}
+
+.table th,
+.table td {
+    padding: 0.8rem;
+}
+
+.table td {
+    border-top: 0.5px solid #ddd;
+    text-overflow: ellipsis;
+
+}
+
+.table tbody tr:hover {
+    background-color: #eee;
+}
+
+.expand {
+    width: 100%;
+}
+
+table tbody td {
+    text-align: center;
+}
+
+.action__cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .3em;
+}
+
+tbody tr:nth-child(even) {
+    background-color: bisque;
+}
+
+.pagination__list {
+    display: flex;
+}
+
+.pagination__item {
+    padding: 1em;
+    border: 1px solid black;
+    list-style: none;
+    cursor: pointer
+}
+
+.active__pagination__item {
+    background-color: aquamarine;
+}
+
+.table tr {
+    cursor: pointer;
+}
+
+@media screen and (max-width:600px) {
+
+    .group__heading {
+        position: static;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .table__wrapper {
+        margin-left: 5.5em;
+    }
+
+    .table {
+        width: 80%;
+    }
+
+    .table td {
+        border-top: none;
+    }
+
+    table tbody {
+        width: 100%;
+        display: table;
+        ;
+    }
+
+    td {
+        display: block;
+    }
+
+    th {
+        display: none;
+    }
+
+    td::before {
+        content: attr(data-cell);
+        text-transform: capitalize;
+    }
+}

@@ -1,46 +1,46 @@
-import ProjectTable from "@/components/ProjectTable/ProjectTable"
+import GroupTable from "@/components/GroupTable/GroupTable"
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { SessionProvider } from "next-auth/react"
-describe("Project Table", () => {
+describe("Group Table", () => {
 
-    describe("New Project Modal", () => {
-        it("Click on new project button and render the modal", async () => {
+    describe("New Group Modal", () => {
+        it("Click on new group button and render the modal", async () => {
             render(
                 <SessionProvider>
-                    <ProjectTable />
+                    <GroupTable />
                 </SessionProvider>
             )
-            const newProjectButton = screen.getByRole("button", { name: "New Project" })
-            await userEvent.click(newProjectButton)
-            const createProjectButton = screen.getByRole("button", { name: "Create Project" })
-            expect(createProjectButton).toBeInTheDocument()
+            const newGroupButton = screen.getByRole("button", { name: "New Group" })
+            await userEvent.click(newGroupButton)
+            const createGroupButton = screen.getByRole("button", { name: "Create Group" })
+            expect(createGroupButton).toBeInTheDocument()
         })
     })
 
-    describe("Project Detail Modal", () => {
-        it("Click on gear and display project information", async () => {
+    describe("Group Detail Modal", () => {
+        it("Click on gear and display group information", async () => {
             render(
                 <SessionProvider>
-                    <ProjectTable />
+                    <GroupTable />
                 </SessionProvider>
             )
-            const projectDisplayItem = await screen.findByTestId("projecttable__gear")
-            await userEvent.click(projectDisplayItem)
+            const groupDisplayItem = await screen.findByTestId("grouptable__gear")
+            await userEvent.click(groupDisplayItem)
             const submitButton = screen.getByRole("button", { name: "Submit" })
             expect(submitButton).toBeInTheDocument()
         })
     })
 
-    describe("Leave Project Modal", () => {
-        it("Click on trash and display leave project modal", async () => {
+    describe("Leave Group Modal", () => {
+        it("Click on trash and display leave group modal", async () => {
             render(
                 <SessionProvider>
-                    <ProjectTable />
+                    <GroupTable />
                 </SessionProvider>
             )
-            const leaveProjectModal = await screen.findByTestId("projecttable__leave")
-            await userEvent.click(leaveProjectModal)
+            const leaveGroupModal = await screen.findByTestId("grouptable__leave")
+            await userEvent.click(leaveGroupModal)
             const leaveButton = screen.getByRole("button", { name: "Leave" })
             expect(leaveButton).toBeInTheDocument()
         })

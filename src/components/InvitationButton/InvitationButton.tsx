@@ -1,15 +1,15 @@
 import React from 'react'
 import { useSession } from 'next-auth/react'
-import { InboxInterface } from '@/lib/mongo/models/UserModel'
+import { InboxItemInterface } from '@/lib/mongo/models/InboxModel';
 import { Dispatch, SetStateAction } from "react";
 interface Props {
     type: "accept" | "reject",
-    projectId: string,
-    inviteId: string,
-    inbox: InboxInterface[],
-    setInbox: Dispatch<SetStateAction<InboxInterface[]>>
+    groupId: string,
+    inviteItemId: string,
+    inbox: InboxItemInterface[],
+    setInbox: Dispatch<SetStateAction<InboxItemInterface[]>>
 }
-export default function InvitationButton({ type, projectId, inbox, setInbox, inviteId }: Props) {
+export default function InvitationButton({ type, groupId, inbox, setInbox, inviteItemId }: Props) {
 
     const data = useSession()
     const userEmail = data?.data?.user.email
@@ -18,11 +18,11 @@ export default function InvitationButton({ type, projectId, inbox, setInbox, inv
     const removeInvitation = async () => {
 
         const inviteBody = {
-            inviteId,
+            inviteItemId,
             userEmail
         }
         //backend call to remove invitation from user inbox list
-        const acceptInviteResp = await fetch("http://localhost:3000/api/removeInvitation", {
+        const acceptInviteResp = await fetch("http://localhost:3000/api/inbox/removeInvitation", {
             method: "POST",
             headers: {
                 "Accept": "application/json",
@@ -38,27 +38,29 @@ export default function InvitationButton({ type, projectId, inbox, setInbox, inv
         }
 
         //remove item from current list of inbox items
-        let tmpInbox = inbox.filter((invite: InboxInterface) => {
-            return invite._id !== inviteId
+        let tmpInbox = inbox.filter((invite: InboxItemInterface) => {
+            return invite._id !== inviteItemId
         })
 
         setInbox(tmpInbox)
     }
+
+
     const handleAccept = async () => {
         if (userEmail && userName) {
-            const project = {
-                projectId,
+            const group = {
+                groupId,
                 userEmail,
                 userName
             }
-            //backend call to add member to project members list
-            const addUserResp = await fetch("http://localhost:3000/api/addProjectMember", {
+            //backend call to add member to group members list
+            const addUserResp = await fetch("http://localhost:3000/api/groupmember/addGroupMember", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(project),
+                body: JSON.stringify(group),
             });
             const newMemberResponse = await addUserResp.json()
             if (newMemberResponse) {
