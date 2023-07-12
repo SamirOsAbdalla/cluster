@@ -78,7 +78,7 @@ export default function NewProjectModal({ modalOpen, setModalOpen, projects,
                 setProjects([...projects, addedProject])
             }
 
-            if (addedMembers) {
+            if (addedMembers || newMember != "") {
 
                 const inboxBody = {
                     projectCreator: creatorName,

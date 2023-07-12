@@ -4,6 +4,7 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 import "./ProjectTable.css"
 import { BsFillTrashFill, BsFillGearFill } from 'react-icons/bs'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
@@ -14,6 +15,7 @@ import LeaveProjectModal from '../LeaveProjectModal/LeaveProjectModal'
 import TablePagination from '../TablePagination/TablePagination'
 export default function ProjectTable() {
     const data = useSession()
+    const router = useRouter()
     const creatorEmail = data?.data?.user.email
     const creatorName = data?.data?.user.name
     useEffect(() => {
@@ -55,7 +57,8 @@ export default function ProjectTable() {
     const lastIndex = currentPage * projectsPerPage;
     const firstIndex = lastIndex - projectsPerPage
     const displayedProjects = projects.slice(firstIndex, lastIndex)
-    const handleGearClick = (project: ProjectInterface) => {
+    const handleGearClick = (project: ProjectInterface, event: React.MouseEvent<SVGElement, MouseEvent>) => {
+        event.stopPropagation()
         if (modalOpen) {
             setModalOpen(false)
         }
@@ -69,7 +72,8 @@ export default function ProjectTable() {
         }
     }
 
-    const handleTrashClick = (project: ProjectInterface) => {
+    const handleTrashClick = (project: ProjectInterface, event: React.MouseEvent<SVGElement, MouseEvent>) => {
+        event.stopPropagation()
         setModalOpen(false)
         setProjectDetailModal(false)
         if (currentProjectModal && !(project._id == currentProjectModal._id)) {
@@ -87,7 +91,10 @@ export default function ProjectTable() {
         }
     }
 
-
+    //account for event bubbling in click
+    const navigateToProjectsPage = (pId: string) => {
+        router.push(`/projects/${pId}`)
+    }
     return (
         <div className="table__wrapper">
             <div className="project__heading">
@@ -139,14 +146,14 @@ export default function ProjectTable() {
                     {
                         displayedProjects.map((project: ProjectInterface) => (
                             <React.Fragment key={project.dateCreated as any}>
-                                <tr>
+                                <tr onClick={() => navigateToProjectsPage(project._id as string)}>
                                     <td data-cell="name: ">{project.name}</td>
                                     <td data-cell="description: " className="description__cell">{project.description}</td>
                                     <td data-cell="creator: ">{project.creator.memberName}</td>
                                     <td >
                                         <span className="action__cell td__right">
-                                            <BsFillTrashFill data-testid="projecttable__leave" onClick={() => handleTrashClick(project)} className="action__logo" />
-                                            <BsFillGearFill data-testid="projecttable__gear" onClick={() => handleGearClick(project)} className="action__logo" />
+                                            <BsFillTrashFill data-testid="projecttable__leave" onClick={(e) => handleTrashClick(project, e)} className="action__logo" />
+                                            <BsFillGearFill data-testid="projecttable__gear" onClick={(e) => handleGearClick(project, e)} className="action__logo" />
                                         </span>
                                     </td>
                                 </tr>

@@ -100,6 +100,10 @@ tbody tr:nth-child(even) {
     background-color: aquamarine;
 }
 
+.table tr {
+    cursor: pointer;
+}
+
 @media screen and (max-width:600px) {
 
     .project__heading {

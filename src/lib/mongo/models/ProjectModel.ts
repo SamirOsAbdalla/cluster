@@ -21,6 +21,7 @@ export interface TaskInterface {
     description: string;
     creator: string;
     dateCreated: Date;
+    //change to bool
     priority: string;
     status: "Completed" | "In Progress";
     comments: CommentInterface[];
