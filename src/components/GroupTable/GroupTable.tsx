@@ -82,6 +82,7 @@ export default function GroupTable() {
 
     //account for event bubbling in click
     const navigateToGroupsPage = (pId: string) => {
+        console.log(pId)
         router.push(`/groups/${pId}`)
     }
     return (

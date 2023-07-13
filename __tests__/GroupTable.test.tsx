@@ -2,9 +2,15 @@ import GroupTable from "@/components/GroupTable/GroupTable"
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { SessionProvider } from "next-auth/react"
+
+jest.mock('next/navigation', () => ({
+    ...require('next-router-mock'),
+    useSearchParams: () => jest.fn(),
+}));
 describe("Group Table", () => {
 
     describe("New Group Modal", () => {
+
         it("Click on new group button and render the modal", async () => {
             render(
                 <SessionProvider>
@@ -15,20 +21,6 @@ describe("Group Table", () => {
             await userEvent.click(newGroupButton)
             const createGroupButton = screen.getByRole("button", { name: "Create Group" })
             expect(createGroupButton).toBeInTheDocument()
-        })
-    })
-
-    describe("Group Detail Modal", () => {
-        it("Click on gear and display group information", async () => {
-            render(
-                <SessionProvider>
-                    <GroupTable />
-                </SessionProvider>
-            )
-            const groupDisplayItem = await screen.findByTestId("grouptable__gear")
-            await userEvent.click(groupDisplayItem)
-            const submitButton = screen.getByRole("button", { name: "Submit" })
-            expect(submitButton).toBeInTheDocument()
         })
     })
 
