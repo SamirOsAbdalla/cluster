@@ -20,38 +20,63 @@ export default function LeaveGroupModal({ currentGroup, leaveGroupModal, setLeav
     let typecastedGroup = currentGroup as GroupInterface
     const data = useSession()
     const userEmail = data?.data?.user.email
-    if (currentGroup) {
-        currentGroup = currentGroup as GroupInterface
-    }
 
+    const editGroupTable = () => {
+        const tmpGroups = groups.filter(group => group._id != typecastedGroup._id)
+        if (tmpGroups.length % groupsPerPage == 0 && tmpGroups.length > 1) {
+            setCurrentPage((prevState) => prevState - 1)
+        }
+        setLeaveGroupModal(false)
+        setGroups(tmpGroups)
+    }
     const leaveGroup = async () => {
         if (!userEmail) {
             return;
         }
-        const leaveGroupBody = {
-            groupId: typecastedGroup._id,
-            userEmail
-        }
 
-        const resp = await fetch("http://localhost:3000/api/groupmember/removeGroupMember", {
-            method: "POST",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(leaveGroupBody),
-        });
-
-        const finalResponse = await resp.json()
-        if (finalResponse) {
-            const tmpGroups = groups.filter(group => group._id != typecastedGroup._id)
-            if (tmpGroups.length % groupsPerPage == 0 && tmpGroups.length > 1) {
-                setCurrentPage((prevState) => prevState - 1)
+        //delete entire group if group creator is the same as current user
+        if (typecastedGroup && (typecastedGroup.creator.memberEmail == userEmail)) {
+            const deleteGroupBody = {
+                groupId: typecastedGroup._id
             }
-            setLeaveGroupModal(false)
-            setGroups(tmpGroups)
-        } else {
-            //handle error
+
+            const resp = await fetch("http://localhost:3000/api/groups/deleteGroup", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(deleteGroupBody),
+            });
+
+            const finalResponse = await resp.json()
+            if (finalResponse) {
+                editGroupTable()
+            } else {
+
+            }
+
+        }//else just remove the current user
+        else if (typecastedGroup && (typecastedGroup.creator.memberEmail != userEmail)) {
+            const leaveGroupBody = {
+                groupId: typecastedGroup._id,
+                userEmail
+            }
+            const resp = await fetch("http://localhost:3000/api/groupmember/removeGroupMember", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(leaveGroupBody),
+            });
+
+            const finalResponse = await resp.json()
+            if (finalResponse) {
+                editGroupTable()
+            } else {
+                //handle error
+            }
         }
     }
     return (
