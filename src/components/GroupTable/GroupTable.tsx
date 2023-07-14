@@ -66,7 +66,7 @@ export default function GroupTable() {
     const displayedGroups = groups.slice(firstIndex, lastIndex)
 
 
-    const handleTrashClick = (group: GroupInterface, event: React.MouseEvent<SVGElement, MouseEvent>) => {
+    const handleLeaveClick = (group: GroupInterface, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.stopPropagation()
         setModalOpen(false)
         if (currentGroupModal && !(group._id == currentGroupModal._id)) {
@@ -143,7 +143,10 @@ export default function GroupTable() {
                                             <td data-cell="creator: ">{group.creator.memberName}</td>
                                             <td >
                                                 <span className="action__cell td__right">
-                                                    <BsFillTrashFill data-testid="grouptable__leave" onClick={(e) => handleTrashClick(group, e)} className="action__logo" />
+                                                    <button data-testid="grouptable__leave" onClick={(e) => handleLeaveClick(group, e)} className="action__logo">
+                                                        Leave
+                                                    </button>
+
                                                 </span>
                                             </td>
                                         </tr>
