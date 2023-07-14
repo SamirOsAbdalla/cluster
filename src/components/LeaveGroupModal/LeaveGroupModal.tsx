@@ -52,6 +52,7 @@ export default function LeaveGroupModal({ currentGroup, leaveGroupModal, setLeav
             const finalResponse = await resp.json()
             if (finalResponse) {
                 editGroupTable()
+                //delete all tasks with the group id
             } else {
 
             }

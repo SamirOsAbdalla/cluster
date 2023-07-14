@@ -40,7 +40,7 @@ export default function Sidebar() {
                 <div className="sidebar__heading__left">
                     <FcFilmReel className="sidebar__title__icon" />
                     <h1 className='sidebar__title' >
-                        Titley
+                        Cluster
                     </h1>
 
                 </div>

@@ -17,6 +17,7 @@ import { CommentInterface } from '@/lib/mongo/models/CommentModel'
 import GroupDetailModal from '../GroupDetailModal/GroupDetailModal'
 import LeaveGroupModal from '../LeaveGroupModal/LeaveGroupModal'
 import TablePagination from '../TablePagination/TablePagination'
+import LoadingGroup from '../LoadingGroup/LoadingGroup'
 export default function GroupTable() {
     const data = useSession()
     const router = useRouter()
@@ -27,6 +28,8 @@ export default function GroupTable() {
             return;
         }
         const fetchGroups = async () => {
+
+
             let currentCreator: MemberInterface = {
                 memberEmail: creatorEmail,
                 memberName: creatorName
@@ -42,6 +45,7 @@ export default function GroupTable() {
 
             const finalData = await resp.json()
             setGroups(finalData)
+            setLoading(false)
         }
 
         fetchGroups()
@@ -54,7 +58,7 @@ export default function GroupTable() {
     const [currentGroupModal, setCurrentGroupModal] = useState<GroupInterface | null>(null)
     const [leaveGroupModal, setLeaveGroupModal] = useState<boolean>(false)
     const [currentPage, setCurrentPage] = useState<number>(1)
-
+    const [loading, setLoading] = useState<boolean>(true)
     const groupsPerPage = 5;
     const totalNumberOfPages = Math.ceil(groups.length / groupsPerPage)
     const lastIndex = currentPage * groupsPerPage;
@@ -82,7 +86,7 @@ export default function GroupTable() {
 
     //account for event bubbling in click
     const navigateToGroupsPage = (pId: string) => {
-        console.log(pId)
+
         router.push(`/groups/${pId}`)
     }
     return (
@@ -116,39 +120,44 @@ export default function GroupTable() {
                 leaveGroupModal={leaveGroupModal}
                 setLeaveGroupModal={setLeaveGroupModal}
                 currentGroup={currentGroupModal} />}
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th className="th__left">Name</th>
-                        <th className="expand">Description</th>
-                        <th>Creator</th>
-                        <th className="th__right"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        displayedGroups.map((group: GroupInterface) => (
-                            <React.Fragment key={group.dateCreated as any}>
-                                <tr onClick={() => navigateToGroupsPage(group._id as string)}>
-                                    <td data-cell="name: ">{group.name}</td>
-                                    <td data-cell="description: " className="description__cell">{group.description}</td>
-                                    <td data-cell="creator: ">{group.creator.memberName}</td>
-                                    <td >
-                                        <span className="action__cell td__right">
-                                            <BsFillTrashFill data-testid="grouptable__leave" onClick={(e) => handleTrashClick(group, e)} className="action__logo" />
-                                        </span>
-                                    </td>
-                                </tr>
-                            </React.Fragment>
-                        ))
-                    }
-                </tbody>
-            </table>
-            <TablePagination
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                totalNumberOfPages={totalNumberOfPages}
-            />
+
+            {loading && <LoadingGroup />}
+            {!loading &&
+                <>
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th className="th__left">Name</th>
+                                <th className="expand">Description</th>
+                                <th>Creator</th>
+                                <th className="th__right"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                displayedGroups.map((group: GroupInterface) => (
+                                    <React.Fragment key={group.dateCreated as any}>
+                                        <tr onClick={() => navigateToGroupsPage(group._id as string)}>
+                                            <td data-cell="name: ">{group.name}</td>
+                                            <td data-cell="description: " className="description__cell">{group.description}</td>
+                                            <td data-cell="creator: ">{group.creator.memberName}</td>
+                                            <td >
+                                                <span className="action__cell td__right">
+                                                    <BsFillTrashFill data-testid="grouptable__leave" onClick={(e) => handleTrashClick(group, e)} className="action__logo" />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </React.Fragment>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                    <TablePagination
+                        currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}
+                        totalNumberOfPages={totalNumberOfPages}
+                    />
+                </>}
         </div>
     )
 }
