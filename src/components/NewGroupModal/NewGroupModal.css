@@ -79,3 +79,7 @@ input {
 input:focus {
     outline: none;
 }
+
+.new__group__button {
+    padding: .5em 1em;
+}

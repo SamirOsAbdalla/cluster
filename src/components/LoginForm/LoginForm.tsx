@@ -13,12 +13,13 @@ import "./LoginForm.css"
 import { useRouter } from "next/navigation"
 import UserModel from "@/lib/mongo/models/UserModel"
 import ErrorMessage from "../ErrorMessage/ErrorMessage"
-
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner"
 interface LoginProps {
     type: string
 }
 export default function LoginForm({ type }: LoginProps) {
     const router = useRouter()
+    const [loading, setLoading] = useState<boolean>(false)
     const [email, setEmail] = useState<string>("")
     const [firstName, setFirstName] = useState<string>("")
     const [lastName, setLastName] = useState<string>("")
@@ -29,6 +30,7 @@ export default function LoginForm({ type }: LoginProps) {
         setError("")
     }, [])
     const handleLogin = async () => {
+        setLoading(true)
         const result = await signIn("credentials", {
             email: email,
             password: password,
@@ -42,6 +44,7 @@ export default function LoginForm({ type }: LoginProps) {
             setError("")
             router.push("/")
         }
+        setLoading(false)
     }
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -49,6 +52,7 @@ export default function LoginForm({ type }: LoginProps) {
             handleLogin()
         }
         else {
+            setLoading(true)
             const name = firstName + " " + lastName
             const newUser = {
                 name,
@@ -70,13 +74,14 @@ export default function LoginForm({ type }: LoginProps) {
                 let tempError = "userExists"
                 setError(tempError)
             }
+            setLoading(false)
         }
 
     }
     return (
         <div className="login__form__wrapper">
-
             <div className="login__form__container">
+                {loading && <LoadingSpinner type="login" />}
                 <div className="login__picture__container">
                     <div className="login__logo__container">
 

@@ -21,5 +21,6 @@
 }
 
 .leave__button {
+    padding: .5em 1em;
     cursor: pointer
 }

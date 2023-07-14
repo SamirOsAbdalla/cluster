@@ -91,17 +91,7 @@ export default function GroupTable() {
     }
     return (
         <div className="table__wrapper">
-            <div className="group__heading">
-                <h1>My Groups</h1>
-                <button className="new__group__button" onClick={(e) => {
-                    const modalStatus = modalOpen
-                    setModalOpen(!modalStatus)
 
-                }}>
-                    <AiOutlinePlusCircle />
-                    <span>New Group</span>
-                </button>
-            </div>
             {modalOpen && <NewGroupModal
                 currentPage={currentPage}
                 groupsPerPage={groupsPerPage}
@@ -124,6 +114,17 @@ export default function GroupTable() {
             {loading && <LoadingGroup />}
             {!loading &&
                 <>
+                    <div className="group__heading">
+                        <h1>My Groups</h1>
+                        <button className="new__group__button" onClick={(e) => {
+                            const modalStatus = modalOpen
+                            setModalOpen(!modalStatus)
+
+                        }}>
+                            <AiOutlinePlusCircle />
+                            <span>New Group</span>
+                        </button>
+                    </div>
                     <table className="table">
                         <thead>
                             <tr>

@@ -11,6 +11,7 @@ import { GroupInterface } from '@/lib/mongo/models/GroupModel'
 import { TaskInterface } from '@/lib/mongo/models/TaskModel'
 import { MemberInterface } from '@/lib/mongo/models/GroupModel'
 import { CommentInterface } from '@/lib/mongo/models/CommentModel'
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 interface Props {
     modalOpen: boolean,
     setModalOpen: Dispatch<SetStateAction<boolean>>,
@@ -32,6 +33,7 @@ export default function NewGroupModal({ modalOpen, setModalOpen, groups,
     const data = useSession()
     const creatorEmail = data?.data?.user.email
     const creatorName = data?.data?.user.name
+    const [loading, setLoading] = useState<boolean>(false)
     const [groupName, setGroupName] = useState<string>("")
     const [groupDescription, setGroupDescription] = useState<string>("")
     const [newMember, setNewMember] = useState<string>("")
@@ -45,6 +47,7 @@ export default function NewGroupModal({ modalOpen, setModalOpen, groups,
             return;
         }
         else {
+            setLoading(true)
             const creatorObject: MemberInterface = {
                 memberEmail: creatorEmail as string,
                 memberName: creatorName as string
@@ -78,9 +81,13 @@ export default function NewGroupModal({ modalOpen, setModalOpen, groups,
                 addedGroup = await resp.json()
                 setCurrentPage(Math.ceil((groups.length + 1) / groupsPerPage))
                 setGroups([...groups, addedGroup])
+            } else {
+                //handle error
             }
 
-            if (addedMembers || newMember != "") {
+            //add quality of life for new member in case user forgot to add
+
+            if (addedMembers) {
 
                 const inboxBody = {
                     groupCreator: creatorName,
@@ -99,6 +106,8 @@ export default function NewGroupModal({ modalOpen, setModalOpen, groups,
                 });
                 setAddedMembers(new Set())
             }
+
+            setLoading(false)
 
         }
 
@@ -169,7 +178,7 @@ export default function NewGroupModal({ modalOpen, setModalOpen, groups,
                     ))}
                 </div>
                 <button type="submit" className="new__group__button">
-                    Create Group
+                    {loading ? <LoadingSpinner type="newGroup" /> : <span>Submit</span>}
                 </button>
             </form>
         </div>

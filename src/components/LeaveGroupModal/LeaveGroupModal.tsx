@@ -3,7 +3,9 @@ import { GroupInterface } from "@/lib/mongo/models/GroupModel"
 import { Dispatch, SetStateAction } from "react"
 import { AiFillCloseCircle } from "react-icons/ai";
 import { useSession } from "next-auth/react";
+import { useState } from "react";
 import React from 'react'
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 interface Props {
     groups: GroupInterface[],
@@ -21,6 +23,7 @@ export default function LeaveGroupModal({ currentGroup, leaveGroupModal, setLeav
     const data = useSession()
     const userEmail = data?.data?.user.email
 
+    const [loading, setLoading] = useState<boolean>(false)
     const editGroupTable = () => {
         const tmpGroups = groups.filter(group => group._id != typecastedGroup._id)
         if (tmpGroups.length % groupsPerPage == 0 && tmpGroups.length > 1) {
@@ -34,6 +37,7 @@ export default function LeaveGroupModal({ currentGroup, leaveGroupModal, setLeav
             return;
         }
 
+        setLoading(true)
         //delete entire group if group creator is the same as current user
         if (typecastedGroup && (typecastedGroup.creator.memberEmail == userEmail)) {
             const deleteGroupBody = {
@@ -79,6 +83,8 @@ export default function LeaveGroupModal({ currentGroup, leaveGroupModal, setLeav
                 //handle error
             }
         }
+
+        setLoading(false)
     }
     return (
         <div className="leavemodal__wrapper">
@@ -88,7 +94,7 @@ export default function LeaveGroupModal({ currentGroup, leaveGroupModal, setLeav
             </div>
             <div className="leave__buttons">
                 <button onClick={leaveGroup} className="leave__button leave">
-                    Leave
+                    {loading ? <LoadingSpinner type="newGroup" /> : <span>Leave</span>}
                 </button>
                 <button onClick={() => setLeaveGroupModal(false)} className="leave__button cancel">
                     Cancel
