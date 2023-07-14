@@ -5,6 +5,8 @@ import { InboxInterface, InboxItemInterface } from '@/lib/mongo/models/InboxMode
 import "./inbox.css"
 import React from 'react'
 import InboxItem from '@/components/InboxItem/InboxItem'
+import LoadingInbox from '@/components/LoadingInbox/LoadingInbox'
+import LoadingMessage from '@/components/LoadingMessage/LoadingMessage'
 
 export default function Inbox() {
     const data = useSession()
@@ -12,6 +14,7 @@ export default function Inbox() {
     const userName = data?.data?.user.name
 
     const [inbox, setInbox] = useState<InboxItemInterface[]>([])
+    const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string>("")
     useEffect(() => {
         const fetchInbox = async () => {
@@ -38,6 +41,7 @@ export default function Inbox() {
             } else {
                 setError("failedInbox")
             }
+            setLoading(false)
         }
 
         fetchInbox()
@@ -46,6 +50,11 @@ export default function Inbox() {
 
     return (
         <div className="inbox__wrapper">
+            {loading && <>
+                <LoadingInbox />
+                <LoadingMessage type="inbox" />
+            </>}
+
             {inbox.map((inboxItem: InboxItemInterface) => (
                 <InboxItem
                     key={inboxItem._id}

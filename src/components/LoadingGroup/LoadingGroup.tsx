@@ -2,6 +2,7 @@ import "./LoadingGroup.css"
 import Image from "next/image"
 import spaceship from "../../../public/ufo.svg"
 import React from 'react'
+import LoadingMessage from "../LoadingMessage/LoadingMessage"
 
 export default function LoadingGroup() {
     return (
@@ -15,16 +16,7 @@ export default function LoadingGroup() {
                     className="spaceship__svg"
                 />
             </div>
-            <div className="loadinggroup__bottom">
-                <div className="loadinggroup__message">
-                    Finding Projects
-                </div>
-                <div className="loading__circles">
-                    <div className="loading__circle"></div>
-                    <div className="loading__circle"></div>
-                    <div className="loading__circle"></div>
-                </div>
-            </div>
+            <LoadingMessage type="groups" />
         </div>
     )
 }
