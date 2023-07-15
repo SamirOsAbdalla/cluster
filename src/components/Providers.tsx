@@ -3,6 +3,7 @@
 
 import React, { ReactNode } from "react";
 import { SessionProvider } from "next-auth/react"
+import QueryProvider from "./QueryProvider";
 interface Props {
     children: ReactNode
 }
@@ -10,9 +11,11 @@ interface Props {
 const Providers = ({ children }: Props) => {
 
     return (
-        <SessionProvider>
-            {children}
-        </SessionProvider>
+        <QueryProvider>
+            <SessionProvider>
+                {children}
+            </SessionProvider>
+        </QueryProvider>
     )
 }
 
