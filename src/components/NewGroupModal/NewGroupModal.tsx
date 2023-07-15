@@ -178,7 +178,7 @@ export default function NewGroupModal({ modalOpen, setModalOpen, groups,
                     ))}
                 </div>
                 <button type="submit" className="new__group__button">
-                    {loading ? <LoadingSpinner type="newGroup" /> : <span>Submit</span>}
+                    {loading ? <LoadingSpinner type="button" /> : <span>Submit</span>}
                 </button>
             </form>
         </div>

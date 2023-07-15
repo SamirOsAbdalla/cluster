@@ -18,6 +18,7 @@ import GroupDetailModal from '../GroupDetailModal/GroupDetailModal'
 import LeaveGroupModal from '../LeaveGroupModal/LeaveGroupModal'
 import TablePagination from '../TablePagination/TablePagination'
 import LoadingGroup from '../LoadingGroup/LoadingGroup'
+import EmptyPage from '../EmptyPage/EmptyPage'
 export default function GroupTable() {
     const data = useSession()
     const router = useRouter()
@@ -112,7 +113,7 @@ export default function GroupTable() {
                 currentGroup={currentGroupModal} />}
 
             {loading && <LoadingGroup />}
-            {!loading &&
+            {!loading && groups.length > 0 &&
                 <>
                     <div className="group__heading">
                         <h1>My Groups</h1>
@@ -162,6 +163,19 @@ export default function GroupTable() {
                         totalNumberOfPages={totalNumberOfPages}
                     />
                 </>}
+            {!loading && groups.length == 0 &&
+                <div className="emptygroup__table">
+                    <EmptyPage type="group" />
+                    <button className="new__group__button" onClick={(e) => {
+                        const modalStatus = modalOpen
+                        setModalOpen(!modalStatus)
+
+                    }}>
+                        <AiOutlinePlusCircle />
+                        <span>New Group</span>
+                    </button>
+                </div>
+            }
         </div>
     )
 }

@@ -2,6 +2,9 @@ import React from 'react'
 import { useSession } from 'next-auth/react'
 import { InboxItemInterface } from '@/lib/mongo/models/InboxModel';
 import { Dispatch, SetStateAction } from "react";
+import { useState } from 'react';
+import "./InvitationButton.css"
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 interface Props {
     type: "accept" | "reject",
     groupId: string,
@@ -14,6 +17,8 @@ export default function InvitationButton({ type, groupId, inbox, setInbox, invit
     const data = useSession()
     const userEmail = data?.data?.user.email
     const userName = data?.data?.user.name
+
+    const [loading, setLoading] = useState<boolean>(false)
 
     const removeInvitation = async () => {
 
@@ -48,6 +53,7 @@ export default function InvitationButton({ type, groupId, inbox, setInbox, invit
 
     const handleAccept = async () => {
         if (userEmail && userName) {
+            setLoading(true)
             const group = {
                 groupId,
                 userEmail,
@@ -69,25 +75,27 @@ export default function InvitationButton({ type, groupId, inbox, setInbox, invit
                 //show error page
             }
 
-            await removeInvitation()
-
+            removeInvitation()
+            setLoading(false)
         }
     }
 
     const handleRejection = async () => {
+        setLoading(true)
         await removeInvitation()
+        setLoading(false)
     }
 
     if (type == "accept") {
         return (
             <button onClick={handleAccept} className="invbutton">
-                Accept
+                {loading ? <LoadingSpinner type="button" /> : <span>Accept</span>}
             </button>
         )
     }
     return (
         <button onClick={handleRejection} data-testid="reject__button" className="invbutton">
-            Reject
+            {loading ? <LoadingSpinner type="button" /> : <span>Reject</span>}
         </button>
     )
 

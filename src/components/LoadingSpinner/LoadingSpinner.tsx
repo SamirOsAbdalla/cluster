@@ -2,10 +2,10 @@ import "./LoadingSpinner.css"
 
 import React from 'react'
 interface Props {
-    type: "login" | "newGroup"
+    type: "login" | "button"
 }
 export default function LoadingSpinner({ type }: Props) {
-    if (type == "newGroup") {
+    if (type == "button") {
         return (
             <div className="loadingspinner__small"></div>
         )

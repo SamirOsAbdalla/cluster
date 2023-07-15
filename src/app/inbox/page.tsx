@@ -7,7 +7,7 @@ import React from 'react'
 import InboxItem from '@/components/InboxItem/InboxItem'
 import LoadingInbox from '@/components/LoadingInbox/LoadingInbox'
 import LoadingMessage from '@/components/LoadingMessage/LoadingMessage'
-
+import EmptyPage from '@/components/EmptyPage/EmptyPage'
 export default function Inbox() {
     const data = useSession()
     const userEmail = data?.data?.user.email
@@ -48,25 +48,30 @@ export default function Inbox() {
 
     }, [userEmail])
 
+
     return (
         <div className="inbox__wrapper">
-            {loading && <>
-                <LoadingInbox />
-                <LoadingMessage type="inbox" />
-            </>}
-
-            {inbox.map((inboxItem: InboxItemInterface) => (
-                <InboxItem
-                    key={inboxItem._id}
-                    inbox={inbox}
-                    setInbox={setInbox}
-                    groupName={inboxItem.groupName}
-                    groupSenderName={inboxItem.senderName}
-                    groupSenderEmail={inboxItem.senderEmail}
-                    groupId={inboxItem.groupId}
-                    inviteItemId={inboxItem._id as string}
-                />
-            ))}
+            {loading &&
+                <>
+                    <LoadingInbox />
+                    <LoadingMessage type="inbox" />
+                </>}
+            {!loading && inbox.length > 0 &&
+                inbox.map((inboxItem: InboxItemInterface) => (
+                    <InboxItem
+                        key={inboxItem._id}
+                        inbox={inbox}
+                        setInbox={setInbox}
+                        groupName={inboxItem.groupName}
+                        groupSenderName={inboxItem.senderName}
+                        groupSenderEmail={inboxItem.senderEmail}
+                        groupId={inboxItem.groupId}
+                        inviteItemId={inboxItem._id as string}
+                    />
+                ))
+            }
+            {!loading && inbox.length == 0 &&
+                <EmptyPage type="inbox" />}
         </div>
     )
 }

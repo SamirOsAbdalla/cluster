@@ -26,7 +26,7 @@ export default function LeaveGroupModal({ currentGroup, leaveGroupModal, setLeav
     const [loading, setLoading] = useState<boolean>(false)
     const editGroupTable = () => {
         const tmpGroups = groups.filter(group => group._id != typecastedGroup._id)
-        if (tmpGroups.length % groupsPerPage == 0 && tmpGroups.length > 1) {
+        if (tmpGroups.length % groupsPerPage == 0 && tmpGroups.length > 1 && currentPage != 1) {
             setCurrentPage((prevState) => prevState - 1)
         }
         setLeaveGroupModal(false)
@@ -94,7 +94,7 @@ export default function LeaveGroupModal({ currentGroup, leaveGroupModal, setLeav
             </div>
             <div className="leave__buttons">
                 <button onClick={leaveGroup} className="leave__button leave">
-                    {loading ? <LoadingSpinner type="newGroup" /> : <span>Leave</span>}
+                    {loading ? <LoadingSpinner type="button" /> : <span>Leave</span>}
                 </button>
                 <button onClick={() => setLeaveGroupModal(false)} className="leave__button cancel">
                     Cancel
