@@ -5,12 +5,15 @@ import { useState, useRef } from 'react'
 import { GroupInterface } from '@/lib/mongo/models/GroupModel'
 import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
+import { AiOutlinePlusCircle } from 'react-icons/ai'
+import { BsPencil } from 'react-icons/bs'
 import "./groupDetails.css"
 export default function GroupDetails({ params }: { params: { groupsId: string } }) {
     const session = useSession()
+    const userEmail = session.data?.user.email
     const [groupName, setGroupName] = useState<string>("")
     const [groupDescription, setGroupDescription] = useState<string>("")
-    const groupCreator = useRef("")
+    const groupCreatorEmail = useRef("")
     const router = useRouter()
 
     //function that fetches current group information by id
@@ -34,7 +37,7 @@ export default function GroupDetails({ params }: { params: { groupsId: string } 
         if (groupResponseJSON) {
             setGroupName(groupResponseJSON.name)
             setGroupDescription(groupResponseJSON.description)
-            groupCreator.current = groupResponseJSON.creator.memberEmail
+            groupCreatorEmail.current = groupResponseJSON.creator.memberEmail
             return groupResponseJSON
         } else {
             //throw error
@@ -54,16 +57,30 @@ export default function GroupDetails({ params }: { params: { groupsId: string } 
         <div className="groupdetails__wrapper">
             <div className="groupdetails__container">
                 <div className="groupdetail__container">
-                    <div className="groupdetail__heading">
-                        Group Name
+                    <div className="groupdetails">
+                        <div className="groupdetail__heading">
+                            Group Name
+                        </div>
+                        {groupCreatorEmail.current == userEmail ?
+                            <BsPencil className="pencil" />
+                            :
+                            <></>
+                        }
                     </div>
                     <div className="groupdetail__name">
                         {groupName}
                     </div>
                 </div>
                 <div className="groupdetail__container">
-                    <div className="groupdetail__heading">
-                        Group Description
+                    <div className="groupdetails">
+                        <div className="groupdetail__heading">
+                            Group Description
+                        </div>
+                        {groupCreatorEmail.current == userEmail ?
+                            <BsPencil className="pencil" />
+                            :
+                            <></>
+                        }
                     </div>
                     <div className="groupdetail__name">
                         {groupDescription}
@@ -75,8 +92,9 @@ export default function GroupDetails({ params }: { params: { groupsId: string } 
                     <div className="members__heading">
                         Members
                     </div>
-                    <button>
-                        Add Member
+                    <button className="member__button">
+                        <AiOutlinePlusCircle className="memberbutton__circle" />
+                        <span className="memberbutton__text">Add Member</span>
                     </button>
                 </div>
                 <div className="members__list">
