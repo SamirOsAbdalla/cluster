@@ -94,7 +94,7 @@ export default function LeaveGroupModal({ currentGroup, leaveGroupModal, setLeav
             </div>
             <div className="leave__buttons">
                 <button onClick={leaveGroup} className="leave__button leave">
-                    {loading ? <LoadingSpinner type="button" /> : <span>Leave</span>}
+                    {loading ? <LoadingSpinner type="button" /> : <span data-testid="modal__leavebutton">Leave</span>}
                 </button>
                 <button onClick={() => setLeaveGroupModal(false)} className="leave__button cancel">
                     Cancel
