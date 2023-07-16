@@ -136,6 +136,8 @@ export default function GroupDetails({ params }: { params: { groupsId: string } 
             {kickModalStatus == "open" &&
                 <KickMemberModal
                     groupId={params.groupsId}
+                    groupMembers={groupMembers}
+                    setGroupMembers={setGroupMembers}
                     kickedMemberEmail={kickModalMemberEmail}
                     kickedMemberName={kickModalMemberName}
                     setKickModalStatus={setKickModalStatus}
