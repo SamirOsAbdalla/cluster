@@ -17,6 +17,7 @@ export default function InvitationButton({ type, groupId, inbox, setInbox, invit
     const data = useSession()
     const userEmail = data?.data?.user.email
     const userName = data?.data?.user.name
+    const userPicture = data?.data?.user.picture
 
     const [loading, setLoading] = useState<boolean>(false)
 
@@ -57,7 +58,8 @@ export default function InvitationButton({ type, groupId, inbox, setInbox, invit
             const group = {
                 groupId,
                 userEmail,
-                userName
+                userName,
+                userPicture: userPicture || ""
             }
             //backend call to add member to group members list
             const addUserResp = await fetch("http://localhost:3000/api/groupmember/addGroupMember", {

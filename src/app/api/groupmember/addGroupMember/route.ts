@@ -1,8 +1,9 @@
-import GroupModel from "@/lib/mongo/models/GroupModel"
+import GroupModel, { MemberInterface } from "@/lib/mongo/models/GroupModel"
 import mongoose from "mongoose"
 interface RequestBody {
     userEmail: string,
     userName: string,
+    userPicture: string,
     groupId: string
 }
 
@@ -10,9 +11,10 @@ export async function POST(request: Request) {
     const body: RequestBody = await request.json()
 
     const id = new mongoose.Types.ObjectId(body.groupId)
-    const userObject = {
+    const userObject: MemberInterface = {
         memberEmail: body.userEmail,
-        memberName: body.userName
+        memberName: body.userName,
+        profilePicture: body.userPicture
     }
     const response = await GroupModel.findByIdAndUpdate(id,
         { $push: { members: userObject } })

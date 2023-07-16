@@ -6,6 +6,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .groupdetails__container {
@@ -48,6 +49,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
     justify-content: center;
 }
 
@@ -68,10 +70,18 @@
     flex-direction: row;
     align-items: center;
     padding: 6px 12px;
-    max-width: 100px;
+    max-width: 120px;
 }
 
 .memberbutton__circle,
 .memberbutton__text {
     font-size: clamp(10px, .7em, .8em)
+}
+
+.members__list {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    max-width: 100%;
+    flex-wrap: wrap;
 }

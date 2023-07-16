@@ -31,7 +31,7 @@ export default function GroupTable() {
         const fetchGroups = async () => {
 
 
-            let currentCreator: MemberInterface = {
+            let currentCreator: Omit<MemberInterface, "profilePicture"> = {
                 memberEmail: creatorEmail,
                 memberName: creatorName
             }
@@ -70,19 +70,9 @@ export default function GroupTable() {
     const handleLeaveClick = (group: GroupInterface, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.stopPropagation()
         setModalOpen(false)
-        if (currentGroupModal && !(group._id == currentGroupModal._id)) {
-            setLeaveGroupModal(true)
-            setCurrentGroupModal(group)
-        } else if (currentGroupModal && (group._id == currentGroupModal._id)) {
-            if (leaveGroupModal) {
-                setLeaveGroupModal(false)
-            } else {
-                setLeaveGroupModal(true)
-            }
-        } else {
-            setCurrentGroupModal(group)
-            setLeaveGroupModal(true)
-        }
+        setCurrentGroupModal(group)
+        setLeaveGroupModal(true)
+
     }
 
     //account for event bubbling in click
@@ -120,7 +110,7 @@ export default function GroupTable() {
                         <button className="new__group__button" onClick={(e) => {
                             const modalStatus = modalOpen
                             setModalOpen(!modalStatus)
-
+                            setLeaveGroupModal(false)
                         }}>
                             <AiOutlinePlusCircle />
                             <span>New Group</span>

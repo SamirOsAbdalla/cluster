@@ -33,6 +33,7 @@ export default function NewGroupModal({ modalOpen, setModalOpen, groups,
     const data = useSession()
     const creatorEmail = data?.data?.user.email
     const creatorName = data?.data?.user.name
+    const creatorPicture = data?.data?.user.picture
     const [loading, setLoading] = useState<boolean>(false)
     const [groupName, setGroupName] = useState<string>("")
     const [groupDescription, setGroupDescription] = useState<string>("")
@@ -43,15 +44,15 @@ export default function NewGroupModal({ modalOpen, setModalOpen, groups,
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        if (!(creatorEmail || creatorName)) {
+        if (!creatorEmail || !creatorName) {
             return;
         }
         else {
             setLoading(true)
             const creatorObject: MemberInterface = {
                 memberEmail: creatorEmail as string,
-                memberName: creatorName as string
-
+                memberName: creatorName as string,
+                profilePicture: creatorPicture || ""
             }
             let allMembers: MemberInterface[] = [];
             allMembers.push(creatorObject)

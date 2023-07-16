@@ -7,12 +7,14 @@ import { FcDataEncryption } from 'react-icons/fc';
 
 export interface MemberInterface {
     memberEmail: string;
-    memberName: string
+    memberName: string;
+    profilePicture?: string
 }
 
 export const memberSchema = new Schema<MemberInterface>({
     memberEmail: { type: String, required: true },
     memberName: { type: String, required: true },
+    profilePicture: { type: String, required: false, default: "" }
 })
 
 
@@ -21,7 +23,7 @@ export interface GroupInterface {
     name: string;
     creator: MemberInterface;
     description: string;
-    members: string[];
+    members: MemberInterface[];
     dateCreated: Date;
 }
 
