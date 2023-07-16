@@ -1,0 +1,62 @@
+.invitemodal__wrapper {
+    position: absolute;
+    padding: 2em;
+    background-color: aquamarine;
+    width: 90%;
+    max-width: 300px;
+    display: flex;
+}
+
+.invitemodal__form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.invitemodal__top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+.invitemodal__form input {
+    padding: .5em;
+}
+
+.invitemodal__invitedlist {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1em 0em
+}
+
+.invitemodal__add {
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: .5em;
+    padding: .3em .4em;
+}
+
+.invitemodal__close {
+    align-self: flex-end;
+    position: relative;
+    top: -1.2em;
+    cursor: pointer
+}
+
+.invitemodal__buttons {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 1em;
+    padding-top: 1em;
+}
+
+.invitemodal__button {
+    cursor: pointer
+}

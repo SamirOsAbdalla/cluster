@@ -19,8 +19,8 @@ export async function POST(request: Request) {
         groupId: body.groupId,
     }
     let members = body.addedMembers
-    members.forEach(async (member) => {
-        const response = await InboxModel.findOneAndUpdate({ userEmail: member }, { $push: { inboxItems: inboxItemObject } })
+    members.forEach(async (memberEmail) => {
+        const response = await InboxModel.findOneAndUpdate({ userEmail: memberEmail }, { $push: { inboxItems: inboxItemObject } })
     })
 
     return new Response(JSON.stringify({ msg: "Invites sent" }))

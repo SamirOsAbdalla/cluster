@@ -16,15 +16,20 @@ interface Props {
     setKickModalStatus: Dispatch<SetStateAction<"open" | "closed">>,
     setKickModalMemberName: Dispatch<SetStateAction<string>>
     setKickModalMemberEmail: Dispatch<SetStateAction<string>>
+    setInviteMemberModalStatus?: Dispatch<SetStateAction<"open" | "closed">>
 }
 export default function MemberCard({
     setKickModalMemberEmail, setKickModalMemberName, memberName,
     memberEmail, memberProfilePicture, isProjectCreator,
-    currentUserEmail, setKickModalStatus }: Props) {
+    currentUserEmail, setKickModalStatus, setInviteMemberModalStatus }: Props) {
     const session = useSession()
 
     const generateKickMemberModal = () => {
         setKickModalStatus("open")
+        if (setInviteMemberModalStatus) {
+            setInviteMemberModalStatus("closed")
+        }
+
         setKickModalMemberName(memberName)
         setKickModalMemberEmail(memberEmail)
     }
