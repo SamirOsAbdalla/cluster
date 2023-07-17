@@ -2,4 +2,11 @@
     padding: 2em;
     position: absolute;
     background-color: dimgray;
+    top: 0em;
+    left: 0em;
+    right: 0em;
+    bottom: 0em;
+    margin: auto;
+    max-width: min(300px, 70vw);
+    height: fit-content
 }

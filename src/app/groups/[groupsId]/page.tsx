@@ -15,6 +15,7 @@ import MembersSection from '@/components/MembersSection/MembersSection'
 export default function GroupDetails({ params }: { params: { groupsId: string } }) {
     const session = useSession()
     const userEmail = session.data?.user.email
+    const userName = session.data?.user.name
     const [groupName, setGroupName] = useState<string>("")
     const [groupDescription, setGroupDescription] = useState<string>("")
     const [groupMembers, setGroupMembers] = useState<MemberInterface[]>([])
@@ -95,10 +96,12 @@ export default function GroupDetails({ params }: { params: { groupsId: string } 
             </div>
             <MembersSection
                 groupCreatorEmail={groupCreatorEmail.current}
+                groupName={groupName}
                 userEmail={userEmail}
                 groupMembers={groupMembers}
                 setGroupMembers={setGroupMembers}
                 groupId={params.groupsId}
+                userName={userName}
             />
 
             <div className="groupdetail__tables">

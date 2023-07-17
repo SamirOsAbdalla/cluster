@@ -1,3 +1,5 @@
+
+
 import "./MembersSection.css"
 
 import React from 'react'
@@ -10,12 +12,15 @@ import { Dispatch, SetStateAction } from "react"
 import InviteMemberModal from "../InviteMemberModal/InviteMemberModal"
 interface Props {
     groupCreatorEmail: string;
-    userEmail?: string
+    userEmail?: string;
+    groupName: string
     groupMembers: MemberInterface[]
     setGroupMembers: Dispatch<SetStateAction<MemberInterface[]>>
-    groupId: string
+    groupId: string;
+    userName?: string
 }
-export default function MembersSection({ groupId, groupCreatorEmail, userEmail, groupMembers, setGroupMembers }: Props) {
+export default function MembersSection({ groupName, groupId, groupCreatorEmail,
+    userEmail, groupMembers, setGroupMembers, userName }: Props) {
     const [inviteMemberModalStatus, setInviteMemberModalStatus] = useState<"open" | "closed">("closed")
     const [kickModalStatus, setKickModalStatus] = useState<"open" | "closed">("closed")
     const [kickModalMemberName, setKickModalMemberName] = useState<string>("")
@@ -41,9 +46,13 @@ export default function MembersSection({ groupId, groupCreatorEmail, userEmail, 
                 </div>
                 {inviteMemberModalStatus == "open" &&
                     <InviteMemberModal
+                        groupName={groupName}
+                        groupId={groupId}
+                        userEmail={userEmail}
                         groupMembers={groupMembers}
                         inviteMemberModalStatus={inviteMemberModalStatus}
                         setInviteMemberModalStatus={setInviteMemberModalStatus}
+                        userName={userName}
                     />
                 }
                 <div className="members__list">

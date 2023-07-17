@@ -1,5 +1,6 @@
 .memberssection__wrapper {
     width: 100%;
+    position: relative;
 }
 
 .members__section {

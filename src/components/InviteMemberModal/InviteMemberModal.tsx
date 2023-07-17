@@ -1,3 +1,4 @@
+"use client"
 import "./InviteMemberModal.css"
 import { AiOutlinePlusCircle } from "react-icons/ai"
 import { AiFillCloseCircle } from "react-icons/ai";
@@ -10,8 +11,13 @@ interface Props {
     groupMembers: MemberInterface[]
     inviteMemberModalStatus: "open" | "closed"
     setInviteMemberModalStatus: Dispatch<SetStateAction<"open" | "closed">>
+    groupName: string,
+    userEmail?: string,
+    userName?: string
+    groupId: string
 }
-export default function InviteMemberModal({ groupMembers, inviteMemberModalStatus, setInviteMemberModalStatus }: Props) {
+export default function InviteMemberModal({ groupName, userEmail, groupId,
+    groupMembers, inviteMemberModalStatus, setInviteMemberModalStatus, userName }: Props) {
     const [inputInvitedMember, setInputInvitedMember] = useState<string>("")
     const [invitedMembers, setInvitedmembers] = useState<Set<string>>(new Set())
     const addInvitedMember = () => {
@@ -25,12 +31,40 @@ export default function InviteMemberModal({ groupMembers, inviteMemberModalStatu
         setInputInvitedMember("")
         setInvitedmembers(newSet)
     }
-    const inviteMembers = async () => {
+    console.log(userEmail)
+    const inviteMembers = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        if (invitedMembers.size > 0) {
 
+            const membersArray = Array.from(invitedMembers)
+            const inviteBody = {
+                groupName,
+                groupId,
+                senderName: userName,
+                senderEmail: userEmail,
+                addedMembers: membersArray
+            }
+
+            const inviteResponse = await fetch("http://localhost:3000/api/inbox/sendInvites", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(inviteBody),
+            })
+
+            const inviteResponseJSON = await inviteResponse.json()
+            if (inviteResponseJSON) {
+                setInviteMemberModalStatus("closed")
+            } else {
+                //throw error
+            }
+        }
     }
     return (
         <div className="invitemodal__wrapper">
-            <form className="invitemodal__form">
+            <form onSubmit={inviteMembers} className="invitemodal__form">
                 <AiFillCloseCircle onClick={() => setInviteMemberModalStatus("closed")} className="invitemodal__close" />
                 <div className="invitemodal__top">
                     <h2>Add member</h2>
@@ -51,7 +85,6 @@ export default function InviteMemberModal({ groupMembers, inviteMemberModalStatu
                     placeholder="janedoe@gmail.com"
                     value={inputInvitedMember}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputInvitedMember(e.target.value)}
-                    required
                 />
 
                 <div className="invitemodal__buttons">

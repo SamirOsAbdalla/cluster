@@ -91,8 +91,8 @@ export default function NewGroupModal({ modalOpen, setModalOpen, groups,
             if (addedMembers) {
 
                 const inboxBody = {
-                    groupCreator: creatorName,
-                    groupCreatorEmail: creatorEmail,
+                    senderName: creatorName,
+                    senderEmail: creatorEmail,
                     addedMembers: Array.from(addedMembers),
                     groupName: groupName,
                     groupId: addedGroup._id
