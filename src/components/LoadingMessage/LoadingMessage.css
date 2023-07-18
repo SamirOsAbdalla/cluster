@@ -9,7 +9,7 @@
 .loadinggroup__message {
     text-align: center;
     font-size: min(40px, 10vw);
-
+    color: #d0dafa
 }
 
 .loading__circles {
@@ -18,12 +18,13 @@
     align-self: flex-end;
     position: relative;
     top: -.5em;
+
 }
 
 .loading__circle {
     width: 10px;
     height: 10px;
-    background-color: black;
+    background-color: #d0dafa;
     border-radius: 50%;
     animation-name: jumpingDots;
     animation-duration: 1.4s;

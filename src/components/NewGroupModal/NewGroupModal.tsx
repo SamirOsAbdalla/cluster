@@ -117,9 +117,13 @@ export default function NewGroupModal({ modalOpen, setModalOpen, groups,
     }
     return (
         <div className={`modal__wrapper ${modalOpen ? "modal__open" : ""}`}>
-            <AiFillCloseCircle className="close__circle" onClick={() => {
-                setModalOpen(!modalOpen)
-            }} />
+            <div className="newgroupmodal__heading">
+                <p>Create Group</p>
+                <AiFillCloseCircle className="close__circle" onClick={() => {
+                    setModalOpen(!modalOpen)
+                }} />
+            </div>
+
             <form onSubmit={handleSubmit}>
                 <div className="group__form__top">
                     <div className="form__section">

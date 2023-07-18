@@ -19,6 +19,7 @@ import LeaveGroupModal from '../LeaveGroupModal/LeaveGroupModal'
 import TablePagination from '../TablePagination/TablePagination'
 import LoadingGroup from '../LoadingGroup/LoadingGroup'
 import EmptyPage from '../EmptyPage/EmptyPage'
+import EditGroupModal from '../EditGroupModal/EditGroupModal'
 export default function GroupTable() {
     const data = useSession()
     const router = useRouter()
@@ -60,6 +61,7 @@ export default function GroupTable() {
     const [leaveGroupModal, setLeaveGroupModal] = useState<boolean>(false)
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [loading, setLoading] = useState<boolean>(true)
+    const [editGroupModalStatus, setEditGroupModalStatus] = useState<"open" | "closed">("closed")
     const groupsPerPage = 5;
     const totalNumberOfPages = Math.ceil(groups.length / groupsPerPage)
     const lastIndex = currentPage * groupsPerPage;
@@ -71,10 +73,17 @@ export default function GroupTable() {
         event.stopPropagation()
         setModalOpen(false)
         setCurrentGroupModal(group)
+        setEditGroupModalStatus("closed")
         setLeaveGroupModal(true)
 
     }
-
+    const handleEditClick = (group: GroupInterface, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        event.stopPropagation()
+        setModalOpen(false)
+        setCurrentGroupModal(group)
+        setLeaveGroupModal(false)
+        setEditGroupModalStatus("open")
+    }
     //account for event bubbling in click
     const navigateToGroupsPage = (gId: string) => {
 
@@ -82,7 +91,6 @@ export default function GroupTable() {
     }
     return (
         <div className="table__wrapper">
-
             {modalOpen && <NewGroupModal
                 currentPage={currentPage}
                 groupsPerPage={groupsPerPage}
@@ -100,8 +108,16 @@ export default function GroupTable() {
                 setGroups={setGroups}
                 leaveGroupModal={leaveGroupModal}
                 setLeaveGroupModal={setLeaveGroupModal}
-                currentGroup={currentGroupModal} />}
-
+                currentGroup={currentGroupModal}
+            />}
+            {editGroupModalStatus == "open" &&
+                <EditGroupModal
+                    editGroupModalStatus={editGroupModalStatus}
+                    setEditGroupModalStatus={setEditGroupModalStatus}
+                    currentGroup={currentGroupModal}
+                    groups={groups}
+                    setGroups={setGroups}
+                />}
             {loading && <LoadingGroup />}
             {!loading && groups.length > 0 &&
                 <>
@@ -135,9 +151,14 @@ export default function GroupTable() {
                                             <td data-cell="creator: ">{group.creator.memberName}</td>
                                             <td >
                                                 <span className="action__cell td__right">
-                                                    <button data-testid="grouptable__leave" onClick={(e) => handleLeaveClick(group, e)} className="action__logo">
+                                                    <button data-testid="grouptable__leave" onClick={(e) => handleLeaveClick(group, e)} className="action__button">
                                                         Leave
                                                     </button>
+                                                    {creatorEmail == group.creator.memberEmail &&
+                                                        <button className="action__button" onClick={(e) => handleEditClick(group, e)}>
+                                                            Edit
+                                                        </button>
+                                                    }
 
                                                 </span>
                                             </td>
@@ -147,6 +168,7 @@ export default function GroupTable() {
                             }
                         </tbody>
                     </table>
+
                     <TablePagination
                         currentPage={currentPage}
                         setCurrentPage={setCurrentPage}

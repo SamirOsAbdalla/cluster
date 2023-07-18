@@ -1,12 +1,14 @@
 .groupdetails__wrapper {
     padding-top: 5em;
-    margin-left: 5em;
+    margin-left: 4.85em;
+    padding-left: .15em;
     width: calc(100% - 5em);
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     position: relative;
+    min-height: 100vh;
+    background-color: #0C0032
 }
 
 .groupdetails__container {
@@ -39,6 +41,7 @@
 .groupdetail__heading {
     font-size: clamp(2em, 8vw, 3em);
     text-align: center;
+    color: #d0dafa;
 }
 
 .pencil {

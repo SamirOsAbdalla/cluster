@@ -1,6 +1,7 @@
 import './globals.css'
 import Providers from '@/components/Providers'
 import Sidebar from "../components/Sidebar/Sidebar"
+
 import {
   QueryClient,
   QueryClientProvider,
@@ -20,7 +21,7 @@ export default function RootLayout({
   const queryClient = new QueryClient()
   return (
     <html lang="en">
-      <body>
+      <body >
 
         <Providers>
 

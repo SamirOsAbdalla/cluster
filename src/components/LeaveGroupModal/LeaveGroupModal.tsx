@@ -3,7 +3,7 @@ import { GroupInterface } from "@/lib/mongo/models/GroupModel"
 import { Dispatch, SetStateAction } from "react"
 import { AiFillCloseCircle } from "react-icons/ai";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import React from 'react'
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
@@ -19,6 +19,7 @@ interface Props {
 }
 export default function LeaveGroupModal({ currentGroup, leaveGroupModal, setLeaveGroupModal,
     groups, setGroups, currentPage, setCurrentPage, groupsPerPage }: Props) {
+
     let typecastedGroup = currentGroup as GroupInterface
     const data = useSession()
     const userEmail = data?.data?.user.email

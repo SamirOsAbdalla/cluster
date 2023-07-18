@@ -11,6 +11,11 @@
     z-index: 9998
 }
 
+.newgroupmodal__heading {
+    display: flex;
+    justify-content: space-between;
+}
+
 .close__circle {
     align-self: flex-end;
     position: relative;

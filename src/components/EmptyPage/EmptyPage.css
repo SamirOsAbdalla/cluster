@@ -3,15 +3,16 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    width: 90%;
+    align-self: center;
     gap: 3em;
 }
 
 .satellite__wrapper {
     background: radial-gradient(circle at 18.7% 37.8%, rgb(250, 250, 250) 0%, rgb(193, 205, 210) 90%);
-    width: 75vw;
+    width: 65vw;
     max-width: 20em;
-    height: 75vw;
+    height: 65vw;
     max-height: 20em;
     border-radius: 50%;
     display: flex;
@@ -20,11 +21,19 @@
 
 }
 
+.emptypage__container h1 {
+    text-align: center;
+}
+
+.emptypage__container h1,
+.empty__message {
+    color: #d0dafa;
+}
 
 .satellite__container {
-    width: 70vw;
+    width: 60vw;
     max-width: 15em;
-    height: 70vw;
+    height: 60vw;
     max-height: 15em;
     border-radius: 50%;
     position: relative;
