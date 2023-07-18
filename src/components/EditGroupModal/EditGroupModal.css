@@ -1,0 +1,14 @@
+.editgroupmodal__wrapper {
+    position: absolute;
+    background-color: green;
+    padding: 1em;
+    z-index: 9998;
+}
+
+.editgroupmodal__close {
+    cursor: pointer;
+}
+
+.editgroupmodal__button {
+    cursor: pointer;
+}
