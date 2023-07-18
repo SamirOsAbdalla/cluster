@@ -182,9 +182,15 @@ export default function NewGroupModal({ modalOpen, setModalOpen, groups,
                         </div>
                     ))}
                 </div>
-                <button type="submit" className="new__group__button">
-                    {loading ? <LoadingSpinner type="button" /> : <span>Submit</span>}
-                </button>
+                <div className="newgroup__buttons">
+                    <button type="submit" className="new__group__button">
+                        {loading ? <LoadingSpinner type="button" /> : <span>Submit</span>}
+                    </button>
+                    <button onClick={() => setModalOpen(false)}>
+                        Cancel
+                    </button>
+                </div>
+
             </form>
         </div>
     )
