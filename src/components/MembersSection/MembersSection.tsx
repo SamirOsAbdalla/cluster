@@ -10,6 +10,7 @@ import { useState } from "react"
 import { MemberInterface } from "@/lib/mongo/models/GroupModel"
 import { Dispatch, SetStateAction } from "react"
 import InviteMemberModal from "../InviteMemberModal/InviteMemberModal"
+import { GrGroup } from "react-icons/gr"
 interface Props {
     groupCreatorEmail: string;
     userEmail?: string;
@@ -30,8 +31,12 @@ export default function MembersSection({ groupName, groupId, groupCreatorEmail,
         <div className="memberssection__wrapper">
             <div className="members__section">
                 <div className="members__section__container">
+                    <div className="memberssection__icon__container">
+                        <GrGroup className="memberssection__icon" />
+                    </div>
+
                     <div className="members__heading">
-                        Members
+                        Group Members
                     </div>
                     <button
                         onClick={() => {

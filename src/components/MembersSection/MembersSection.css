@@ -1,6 +1,11 @@
 .memberssection__wrapper {
-    width: 100%;
+    width: fit-content;
+    min-width: 200px;
+    max-width: 90%;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .members__section {
@@ -8,7 +13,17 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
+    padding: 2em;
     justify-content: center;
+    background-color: aquamarine;
+}
+
+.memberssection__icon__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .5em;
+    background-color: blue;
 }
 
 .members__section__container {
@@ -20,7 +35,8 @@
 }
 
 .members__heading {
-    font-size: clamp(2em, 8vw, 3em);
+    font-size: clamp(1em, 5vw, 1.2em);
+    color: #d0dafa
 }
 
 .member__button {
@@ -42,4 +58,5 @@
     gap: 1em;
     max-width: 100%;
     flex-wrap: wrap;
+    padding: 2em;
 }
