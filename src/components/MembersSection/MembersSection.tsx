@@ -26,10 +26,20 @@ export default function MembersSection({ groupName, groupId, groupCreatorEmail,
     const [kickModalStatus, setKickModalStatus] = useState<"open" | "closed">("closed")
     const [kickModalMemberName, setKickModalMemberName] = useState<string>("")
     const [kickModalMemberEmail, setKickModalMemberEmail] = useState<string>("")
-
+    const [showMemberButtonStatus, setShowMemberButtonStatus] = useState<"Show more" | "Show less">("Show less")
+    const toggleMemberButtonStatus = () => {
+        if (showMemberButtonStatus == "Show less") {
+            setShowMemberButtonStatus("Show more")
+            return
+        }
+        setShowMemberButtonStatus("Show less")
+    }
     return (
         <div className="memberssection__wrapper">
+
+
             <div className="members__section">
+
                 <div className="members__section__container">
                     <div className="memberssection__icon__container">
                         <GrGroup className="memberssection__icon" />
@@ -60,34 +70,41 @@ export default function MembersSection({ groupName, groupId, groupCreatorEmail,
                         userName={userName}
                     />
                 }
-                <div className="members__list">
-                    {
-                        groupCreatorEmail == userEmail ?
-                            groupMembers.map(member =>
-                                <MemberCard key={member.memberEmail}
-                                    setKickModalStatus={setKickModalStatus}
-                                    setKickModalMemberEmail={setKickModalMemberEmail}
-                                    kickModalStatus={kickModalStatus}
-                                    setKickModalMemberName={setKickModalMemberName}
-                                    memberEmail={member.memberEmail}
-                                    memberName={member.memberName}
-                                    memberProfilePicture={member.profilePicture}
-                                    currentUserEmail={userEmail}
-                                    isProjectCreator={true}
-                                    setInviteMemberModalStatus={setInviteMemberModalStatus}
-                                />) :
-                            groupMembers.map(member =>
-                                <MemberCard key={member.memberEmail}
-                                    setKickModalMemberEmail={setKickModalMemberEmail}
-                                    setKickModalMemberName={setKickModalMemberName}
-                                    kickModalStatus={kickModalStatus}
-                                    setKickModalStatus={setKickModalStatus}
-                                    memberEmail={member.memberEmail}
-                                    memberName={member.memberName}
-                                    memberProfilePicture={member.profilePicture}
-                                />)
-                    }
-                </div>
+                {showMemberButtonStatus == "Show less" &&
+                    <div className="members__list">
+                        {
+                            groupCreatorEmail == userEmail ?
+                                groupMembers.map(member =>
+                                    <MemberCard key={member.memberEmail}
+                                        setKickModalStatus={setKickModalStatus}
+                                        setKickModalMemberEmail={setKickModalMemberEmail}
+                                        kickModalStatus={kickModalStatus}
+                                        setKickModalMemberName={setKickModalMemberName}
+                                        memberEmail={member.memberEmail}
+                                        memberName={member.memberName}
+                                        memberProfilePicture={member.profilePicture}
+                                        currentUserEmail={userEmail}
+                                        isProjectCreator={true}
+                                        setInviteMemberModalStatus={setInviteMemberModalStatus}
+                                    />) :
+                                groupMembers.map(member =>
+                                    <MemberCard key={member.memberEmail}
+                                        setKickModalMemberEmail={setKickModalMemberEmail}
+                                        setKickModalMemberName={setKickModalMemberName}
+                                        kickModalStatus={kickModalStatus}
+                                        setKickModalStatus={setKickModalStatus}
+                                        memberEmail={member.memberEmail}
+                                        memberName={member.memberName}
+                                        memberProfilePicture={member.profilePicture}
+                                    />)
+                        }
+                    </div>}
+                {groupMembers.length > 0 &&
+                    <button onClick={toggleMemberButtonStatus} className="showmembers__button">
+                        {showMemberButtonStatus}
+                    </button>
+                }
+
             </div>
             {kickModalStatus == "open" &&
                 <KickMemberModal
@@ -99,6 +116,7 @@ export default function MembersSection({ groupName, groupId, groupCreatorEmail,
                     setKickModalStatus={setKickModalStatus}
                 />
             }
+
         </div>
     )
 }

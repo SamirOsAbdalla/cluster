@@ -3,6 +3,7 @@
     min-width: 200px;
     max-width: 90%;
     position: relative;
+    flex-direction: column;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,7 +14,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    padding: 2em;
+    padding: 1em;
     justify-content: center;
     background-color: aquamarine;
 }
@@ -58,5 +59,4 @@
     gap: 1em;
     max-width: 100%;
     flex-wrap: wrap;
-    padding: 2em;
 }
