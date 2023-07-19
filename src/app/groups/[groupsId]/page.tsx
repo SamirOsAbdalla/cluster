@@ -63,35 +63,11 @@ export default function GroupDetails({ params }: { params: { groupsId: string } 
     return (
         <div className="groupdetails__wrapper">
             <div className="groupdetails__container">
-                <div className="groupdetail__container">
-                    <div className="groupdetails">
-                        <div className="groupdetail__heading">
-                            Group Name
-                        </div>
-                        {groupCreatorEmail.current == userEmail ?
-                            <BsPencil className="pencil" />
-                            :
-                            <></>
-                        }
-                    </div>
-                    <div className="groupdetail__name">
-                        {groupName}
-                    </div>
-                </div>
-                <div className="groupdetail__container">
-                    <div className="groupdetails">
-                        <div className="groupdetail__heading">
-                            Group Description
-                        </div>
-                        {groupCreatorEmail.current == userEmail ?
-                            <BsPencil className="pencil" />
-                            :
-                            <></>
-                        }
-                    </div>
-                    <div className="groupdetail__name">
-                        {groupDescription}
-                    </div>
+                <h1>
+                    {groupName}
+                </h1>
+                <div>
+                    {groupDescription}
                 </div>
             </div>
             <MembersSection

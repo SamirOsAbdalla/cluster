@@ -1,5 +1,5 @@
 .groupdetails__wrapper {
-    padding-top: 5em;
+    padding-top: 2em;
     margin-left: 4.85em;
     padding-left: .15em;
     width: calc(100% - 5em);
@@ -13,37 +13,21 @@
 
 .groupdetails__container {
     display: flex;
-    flex-direction: row;
-    gap: 5em;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    padding-bottom: 5em;
-}
-
-.groupdetails {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 1em;
-    padding-bottom: 1em;
-    flex-wrap: wrap;
-}
-
-.groupdetail__container {
-    display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-}
-
-.groupdetail__heading {
-    font-size: clamp(2em, 8vw, 3em);
-    text-align: center;
+    flex-wrap: wrap;
+    padding-left: 6em;
+    gap: 1em;
+    padding-bottom: 2em;
     color: #d0dafa;
+    width: 100%;
 }
 
-.pencil {
-    font-size: clamp(1.4em, 3vw, 1.7em);
+@media screen and (max-width:600px) {
+    .groupdetails__container {
+        padding-left: 0em;
+        align-items: flex-start;
+        width: 80%;
+    }
 }

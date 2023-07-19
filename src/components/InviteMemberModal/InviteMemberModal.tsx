@@ -31,7 +31,6 @@ export default function InviteMemberModal({ groupName, userEmail, groupId,
         setInputInvitedMember("")
         setInvitedmembers(newSet)
     }
-    console.log(userEmail)
     const inviteMembers = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (invitedMembers.size > 0) {
