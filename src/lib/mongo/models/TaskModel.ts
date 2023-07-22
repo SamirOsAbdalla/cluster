@@ -1,7 +1,7 @@
 import { Schema, model, connect, models } from 'mongoose';
 import { MemberInterface, memberSchema } from './GroupModel';
 
-export type TaskPriority = "low" | "medium" | "high" | "urgent"
+export type TaskPriority = "Low" | "Medium" | "High" | "Urgent"
 export interface TaskInterface {
     groupId: string;
     name: string;

@@ -144,7 +144,7 @@ export default function GroupTable() {
                         <tbody>
                             {
                                 displayedGroups.map((group: GroupInterface) => (
-                                    <React.Fragment key={group.dateCreated as any}>
+                                    <React.Fragment key={group._id}>
                                         <tr onClick={() => navigateToGroupsPage(group._id as string)}>
                                             <td data-cell="name: ">{group.name}</td>
                                             <td data-cell="description: " className="description__cell">{group.description}</td>

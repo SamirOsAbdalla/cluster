@@ -1,0 +1,70 @@
+.tasktable__wrapper {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    position: relative;
+}
+
+.tasktable__header {
+    padding-left: 3em;
+    max-width: 1000px;
+    display: flex;
+    gap: 2em;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.tasktable__body {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    max-width: 1000px;
+}
+
+.tasktable__table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0px 10px 10px #ccc;
+
+}
+
+.tasktable__table th,
+.tasktable__table td {
+    padding: 1rem;
+}
+
+/* .tasktable__expand {
+    width: 100%;
+} */
+
+th {
+    text-align: center;
+}
+
+.tasktable__table td {
+    text-overflow: ellipsis;
+    text-align: center;
+}
+
+@media screen and (max-width:650px) {
+    th {
+        display: none;
+
+    }
+
+    .tasktable__table td {
+        display: block;
+        padding: .5rem 1rem;
+
+    }
+
+    .tasktable__table td::before {
+        content: attr(data-cell);
+        font-weight: 700;
+        text-align: left;
+        text-transform: capitalize;
+    }
+}

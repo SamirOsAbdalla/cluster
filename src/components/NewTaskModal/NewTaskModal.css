@@ -1,0 +1,26 @@
+.ntmodal__wrapper {
+    position: absolute;
+    background-color: rgb(60, 58, 55);
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    align-items: center;
+}
+
+.ntmodal__form {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 2em;
+}
+
+.ntmodal__close {
+    cursor: pointer;
+    align-self: flex-end
+}
+
+.ntmodal__urgent:focus {
+    background-color: brown
+}

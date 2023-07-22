@@ -12,6 +12,7 @@ import MemberCard from '@/components/MemberCard/MemberCard'
 import KickMemberModal from '@/components/KickMemberModal/KickMemberModal'
 import InviteMemberModal from '@/components/InviteMemberModal/InviteMemberModal'
 import MembersSection from '@/components/MembersSection/MembersSection'
+import TaskTable from '@/components/TaskTable/TaskTable'
 export default function GroupDetails({ params }: { params: { groupsId: string } }) {
     const session = useSession()
     const userEmail = session.data?.user.email
@@ -55,6 +56,7 @@ export default function GroupDetails({ params }: { params: { groupsId: string } 
         queryFn: fetchCurrentGroup,
         enabled: !!params.groupsId
     })
+
     //function that fetches all tasks with current group id
     const fetchCurrentGroupTasks = async () => {
 
@@ -79,16 +81,9 @@ export default function GroupDetails({ params }: { params: { groupsId: string } 
                 groupId={params.groupsId}
                 userName={userName}
             />
-
-            <div className="groupdetail__tables">
-                <div>
-                    Task Table
-                </div>
-                <div>
-                    Group History
-                </div>
-            </div>
-
+            <TaskTable
+                groupId={params.groupsId}
+            />
         </div>
     )
 }

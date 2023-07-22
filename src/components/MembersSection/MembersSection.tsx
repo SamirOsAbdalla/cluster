@@ -26,7 +26,7 @@ export default function MembersSection({ groupName, groupId, groupCreatorEmail,
     const [kickModalStatus, setKickModalStatus] = useState<"open" | "closed">("closed")
     const [kickModalMemberName, setKickModalMemberName] = useState<string>("")
     const [kickModalMemberEmail, setKickModalMemberEmail] = useState<string>("")
-    const [showMemberButtonStatus, setShowMemberButtonStatus] = useState<"Show more" | "Show less">("Show less")
+    const [showMemberButtonStatus, setShowMemberButtonStatus] = useState<"Show more" | "Show less">("Show more")
     const toggleMemberButtonStatus = () => {
         if (showMemberButtonStatus == "Show less") {
             setShowMemberButtonStatus("Show more")
