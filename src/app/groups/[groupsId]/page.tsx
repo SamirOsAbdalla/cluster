@@ -13,6 +13,7 @@ import KickMemberModal from '@/components/KickMemberModal/KickMemberModal'
 import InviteMemberModal from '@/components/InviteMemberModal/InviteMemberModal'
 import MembersSection from '@/components/MembersSection/MembersSection'
 import TaskTable from '@/components/TaskTable/TaskTable'
+import { useEffect } from 'react'
 export default function GroupDetails({ params }: { params: { groupsId: string } }) {
     const session = useSession()
     const userEmail = session.data?.user.email
@@ -23,44 +24,46 @@ export default function GroupDetails({ params }: { params: { groupsId: string } 
     const groupCreatorEmail = useRef("")
     const router = useRouter()
 
-    //function that fetches current group information by id
-    const fetchCurrentGroup = async () => {
+    useEffect(() => {
+        //function that fetches current group information by id
+        const fetchCurrentGroup = async () => {
+            if (!userName || !params.groupsId) {
+                return;
+            }
+            const groupBody = {
+                groupId: params.groupsId
+            }
 
-        const groupBody = {
-            groupId: params.groupsId
+            const groupResponse = await fetch("http://localhost:3000/api/groups/fetchGroupById", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(groupBody),
+            })
+
+            const groupResponseJSON = await groupResponse.json()
+
+            if (groupResponseJSON) {
+                setGroupName(groupResponseJSON.name)
+                setGroupDescription(groupResponseJSON.description)
+                groupCreatorEmail.current = groupResponseJSON.creator.memberEmail
+                setGroupMembers(groupResponseJSON.members)
+
+            } else {
+                //throw error
+            }
         }
+        fetchCurrentGroup()
+    }, [params.groupsId])
 
-        const groupResponse = await fetch("http://localhost:3000/api/groups/fetchGroupById", {
-            method: "POST",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(groupBody),
-        })
+    // const groupQuery = useQuery({
+    //     queryKey: ['group'],
+    //     queryFn: fetchCurrentGroup,
+    //     enabled: !!params.groupsId
+    // })
 
-        const groupResponseJSON: GroupInterface | null = await groupResponse.json()
-
-        if (groupResponseJSON) {
-            setGroupName(groupResponseJSON.name)
-            setGroupDescription(groupResponseJSON.description)
-            groupCreatorEmail.current = groupResponseJSON.creator.memberEmail
-            setGroupMembers(groupResponseJSON.members)
-            return groupResponseJSON
-        } else {
-            //throw error
-        }
-    }
-    const groupQuery = useQuery({
-        queryKey: ['group'],
-        queryFn: fetchCurrentGroup,
-        enabled: !!params.groupsId
-    })
-
-    //function that fetches all tasks with current group id
-    const fetchCurrentGroupTasks = async () => {
-
-    }
 
     return (
         <div className="groupdetails__wrapper">

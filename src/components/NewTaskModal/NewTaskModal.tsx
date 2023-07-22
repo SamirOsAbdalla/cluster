@@ -11,11 +11,13 @@ import { useSession } from 'next-auth/react';
 
 interface Props {
     setNewTaskModalStatus: Dispatch<SetStateAction<"open" | "closed">>
-    groupId: string
+    groupId: string,
+    tasks: TaskInterface[]
+    setTasks: Dispatch<SetStateAction<TaskInterface[]>>
 }
 
 
-export default function NewTaskModal({ setNewTaskModalStatus, groupId }: Props) {
+export default function NewTaskModal({ setNewTaskModalStatus, groupId, tasks, setTasks }: Props) {
 
     const [newTaskNameInput, setNewTaskNameInput] = useState<string>("")
     const [newTaskDescriptionInput, setNewTaskDescriptionInput] = useState<string>("")
@@ -50,11 +52,13 @@ export default function NewTaskModal({ setNewTaskModalStatus, groupId }: Props) 
         })
 
         const newTaskResponseJSON = await newTaskResponse.json()
-        setNewTaskModalStatus("closed")
+
         if (!newTaskResponseJSON) {
             //throw error
         }
+
         setNewTaskModalStatus("closed")
+
     }
     return (
         <div className="ntmodal__wrapper">
