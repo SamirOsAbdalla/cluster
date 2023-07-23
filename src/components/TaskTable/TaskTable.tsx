@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query'
 import { TaskInterface } from "@/lib/mongo/models/TaskModel"
 import { useEffect } from "react"
 import { useSession } from "next-auth/react"
+import DeleteTaskModal from "../DeleteTaskModal/DeleteTaskModal"
 interface Props {
     groupId: string
 }
@@ -45,13 +46,19 @@ export default function TaskTable({ groupId }: Props) {
     }, [userName])
 
 
+    const handleDeleteClick = (task: TaskInterface) => {
+        setNewTaskModalStatus("closed")
+        setDeleteTaskModalStatus("open")
+        setCurrentDeleteTask(task)
+    }
     // const taskQuery = useQuery({
     //     queryKey: ['task'],
     //     queryFn: fetchCurrentTasks
     // })
     const [newTaskModalStatus, setNewTaskModalStatus] = useState<"open" | "closed">("closed")
     const [tasks, setTasks] = useState<TaskInterface[]>([])
-
+    const [deleteTaskModalStatus, setDeleteTaskModalStatus] = useState<"open" | "closed">("closed")
+    const [currentDeleteTask, setCurrentDeleteTask] = useState<TaskInterface | null>(null)
     return (
         <main className="tasktable__wrapper">
             <section className="tasktable__header">
@@ -64,6 +71,15 @@ export default function TaskTable({ groupId }: Props) {
                     tasks={tasks}
                     setTasks={setTasks}
                     groupId={groupId}
+                />
+            }
+            {deleteTaskModalStatus == "open" && currentDeleteTask &&
+                <DeleteTaskModal
+                    taskId={currentDeleteTask._id}
+                    taskName={currentDeleteTask.name}
+                    setDeleteTaskModalStatus={setDeleteTaskModalStatus}
+                    tasks={tasks}
+                    setTasks={setTasks}
                 />
             }
             <section className="tasktable__body">
@@ -91,7 +107,7 @@ export default function TaskTable({ groupId }: Props) {
                                         </button>
                                     </td>
                                     <td>
-                                        <button>
+                                        <button onClick={() => handleDeleteClick(task)}>
                                             Delete
                                         </button>
                                     </td>
