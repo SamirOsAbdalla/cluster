@@ -30,6 +30,7 @@ export default function GroupDetails({ params }: { params: { groupsId: string } 
             if (!userName || !params.groupsId) {
                 return;
             }
+
             const groupBody = {
                 groupId: params.groupsId
             }
@@ -56,7 +57,7 @@ export default function GroupDetails({ params }: { params: { groupsId: string } 
             }
         }
         fetchCurrentGroup()
-    }, [params.groupsId])
+    }, [userName])
 
     // const groupQuery = useQuery({
     //     queryKey: ['group'],
@@ -86,6 +87,7 @@ export default function GroupDetails({ params }: { params: { groupsId: string } 
             />
             <TaskTable
                 groupId={params.groupsId}
+                groupMembers={groupMembers}
             />
         </div>
     )

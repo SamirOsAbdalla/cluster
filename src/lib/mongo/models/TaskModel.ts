@@ -10,6 +10,7 @@ export interface TaskInterface {
     creator: MemberInterface;
     dateCreated: Date;
     isUrgent: boolean;
+    members: MemberInterface[]
     _id?: string
 }
 const taskSchema = new Schema<TaskInterface>({
@@ -20,6 +21,7 @@ const taskSchema = new Schema<TaskInterface>({
     isUrgent: { type: Boolean, default: false },
     priority: { type: String, required: true },
     groupId: { type: String, required: true },
+    members: { type: [memberSchema], required: true }
 })
 
 const TaskModel = models.Task || model<TaskInterface>("Task", taskSchema)

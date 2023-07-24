@@ -1,0 +1,11 @@
+.tm__wrapper {
+    padding: .5em;
+}
+
+.tm__wrapper__inactive {
+    background-color: aquamarine;
+}
+
+.tm__wrapper__active {
+    background-color: aliceblue;
+}

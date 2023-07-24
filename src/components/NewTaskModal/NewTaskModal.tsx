@@ -7,6 +7,8 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import { Dispatch, SetStateAction } from 'react';
 import { TaskInterface, TaskPriority } from '@/lib/mongo/models/TaskModel';
 import { useSession } from 'next-auth/react';
+import { MemberInterface } from '@/lib/mongo/models/GroupModel';
+import TaskMemberAdd from '../TaskMemberAdd/TaskMemberAdd';
 
 
 interface Props {
@@ -14,21 +16,29 @@ interface Props {
     groupId: string,
     tasks: TaskInterface[]
     setTasks: Dispatch<SetStateAction<TaskInterface[]>>
+    groupMembers: MemberInterface[]
 }
 
 
-export default function NewTaskModal({ setNewTaskModalStatus, groupId, tasks, setTasks }: Props) {
+export default function NewTaskModal({ setNewTaskModalStatus, groupId, tasks, setTasks, groupMembers }: Props) {
 
     const [newTaskNameInput, setNewTaskNameInput] = useState<string>("")
     const [newTaskDescriptionInput, setNewTaskDescriptionInput] = useState<string>("")
     const [taskPriority, setTaskPriority] = useState<TaskPriority>("Medium")
-
+    const [addedMembers, setAddedMembers] = useState<MemberInterface[]>([])
     const session = useSession()
     const userEmail = session.data?.user.email
     const userName = session.data?.user.name
 
     const createNewTask = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        if (!userEmail || !userName) {
+            return;
+        }
+
+        let tempAddedMembers = addedMembers
+        tempAddedMembers.push({ memberEmail: userEmail!, memberName: userName! })
         const newTaskBody: TaskInterface = {
             name: newTaskNameInput,
             description: newTaskDescriptionInput,
@@ -39,7 +49,8 @@ export default function NewTaskModal({ setNewTaskModalStatus, groupId, tasks, se
             dateCreated: new Date(),
             priority: taskPriority,
             isUrgent: taskPriority == "Urgent" ? true : false,
-            groupId
+            groupId,
+            members: tempAddedMembers
         }
 
         const newTaskResponse = await fetch("http://localhost:3000/api/tasks/createNewTask", {
@@ -58,7 +69,9 @@ export default function NewTaskModal({ setNewTaskModalStatus, groupId, tasks, se
         }
 
         setNewTaskModalStatus("closed")
-
+        const tempTasks = tasks
+        tempTasks.push(newTaskResponseJSON)
+        setTasks(tempTasks)
     }
     return (
         <div className="ntmodal__wrapper">
@@ -105,6 +118,32 @@ export default function NewTaskModal({ setNewTaskModalStatus, groupId, tasks, se
                         </button>
                     </div>
                 </div>
+                <div className="tmadd__container">
+
+                    <div className="ntmodal__addmember">
+                        Add Members
+                    </div>
+                    {groupMembers.map(groupMember => {
+                        if (groupMember.memberEmail == userEmail) {
+                            return (
+                                <React.Fragment key={groupMember.memberEmail}>
+
+                                </React.Fragment>
+                            )
+                        }
+                        return (
+                            <React.Fragment key={groupMember.memberEmail}>
+                                <TaskMemberAdd
+                                    memberEmail={groupMember.memberEmail}
+                                    memberName={groupMember.memberName}
+                                    addedMembers={addedMembers}
+                                    setAddedMembers={setAddedMembers}
+                                />
+                            </React.Fragment>)
+                    }
+                    )}
+                </div>
+
                 <div>
                     <button type="submit">
                         Create

@@ -8,8 +8,9 @@ export async function POST(request: Request) {
     const { groupId } = await request.json()
 
     const tasks = await TaskModel.find({ groupId: groupId })
-    if (tasks) {
-        return new Response(JSON.stringify(tasks))
-    }
-    return new Response(JSON.stringify(null))
+
+
+    return new Response(JSON.stringify(tasks))
+
+    //return new Response(JSON.stringify(null))
 }

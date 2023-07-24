@@ -8,10 +8,12 @@ import { TaskInterface } from "@/lib/mongo/models/TaskModel"
 import { useEffect } from "react"
 import { useSession } from "next-auth/react"
 import DeleteTaskModal from "../DeleteTaskModal/DeleteTaskModal"
+import { MemberInterface } from "@/lib/mongo/models/GroupModel"
 interface Props {
     groupId: string
+    groupMembers: MemberInterface[]
 }
-export default function TaskTable({ groupId }: Props) {
+export default function TaskTable({ groupId, groupMembers }: Props) {
 
     const session = useSession()
     const userName = session.data?.user.name
@@ -71,6 +73,7 @@ export default function TaskTable({ groupId }: Props) {
                     tasks={tasks}
                     setTasks={setTasks}
                     groupId={groupId}
+                    groupMembers={groupMembers}
                 />
             }
             {deleteTaskModalStatus == "open" && currentDeleteTask &&

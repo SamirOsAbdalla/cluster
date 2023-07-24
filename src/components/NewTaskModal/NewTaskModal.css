@@ -1,11 +1,14 @@
 .ntmodal__wrapper {
-    position: absolute;
     background-color: rgb(60, 58, 55);
     padding: 2em;
     display: flex;
     flex-direction: column;
     width: 400px;
+    position: absolute;
+    top: -8em;
     align-items: center;
+    width: 90%;
+    max-width: 400px;
 }
 
 .ntmodal__form {
@@ -23,4 +26,10 @@
 
 .ntmodal__urgent:focus {
     background-color: brown
+}
+
+.tmadd__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
