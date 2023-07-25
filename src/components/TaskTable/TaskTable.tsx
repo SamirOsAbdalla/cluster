@@ -157,10 +157,11 @@ export default function TaskTable({ groupId, groupMembers }: Props) {
 
                             const memberStatus = findMemberStatus(task)
 
-                            if (memberStatus == "Resolved") {
-                                return (<React.Fragment key={task._id}>
+                            if ((task.creator.memberEmail != userEmail) && memberStatus == "Resolved") {
+                                return (
+                                    <React.Fragment key={task._id}>
 
-                                </React.Fragment>)
+                                    </React.Fragment>)
                             }
                             return (
                                 <React.Fragment key={task._id}>
@@ -180,9 +181,15 @@ export default function TaskTable({ groupId, groupMembers }: Props) {
                                                         Delete
                                                     </button>
                                                 }
-                                                <button onClick={() => setTaskMemberStatus(task._id!)}>
-                                                    Complete
-                                                </button>
+                                                {(task.creator.memberEmail == userEmail) && memberStatus == "Resolved" ?
+                                                    <button>
+                                                        Completed!
+                                                    </button> :
+                                                    <button onClick={() => setTaskMemberStatus(task._id!)}>
+                                                        Complete
+                                                    </button>
+                                                }
+
                                                 {userEmail && task.creator.memberEmail == userEmail! &&
                                                     <button>
                                                         Edit
