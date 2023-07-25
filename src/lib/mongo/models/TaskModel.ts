@@ -2,15 +2,30 @@ import { Schema, model, connect, models } from 'mongoose';
 import { MemberInterface, memberSchema } from './GroupModel';
 
 export type TaskPriority = "Low" | "Medium" | "High" | "Urgent"
+type TaskStatusType = "In Progress" | "Resolved"
+
+
+export type TaskMemberType = MemberInterface & {
+    status: TaskStatusType
+}
+
+const taskMemberSchema = new Schema<TaskMemberType>({
+    memberEmail: { type: String, required: true },
+    memberName: { type: String, required: true },
+    profilePicture: { type: String, required: false, default: "" },
+    status: { type: String, required: true }
+})
+
 export interface TaskInterface {
     groupId: string;
     name: string;
-    priority: TaskPriority
+    priority: TaskPriority;
+    status: TaskStatusType
     description: string;
     creator: MemberInterface;
     dateCreated: Date;
     isUrgent: boolean;
-    members: MemberInterface[]
+    members: TaskMemberType[]
     _id?: string
 }
 const taskSchema = new Schema<TaskInterface>({
@@ -21,7 +36,8 @@ const taskSchema = new Schema<TaskInterface>({
     isUrgent: { type: Boolean, default: false },
     priority: { type: String, required: true },
     groupId: { type: String, required: true },
-    members: { type: [memberSchema], required: true }
+    members: { type: [taskMemberSchema], required: true },
+    status: { type: String, required: true }
 })
 
 const TaskModel = models.Task || model<TaskInterface>("Task", taskSchema)
