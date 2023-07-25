@@ -15,10 +15,7 @@ export async function POST(request: Request) {
         const id = new mongoose.Types.ObjectId(body.groupId)
         const response = await GroupModel.deleteOne({ _id: id })
         if (response) {
-            return new Response(JSON.stringify({ msg: "Group deleted" }))
-        } else {
-            return new Response(JSON.stringify(null))
-
+            return new Response(JSON.stringify(response))
         }
     }
     return new Response(JSON.stringify(null))
