@@ -17,14 +17,15 @@ export default function TaskTable({ groupId, groupMembers }: Props) {
 
     const session = useSession()
     const userName = session.data?.user.name
-
+    const userEmail = session.data?.user.email
     useEffect(() => {
         const fetchCurrentTasks = async () => {
             if (!groupId) {
                 return;
             }
             const fetchTasksBody = {
-                groupId
+                groupId,
+                memberEmail: userEmail
             }
 
             const fetchTasksResponse = await fetch("http://localhost:3000/api/tasks/fetchTasks", {
@@ -53,14 +54,68 @@ export default function TaskTable({ groupId, groupMembers }: Props) {
         setDeleteTaskModalStatus("open")
         setCurrentDeleteTask(task)
     }
-    // const taskQuery = useQuery({
-    //     queryKey: ['task'],
-    //     queryFn: fetchCurrentTasks
-    // })
+
     const [newTaskModalStatus, setNewTaskModalStatus] = useState<"open" | "closed">("closed")
     const [tasks, setTasks] = useState<TaskInterface[]>([])
     const [deleteTaskModalStatus, setDeleteTaskModalStatus] = useState<"open" | "closed">("closed")
     const [currentDeleteTask, setCurrentDeleteTask] = useState<TaskInterface | null>(null)
+
+    const setTaskMemberStatus = async (taskId: string) => {
+        const taskMemberStatusBody = {
+            taskId,
+            memberEmail: userEmail
+        }
+
+        const taskMemberStatusResponse = await fetch("http://localhost:3000/api/tasks/changeTaskMemberStatus", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(taskMemberStatusBody),
+        })
+
+        const taskMemberStatusResponseJSON = await taskMemberStatusResponse.json()
+        if (!taskMemberStatusResponseJSON) {
+            //throw error
+        }
+
+        const taskIndex = tasks.findIndex(task => task._id == taskId)
+        if (taskIndex != -1) {
+
+            const taskMemberIndex = tasks[taskIndex].members.findIndex(member => member.memberEmail == userEmail)
+            if (taskMemberIndex != -1) {
+                let tempTasks = [...tasks]
+                tempTasks[taskIndex].members[taskMemberIndex].status = "Resolved"
+
+                setTasks(tempTasks)
+            }
+        }
+    }
+    const isNotMemberResolvedTask: (currentTask: TaskInterface) => boolean = (currentTask: TaskInterface) => {
+
+        const taskMemberIndex = currentTask.members.findIndex(member => member.memberEmail == userEmail)
+        if (taskMemberIndex == -1) {
+            return true;
+        }
+
+        if (currentTask.members[taskMemberIndex].status == "Resolved") {
+            return false;
+        }
+        return true;
+
+    }
+
+    const findMemberStatus = (task: TaskInterface) => {
+        const memberIndex = task.members.findIndex(member => member.memberEmail == userEmail)
+        if (memberIndex == -1) {
+            return "In Progress"
+        }
+
+        return task.members[memberIndex].status
+    }
+
+
     return (
         <main className="tasktable__wrapper">
             <section className="tasktable__header">
@@ -98,26 +153,49 @@ export default function TaskTable({ groupId, groupMembers }: Props) {
                     </thead>
                     <tbody>
 
-                        {tasks.map(task =>
-                            <React.Fragment key={task._id}>
-                                <tr>
-                                    <td data-cell="name: ">{task.name}</td>
-                                    <td data-cell="description: ">{task.description}</td>
-                                    <td data-cell="creator: ">{task.creator.memberName}</td>
-                                    <td>
-                                        <button>
-                                            {task.priority}
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button onClick={() => handleDeleteClick(task)}>
-                                            Delete
-                                        </button>
-                                    </td>
-                                </tr>
-                            </React.Fragment>
-                        )}
+                        {tasks.map(task => {
 
+                            const memberStatus = findMemberStatus(task)
+
+                            if (memberStatus == "Resolved") {
+                                return (<React.Fragment key={task._id}>
+
+                                </React.Fragment>)
+                            }
+                            return (
+                                <React.Fragment key={task._id}>
+                                    <tr >
+                                        <td data-cell="name: ">{task.name}</td>
+                                        <td data-cell="description: ">{task.description}</td>
+                                        <td data-cell="creator: ">{task.creator.memberName}</td>
+                                        <td>
+                                            <button type="button">
+                                                {task.priority}
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <div className="tasktable__buttons">
+                                                {userEmail && task.creator.memberEmail == userEmail! &&
+                                                    <button onClick={() => handleDeleteClick(task)}>
+                                                        Delete
+                                                    </button>
+                                                }
+                                                <button onClick={() => setTaskMemberStatus(task._id!)}>
+                                                    Complete
+                                                </button>
+                                                {userEmail && task.creator.memberEmail == userEmail! &&
+                                                    <button>
+                                                        Edit
+                                                    </button>
+                                                }
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+                                </React.Fragment>
+                            )
+                        })}
 
                     </tbody>
                 </table>
