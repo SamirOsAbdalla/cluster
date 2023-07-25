@@ -10,8 +10,7 @@ export async function POST(request: Request) {
     const tasks = await TaskModel.find(
         {
             groupId: groupId,
-            "members.memberEmail": memberEmail,
-            "members.status": { $ne: "Resolved" }
+            "members.memberEmail": memberEmail
         })
 
 
