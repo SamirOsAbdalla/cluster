@@ -54,12 +54,25 @@ export default function LeaveGroupModal({ currentGroup, leaveGroupModal, setLeav
                 body: JSON.stringify(deleteGroupBody),
             });
 
-            const finalResponse = await resp.json()
-            if (finalResponse) {
+            const finalGroupResponse = await resp.json()
+            if (finalGroupResponse) {
                 editGroupTable()
-                //delete all tasks with the group id
-            } else {
 
+                const deleteAllTasksResponse = await fetch("http://localhost:3000/api/tasks/deleteAllGroupTasks", {
+                    method: "POST",
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(deleteGroupBody),
+                })
+
+                const deleteAllTasksResponseJSON = await deleteAllTasksResponse.json()
+                if (!deleteAllTasksResponseJSON) {
+                    //throw error
+                }
+            } else {
+                //throw error
             }
 
         }//else just remove the current user
@@ -80,6 +93,23 @@ export default function LeaveGroupModal({ currentGroup, leaveGroupModal, setLeav
             const finalResponse = await resp.json()
             if (finalResponse) {
                 editGroupTable()
+                const removeMemberBody = {
+                    userEmail
+                }
+                const removeMemberFromTaskResponse = await fetch("http://localhost:3000/api/tasks/removeMemberFromAllTasks", {
+                    method: "POST",
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(removeMemberBody),
+                })
+                const removeMemberFromTaskResponseJSON = await removeMemberFromTaskResponse.json()
+                if (!removeMemberFromTaskResponseJSON) {
+                    //throw error
+                }
+
+
             } else {
                 //handle error
             }
