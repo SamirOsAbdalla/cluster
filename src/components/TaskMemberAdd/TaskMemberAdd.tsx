@@ -1,12 +1,13 @@
 import "./TaskMemberAdd.css"
 import { Dispatch, SetStateAction, useState } from "react"
 import { MemberInterface } from "@/lib/mongo/models/GroupModel"
+import { TaskMemberType } from "@/lib/mongo/models/TaskModel";
 
 interface Props {
     memberName: string,
     memberEmail: string
-    addedMembers: MemberInterface[];
-    setAddedMembers: Dispatch<SetStateAction<MemberInterface[]>>
+    addedMembers: TaskMemberType[];
+    setAddedMembers: Dispatch<SetStateAction<TaskMemberType[]>>
 }
 export default function TaskMemberAdd({ memberName, memberEmail, addedMembers, setAddedMembers }: Props) {
 
@@ -22,7 +23,7 @@ export default function TaskMemberAdd({ memberName, memberEmail, addedMembers, s
 
         setActiveStatus("active")
         let tempAddedMembers = addedMembers
-        tempAddedMembers.push({ memberEmail, memberName })
+        tempAddedMembers.push({ memberEmail, memberName, status: "In Progress" })
         setAddedMembers(tempAddedMembers)
     }
 
