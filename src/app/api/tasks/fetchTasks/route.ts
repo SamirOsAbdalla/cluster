@@ -5,9 +5,14 @@ import TaskModel from "@/lib/mongo/models/TaskModel";
 export async function POST(request: Request) {
     await db.connect()
 
-    const { groupId } = await request.json()
+    const { groupId, memberEmail } = await request.json()
 
-    const tasks = await TaskModel.find({ groupId: groupId })
+    const tasks = await TaskModel.find(
+        {
+            groupId: groupId,
+            "members.memberEmail": memberEmail,
+            "members.status": { $ne: "Resolved" }
+        })
 
 
     return new Response(JSON.stringify(tasks))
