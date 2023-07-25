@@ -5,6 +5,7 @@
     width: 90%;
     max-width: 300px;
     display: flex;
+    z-index: 9998;
 }
 
 .invitemodal__form {

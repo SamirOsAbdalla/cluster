@@ -34,7 +34,6 @@ export default function InviteMemberModal({ groupName, userEmail, groupId,
     const inviteMembers = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (invitedMembers.size > 0) {
-
             const membersArray = Array.from(invitedMembers)
             const inviteBody = {
                 groupName,
