@@ -5,7 +5,7 @@ import "./NewTaskModal.css"
 import { useState, useEffect } from 'react'
 import { AiFillCloseCircle } from "react-icons/ai";
 import { Dispatch, SetStateAction } from 'react';
-import { TaskInterface, TaskPriority } from '@/lib/mongo/models/TaskModel';
+import { TaskInterface, TaskMemberType, TaskPriority } from '@/lib/mongo/models/TaskModel';
 import { useSession } from 'next-auth/react';
 import { MemberInterface } from '@/lib/mongo/models/GroupModel';
 import TaskMemberAdd from '../TaskMemberAdd/TaskMemberAdd';
@@ -25,7 +25,7 @@ export default function NewTaskModal({ setNewTaskModalStatus, groupId, tasks, se
     const [newTaskNameInput, setNewTaskNameInput] = useState<string>("")
     const [newTaskDescriptionInput, setNewTaskDescriptionInput] = useState<string>("")
     const [taskPriority, setTaskPriority] = useState<TaskPriority>("Medium")
-    const [addedMembers, setAddedMembers] = useState<MemberInterface[]>([])
+    const [addedMembers, setAddedMembers] = useState<TaskMemberType[]>([])
     const session = useSession()
     const userEmail = session.data?.user.email
     const userName = session.data?.user.name
@@ -38,7 +38,8 @@ export default function NewTaskModal({ setNewTaskModalStatus, groupId, tasks, se
         }
 
         let tempAddedMembers = addedMembers
-        tempAddedMembers.push({ memberEmail: userEmail!, memberName: userName! })
+        tempAddedMembers.push({ memberEmail: userEmail!, memberName: userName!, status: "In Progress" })
+
         const newTaskBody: TaskInterface = {
             name: newTaskNameInput,
             description: newTaskDescriptionInput,
@@ -50,8 +51,10 @@ export default function NewTaskModal({ setNewTaskModalStatus, groupId, tasks, se
             priority: taskPriority,
             isUrgent: taskPriority == "Urgent" ? true : false,
             groupId,
-            members: tempAddedMembers
+            members: addedMembers,
+            status: "In Progress"
         }
+
 
         const newTaskResponse = await fetch("http://localhost:3000/api/tasks/createNewTask", {
             method: "POST",
@@ -120,9 +123,11 @@ export default function NewTaskModal({ setNewTaskModalStatus, groupId, tasks, se
                 </div>
                 <div className="tmadd__container">
 
-                    <div className="ntmodal__addmember">
-                        Add Members
-                    </div>
+                    {groupMembers.length > 1 &&
+                        <div className="ntmodal__addmember">
+                            Add Members
+                        </div>
+                    }
                     {groupMembers.map(groupMember => {
                         if (groupMember.memberEmail == userEmail) {
                             return (
