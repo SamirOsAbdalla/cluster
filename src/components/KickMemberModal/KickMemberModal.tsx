@@ -2,6 +2,7 @@ import { MemberInterface } from "@/lib/mongo/models/GroupModel";
 import "./KickMemberModal.css"
 import React from 'react'
 import { Dispatch, SetStateAction } from "react";
+import { TaskMemberType } from "@/lib/mongo/models/TaskModel";
 
 interface Props {
     kickedMemberName: string;

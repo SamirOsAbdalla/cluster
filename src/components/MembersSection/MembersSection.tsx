@@ -11,6 +11,7 @@ import { MemberInterface } from "@/lib/mongo/models/GroupModel"
 import { Dispatch, SetStateAction } from "react"
 import InviteMemberModal from "../InviteMemberModal/InviteMemberModal"
 import { GrGroup } from "react-icons/gr"
+import { TaskMemberType } from "@/lib/mongo/models/TaskModel"
 interface Props {
     groupCreatorEmail: string;
     userEmail?: string;

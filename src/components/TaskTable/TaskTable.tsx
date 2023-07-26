@@ -4,12 +4,13 @@ import React from 'react'
 import { useState } from "react"
 import NewTaskModal from "../NewTaskModal/NewTaskModal"
 import { useQuery } from '@tanstack/react-query'
-import { TaskInterface } from "@/lib/mongo/models/TaskModel"
+import { TaskInterface, TaskMemberType } from "@/lib/mongo/models/TaskModel"
 import { useEffect } from "react"
 import { useSession } from "next-auth/react"
 import DeleteTaskModal from "../DeleteTaskModal/DeleteTaskModal"
 import { MemberInterface } from "@/lib/mongo/models/GroupModel"
 import CompleteTaskModal from "../CompleteTaskModal/CompleteTaskModal"
+import EditTaskModal from "../EditTaskModal/EditTaskModal"
 interface Props {
     groupId: string
     groupMembers: MemberInterface[]
@@ -34,7 +35,7 @@ export default function TaskTable({ groupId, groupMembers }: Props) {
 
     useEffect(() => {
         const fetchCurrentTasks = async () => {
-            if (!groupId) {
+            if (!groupId || !userEmail) {
                 return;
             }
             const fetchTasksBody = {
@@ -60,7 +61,7 @@ export default function TaskTable({ groupId, groupMembers }: Props) {
             return fetchTasksResponseJSON
         }
         fetchCurrentTasks()
-    }, [userName])
+    }, [userEmail])
 
 
     type TaskTableModalTypes = "delete" | "edit" | "complete" | "new"
@@ -137,6 +138,15 @@ export default function TaskTable({ groupId, groupMembers }: Props) {
                     setCompleteTaskModalStatus={setCompleteTaskModalStatus}
                     taskInfo={currentCompleteTaskInfo}
                     memberEmail={userEmail}
+                />
+            }
+            {taskEditModalStatus == "open" && currentEditTask &&
+                <EditTaskModal
+                    groupMembers={groupMembers}
+                    tasks={tasks}
+                    setTasks={setTasks}
+                    currentTask={currentEditTask}
+                    setTaskEditModalStatus={setTaskEditModalStatus}
                 />
             }
             <section className="tasktable__body">

@@ -14,6 +14,7 @@ import InviteMemberModal from '@/components/InviteMemberModal/InviteMemberModal'
 import MembersSection from '@/components/MembersSection/MembersSection'
 import TaskTable from '@/components/TaskTable/TaskTable'
 import { useEffect } from 'react'
+import { TaskMemberType } from '@/lib/mongo/models/TaskModel'
 export default function GroupDetails({ params }: { params: { groupsId: string } }) {
     const session = useSession()
     const userEmail = session.data?.user.email
@@ -23,16 +24,16 @@ export default function GroupDetails({ params }: { params: { groupsId: string } 
     const [groupMembers, setGroupMembers] = useState<MemberInterface[]>([])
     const groupCreatorEmail = useRef("")
     const router = useRouter()
-
+    const tmpI = params.groupsId
     useEffect(() => {
         //function that fetches current group information by id
         const fetchCurrentGroup = async () => {
-            if (!userName || !params.groupsId) {
+            if (!tmpI) {
                 return;
             }
 
             const groupBody = {
-                groupId: params.groupsId
+                groupId: tmpI
             }
 
             const groupResponse = await fetch("http://localhost:3000/api/groups/fetchGroupById", {
@@ -57,7 +58,7 @@ export default function GroupDetails({ params }: { params: { groupsId: string } 
             }
         }
         fetchCurrentGroup()
-    }, [userName])
+    }, [tmpI])
 
     // const groupQuery = useQuery({
     //     queryKey: ['group'],

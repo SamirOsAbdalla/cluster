@@ -2,16 +2,23 @@ import "./TaskMemberAdd.css"
 import { Dispatch, SetStateAction, useState } from "react"
 import { MemberInterface } from "@/lib/mongo/models/GroupModel"
 import { TaskMemberType } from "@/lib/mongo/models/TaskModel";
-
+import { useEffect } from "react";
 interface Props {
     memberName: string,
     memberEmail: string
     addedMembers: TaskMemberType[];
     setAddedMembers: Dispatch<SetStateAction<TaskMemberType[]>>
+    initialActiveStatus?: "active" | 'inactive'
 }
-export default function TaskMemberAdd({ memberName, memberEmail, addedMembers, setAddedMembers }: Props) {
+export default function TaskMemberAdd({ memberName, memberEmail, addedMembers, setAddedMembers, initialActiveStatus }: Props) {
 
     const [activeStatus, setActiveStatus] = useState<"active" | "inactive">("inactive")
+
+    useEffect(() => {
+        if (initialActiveStatus == "active") {
+            setActiveStatus("active")
+        }
+    }, [])
 
     const handleActiveStatusChange = () => {
         if (activeStatus == "active") {
