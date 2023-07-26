@@ -1,0 +1,6 @@
+.ctmodal__wrapper {
+    background-color: rgb(95, 111, 126);
+    position: absolute;
+    z-index: 9998;
+    padding: 1em;
+}
