@@ -9,6 +9,7 @@ import { useEffect } from "react"
 import { useSession } from "next-auth/react"
 import DeleteTaskModal from "../DeleteTaskModal/DeleteTaskModal"
 import { MemberInterface } from "@/lib/mongo/models/GroupModel"
+import CompleteTaskModal from "../CompleteTaskModal/CompleteTaskModal"
 interface Props {
     groupId: string
     groupMembers: MemberInterface[]
@@ -18,6 +19,19 @@ export default function TaskTable({ groupId, groupMembers }: Props) {
     const session = useSession()
     const userName = session.data?.user.name
     const userEmail = session.data?.user.email
+
+
+    const [tasks, setTasks] = useState<TaskInterface[]>([])
+    const [currentDeleteTask, setCurrentDeleteTask] = useState<TaskInterface | null>(null)
+    const [currentEditTask, setCurrentEditTask] = useState<TaskInterface | null>(null)
+    const [deleteTaskModalStatus, setDeleteTaskModalStatus] = useState<"open" | "closed">("closed")
+    const [newTaskModalStatus, setNewTaskModalStatus] = useState<"open" | "closed">("closed")
+    const [taskEditModalStatus, setTaskEditModalStatus] = useState<"open" | "closed">("closed")
+    const [completeTaskModalStatus, setCompleteTaskModalStatus] = useState<"open" | "closed">("closed")
+    const [currentCompleteTaskInfo, setCurrentCompleteTaskInfo] = useState<{ taskId: string, taskName: string }>(
+        { taskId: "", taskName: "" }
+    )
+
     useEffect(() => {
         const fetchCurrentTasks = async () => {
             if (!groupId) {
@@ -49,61 +63,37 @@ export default function TaskTable({ groupId, groupMembers }: Props) {
     }, [userName])
 
 
-    const handleDeleteClick = (task: TaskInterface) => {
-        setNewTaskModalStatus("closed")
-        setDeleteTaskModalStatus("open")
-        setCurrentDeleteTask(task)
-    }
-
-    const [newTaskModalStatus, setNewTaskModalStatus] = useState<"open" | "closed">("closed")
-    const [tasks, setTasks] = useState<TaskInterface[]>([])
-    const [deleteTaskModalStatus, setDeleteTaskModalStatus] = useState<"open" | "closed">("closed")
-    const [currentDeleteTask, setCurrentDeleteTask] = useState<TaskInterface | null>(null)
-
-    const setTaskMemberStatus = async (taskId: string) => {
-        const taskMemberStatusBody = {
-            taskId,
-            memberEmail: userEmail
+    type TaskTableModalTypes = "delete" | "edit" | "complete" | "new"
+    const configureModalStatus = (modalType: TaskTableModalTypes, taskInfo?: { taskId: string, taskName: string }, task?: TaskInterface) => {
+        switch (modalType) {
+            case "delete":
+                setNewTaskModalStatus("closed")
+                setTaskEditModalStatus("closed")
+                setCompleteTaskModalStatus("closed")
+                setDeleteTaskModalStatus("open")
+                setCurrentDeleteTask(task!)
+                break;
+            case "edit":
+                setDeleteTaskModalStatus("closed")
+                setCompleteTaskModalStatus("closed")
+                setNewTaskModalStatus("closed")
+                setCurrentEditTask(task!)
+                setTaskEditModalStatus("open")
+                break;
+            case "new":
+                setDeleteTaskModalStatus("closed")
+                setTaskEditModalStatus("closed")
+                setCompleteTaskModalStatus("closed")
+                setNewTaskModalStatus("open")
+                break;
+            case "complete":
+                setNewTaskModalStatus("closed")
+                setTaskEditModalStatus("closed")
+                setDeleteTaskModalStatus("closed")
+                setCurrentCompleteTaskInfo(taskInfo!)
+                setCompleteTaskModalStatus("open")
+                break;
         }
-
-        const taskMemberStatusResponse = await fetch("http://localhost:3000/api/tasks/changeTaskMemberStatus", {
-            method: "POST",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(taskMemberStatusBody),
-        })
-
-        const taskMemberStatusResponseJSON = await taskMemberStatusResponse.json()
-        if (!taskMemberStatusResponseJSON) {
-            //throw error
-        }
-
-        const taskIndex = tasks.findIndex(task => task._id == taskId)
-        if (taskIndex != -1) {
-
-            const taskMemberIndex = tasks[taskIndex].members.findIndex(member => member.memberEmail == userEmail)
-            if (taskMemberIndex != -1) {
-                let tempTasks = [...tasks]
-                tempTasks[taskIndex].members[taskMemberIndex].status = "Resolved"
-
-                setTasks(tempTasks)
-            }
-        }
-    }
-    const isNotMemberResolvedTask: (currentTask: TaskInterface) => boolean = (currentTask: TaskInterface) => {
-
-        const taskMemberIndex = currentTask.members.findIndex(member => member.memberEmail == userEmail)
-        if (taskMemberIndex == -1) {
-            return true;
-        }
-
-        if (currentTask.members[taskMemberIndex].status == "Resolved") {
-            return false;
-        }
-        return true;
-
     }
 
     const findMemberStatus = (task: TaskInterface) => {
@@ -120,7 +110,7 @@ export default function TaskTable({ groupId, groupMembers }: Props) {
         <main className="tasktable__wrapper">
             <section className="tasktable__header">
                 <h1>Tasks</h1>
-                <button onClick={() => setNewTaskModalStatus("open")}>New Task</button>
+                <button onClick={() => configureModalStatus("new")}>New Task</button>
             </section>
             {newTaskModalStatus == "open" &&
                 <NewTaskModal
@@ -138,6 +128,15 @@ export default function TaskTable({ groupId, groupMembers }: Props) {
                     setDeleteTaskModalStatus={setDeleteTaskModalStatus}
                     tasks={tasks}
                     setTasks={setTasks}
+                />
+            }
+            {completeTaskModalStatus == "open" &&
+                <CompleteTaskModal
+                    tasks={tasks}
+                    setTasks={setTasks}
+                    setCompleteTaskModalStatus={setCompleteTaskModalStatus}
+                    taskInfo={currentCompleteTaskInfo}
+                    memberEmail={userEmail}
                 />
             }
             <section className="tasktable__body">
@@ -177,7 +176,7 @@ export default function TaskTable({ groupId, groupMembers }: Props) {
                                         <td>
                                             <div className="tasktable__buttons">
                                                 {userEmail && task.creator.memberEmail == userEmail! &&
-                                                    <button onClick={() => handleDeleteClick(task)}>
+                                                    <button onClick={() => configureModalStatus("delete", { taskName: "", taskId: "" }, task)}>
                                                         Delete
                                                     </button>
                                                 }
@@ -185,13 +184,13 @@ export default function TaskTable({ groupId, groupMembers }: Props) {
                                                     <button>
                                                         Completed!
                                                     </button> :
-                                                    <button onClick={() => setTaskMemberStatus(task._id!)}>
+                                                    <button onClick={() => configureModalStatus("complete", { taskId: task._id!, taskName: task.name })}>
                                                         Complete
                                                     </button>
                                                 }
 
                                                 {userEmail && task.creator.memberEmail == userEmail! &&
-                                                    <button>
+                                                    <button onClick={() => configureModalStatus("edit", { taskName: "", taskId: "" }, task)}>
                                                         Edit
                                                     </button>
                                                 }
