@@ -29,7 +29,7 @@ export default function TaskMemberAdd({ memberName, memberEmail, addedMembers, s
         }
 
         setActiveStatus("active")
-        let tempAddedMembers = addedMembers
+        let tempAddedMembers = [...addedMembers]
         tempAddedMembers.push({ memberEmail, memberName, status: "In Progress" })
         setAddedMembers(tempAddedMembers)
     }
