@@ -5,6 +5,7 @@ import { MemberInterface } from "@/lib/mongo/models/GroupModel"
 import TaskMemberAdd from "../TaskMemberAdd/TaskMemberAdd"
 import React from "react"
 import { AiOutlineCloseCircle } from "react-icons/ai"
+import { EditTaskBodyType } from "@/app/api/tasks/editTask/route"
 interface Props {
     tasks: TaskInterface[]
     setTasks: Dispatch<SetStateAction<TaskInterface[]>>
@@ -26,8 +27,66 @@ export default function EditTaskModal({ tasks, setTasks, currentTask, setTaskEdi
         setAddedMembers(tmpMembers)
     }, [])
 
+    const taskMembersChanged = () => {
+        const map = new Map<string, number>()
+        for (let i = 0; i < currentTask.members.length; i++) {
+            map.set(currentTask.members[i].memberEmail, 1)
+        }
+
+        for (let j = 0; j < addedMembers.length; j++) {
+            if (!(map.get(addedMembers[j].memberEmail))) {
+                return true;
+            }
+        }
+
+        return false;
+    }
     const handleTaskEditSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+
+        const didTaskMembersChange: boolean = taskMembersChanged()
+        //if nothing changed don't make api call
+        if (!editTaskName && !editTaskDescription && !didTaskMembersChange) {
+            return;
+        }
+
+
+        const didNameChange: boolean = !!editTaskName
+        const didDescriptionChange: boolean = !!editTaskDescription
+        const newTaskName = didNameChange ? editTaskName : currentTask.name
+        const newTaskDescription = didDescriptionChange ? editTaskDescription : currentTask.description
+        const editTaskBody: EditTaskBodyType = {
+            newTaskName,
+            newTaskDescription,
+            newTaskMembers: addedMembers,
+            currentTaskId: currentTask._id
+        }
+
+        const editTaskResponse = await fetch("http://localhost:3000/api/tasks/editTask", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(editTaskBody),
+        })
+
+        const editTaskResponseJSON = await editTaskResponse.json()
+        if (!editTaskResponseJSON) {
+            //throw error
+        }
+
+        //update original task in tasks with new members
+        const taskIndex = tasks.findIndex(currentOriginalTask => currentOriginalTask._id == currentTask._id)
+        if (!taskIndex) {
+            //throw error
+        }
+        const tempTasks = [...tasks]
+        tempTasks[taskIndex].members = [...addedMembers]
+        tempTasks[taskIndex].name = newTaskName
+        tempTasks[taskIndex].description = newTaskDescription
+        setTasks(tempTasks)
+        setTaskEditModalStatus("closed")
     }
     return (
         <div className="etmodal__wrapper">
@@ -87,7 +146,7 @@ export default function EditTaskModal({ tasks, setTasks, currentTask, setTaskEdi
                     <button type="submit">
                         Save
                     </button>
-                    <button onClick={() => setTaskEditModalStatus("closed")}>
+                    <button type="button" onClick={() => setTaskEditModalStatus("closed")}>
                         Cancel
                     </button>
                 </div>
