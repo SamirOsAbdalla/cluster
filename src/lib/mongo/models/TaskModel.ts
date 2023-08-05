@@ -2,7 +2,7 @@ import { Schema, model, connect, models } from 'mongoose';
 import { MemberInterface, memberSchema } from './GroupModel';
 
 export type TaskPriority = "Low" | "Medium" | "High" | "Urgent"
-type TaskStatusType = "In Progress" | "Resolved"
+export type TaskStatusType = "In Progress" | "Resolved"
 
 
 export type TaskMemberType = MemberInterface & {
