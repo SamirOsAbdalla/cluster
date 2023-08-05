@@ -11,11 +11,13 @@ import DeleteTaskModal from "../DeleteTaskModal/DeleteTaskModal"
 import { MemberInterface } from "@/lib/mongo/models/GroupModel"
 import CompleteTaskModal from "../CompleteTaskModal/CompleteTaskModal"
 import EditTaskModal from "../EditTaskModal/EditTaskModal"
+import TaskItems from "../TaskItems/TaskItems"
 interface Props {
     groupId: string
-    groupMembers: MemberInterface[]
+    groupMembers: MemberInterface[],
+    taskTableType: "group" | "urgent"
 }
-export default function TaskTable({ groupId, groupMembers }: Props) {
+export default function TaskTable({ groupId, groupMembers, taskTableType }: Props) {
 
     const session = useSession()
     const userName = session.data?.user.name
@@ -34,7 +36,7 @@ export default function TaskTable({ groupId, groupMembers }: Props) {
     )
 
     useEffect(() => {
-        const fetchCurrentTasks = async () => {
+        const fetchCurrentGroupTasks = async () => {
             if (!groupId || !userEmail) {
                 return;
             }
@@ -60,7 +62,9 @@ export default function TaskTable({ groupId, groupMembers }: Props) {
             setTasks(fetchTasksResponseJSON)
             return fetchTasksResponseJSON
         }
-        fetchCurrentTasks()
+        if (taskTableType == "group") {
+            fetchCurrentGroupTasks()
+        }
     }, [userEmail])
 
 
@@ -97,14 +101,7 @@ export default function TaskTable({ groupId, groupMembers }: Props) {
         }
     }
 
-    const findMemberStatus = (task: TaskInterface) => {
-        const memberIndex = task.members.findIndex(member => member.memberEmail == userEmail)
-        if (memberIndex == -1) {
-            return "In Progress"
-        }
 
-        return task.members[memberIndex].status
-    }
 
 
     return (
@@ -161,58 +158,12 @@ export default function TaskTable({ groupId, groupMembers }: Props) {
                         </tr>
                     </thead>
                     <tbody>
+                        <TaskItems
+                            tasks={tasks}
+                            configureModalStatus={configureModalStatus}
+                            userEmail={userEmail}
 
-                        {tasks.map(task => {
-
-                            const memberStatus = findMemberStatus(task)
-
-                            if ((task.creator.memberEmail != userEmail) && memberStatus == "Resolved") {
-                                return (
-                                    <React.Fragment key={task._id}>
-
-                                    </React.Fragment>)
-                            }
-                            return (
-                                <React.Fragment key={task._id}>
-                                    <tr >
-                                        <td data-cell="name: ">{task.name}</td>
-                                        <td data-cell="description: ">{task.description}</td>
-                                        <td data-cell="creator: ">{task.creator.memberName}</td>
-                                        <td>
-                                            <button type="button">
-                                                {task.priority}
-                                            </button>
-                                        </td>
-                                        <td>
-                                            <div className="tasktable__buttons">
-                                                {userEmail && task.creator.memberEmail == userEmail! &&
-                                                    <button onClick={() => configureModalStatus("delete", { taskName: "", taskId: "" }, task)}>
-                                                        Delete
-                                                    </button>
-                                                }
-                                                {(task.creator.memberEmail == userEmail) && memberStatus == "Resolved" ?
-                                                    <button>
-                                                        Completed!
-                                                    </button> :
-                                                    <button onClick={() => configureModalStatus("complete", { taskId: task._id!, taskName: task.name })}>
-                                                        Complete
-                                                    </button>
-                                                }
-
-                                                {userEmail && task.creator.memberEmail == userEmail! &&
-                                                    <button onClick={() => configureModalStatus("edit", { taskName: "", taskId: "" }, task)}>
-                                                        Edit
-                                                    </button>
-                                                }
-                                            </div>
-
-                                        </td>
-
-                                    </tr>
-                                </React.Fragment>
-                            )
-                        })}
-
+                        />
                     </tbody>
                 </table>
             </section>
