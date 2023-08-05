@@ -9,6 +9,7 @@ import { TaskInterface, TaskMemberType, TaskPriority } from '@/lib/mongo/models/
 import { useSession } from 'next-auth/react';
 import { MemberInterface } from '@/lib/mongo/models/GroupModel';
 import TaskMemberAdd from '../TaskMemberAdd/TaskMemberAdd';
+import TaskPriorityButtons from '../TaskPriorityButtons/TaskPriorityButtons';
 
 
 interface Props {
@@ -72,7 +73,7 @@ export default function NewTaskModal({ setNewTaskModalStatus, groupId, tasks, se
         }
 
         setNewTaskModalStatus("closed")
-        const tempTasks = tasks
+        const tempTasks = [...tasks]
         tempTasks.push(newTaskResponseJSON)
         setTasks(tempTasks)
     }
@@ -106,20 +107,9 @@ export default function NewTaskModal({ setNewTaskModalStatus, groupId, tasks, se
                     <div className="ntmodal__priority__heading">
                         Priority
                     </div>
-                    <div className="ntmodal__priority__buttons">
-                        <button onClick={() => setTaskPriority("Low")} type="button" className="ntmodal__priority__button ntmodal__low">
-                            Low
-                        </button>
-                        <button onClick={() => setTaskPriority("Medium")} type="button" className="ntmodal__priority__button ntmodal__medium">
-                            Medium
-                        </button>
-                        <button onClick={() => setTaskPriority("High")} type="button" className="ntmodal__priority__button ntmodal__high">
-                            High
-                        </button>
-                        <button onClick={() => setTaskPriority("Urgent")} type="button" className="ntmodal__priority__button ntmodal__urgent">
-                            Urgent
-                        </button>
-                    </div>
+                    <TaskPriorityButtons
+                        setTaskPriority={setTaskPriority}
+                    />
                 </div>
                 <div className="tmadd__container">
 
