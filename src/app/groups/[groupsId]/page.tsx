@@ -24,16 +24,16 @@ export default function GroupDetails({ params }: { params: { groupsId: string } 
     const [groupMembers, setGroupMembers] = useState<MemberInterface[]>([])
     const groupCreatorEmail = useRef("")
     const router = useRouter()
-    const tmpI = params.groupsId
+    const paramsId = params.groupsId
     useEffect(() => {
         //function that fetches current group information by id
         const fetchCurrentGroup = async () => {
-            if (!tmpI) {
+            if (!paramsId) {
                 return;
             }
 
             const groupBody = {
-                groupId: tmpI
+                groupId: paramsId
             }
 
             const groupResponse = await fetch("http://localhost:3000/api/groups/fetchGroupById", {
@@ -58,7 +58,7 @@ export default function GroupDetails({ params }: { params: { groupsId: string } 
             }
         }
         fetchCurrentGroup()
-    }, [tmpI])
+    }, [paramsId])
 
     // const groupQuery = useQuery({
     //     queryKey: ['group'],
@@ -89,6 +89,7 @@ export default function GroupDetails({ params }: { params: { groupsId: string } 
             <TaskTable
                 groupId={params.groupsId}
                 groupMembers={groupMembers}
+                taskTableType='group'
             />
         </div>
     )
