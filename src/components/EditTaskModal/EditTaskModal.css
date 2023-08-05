@@ -2,4 +2,10 @@
     background-color: brown;
     padding: 2em;
     position: absolute;
+    top: -8em;
+}
+
+.et__middle {
+    display: flex;
+    gap: 1em;
 }
