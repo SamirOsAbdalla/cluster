@@ -1,0 +1,21 @@
+.dt__wrapper {
+    background-color: white;
+    width: 80%;
+    margin-top: 10em;
+}
+
+.dt__information {
+    flex: 1;
+    background-color: aquamarine;
+    flex-wrap: wrap;
+    padding: 2em;
+    max-width: 500px;
+    display: flex;
+    justify-content: space-between;
+    gap: 4em;
+}
+
+.dt__cell {
+    flex: 1;
+    max-width: 100px;
+}
