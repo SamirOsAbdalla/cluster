@@ -2,13 +2,17 @@
 import { TaskInterface, TaskStatusType } from "@/lib/mongo/models/TaskModel"
 import "./TaskItems.css"
 import React from "react"
+import { Dispatch, SetStateAction } from "react"
 
 interface Props {
     tasks: TaskInterface[]
     userEmail?: string
     configureModalStatus: any;
+    taskTableType: "group" | "urgent"
+    setDisplayedTask: Dispatch<SetStateAction<TaskInterface>>
+
 }
-export default function TaskItems({ tasks, userEmail, configureModalStatus }: Props) {
+export default function TaskItems({ tasks, userEmail, configureModalStatus, taskTableType, setDisplayedTask }: Props) {
 
     const findMemberStatus = (task: TaskInterface) => {
         const memberIndex = task.members.findIndex(member => member.memberEmail == userEmail)
@@ -18,6 +22,12 @@ export default function TaskItems({ tasks, userEmail, configureModalStatus }: Pr
 
         return task.members[memberIndex].status
     }
+
+    const clickHandler = taskTableType == "group" ?
+        (task: TaskInterface) => {
+            setDisplayedTask(task)
+        } :
+        () => { }
     return (
         <>
             {tasks.map(task => {
@@ -32,7 +42,7 @@ export default function TaskItems({ tasks, userEmail, configureModalStatus }: Pr
                 }
                 return (
                     <React.Fragment key={task._id}>
-                        <tr >
+                        <tr onClick={(e) => clickHandler(task)}>
                             <td data-cell="name: ">{task.name}</td>
                             <td data-cell="description: ">{task.description}</td>
                             <td data-cell="creator: ">{task.creator.memberName}</td>

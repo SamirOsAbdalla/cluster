@@ -1,6 +1,6 @@
 "use client"
 import "./TaskTable.css"
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import { useState } from "react"
 import NewTaskModal from "../NewTaskModal/NewTaskModal"
 import { useQuery } from '@tanstack/react-query'
@@ -15,9 +15,10 @@ import TaskItems from "../TaskItems/TaskItems"
 interface Props {
     groupId: string
     groupMembers: MemberInterface[],
-    taskTableType: "group" | "urgent"
+    taskTableType: "group" | "urgent",
+    setDisplayedTask: Dispatch<SetStateAction<TaskInterface>>
 }
-export default function TaskTable({ groupId, groupMembers, taskTableType }: Props) {
+export default function TaskTable({ groupId, groupMembers, taskTableType, setDisplayedTask }: Props) {
 
     const session = useSession()
     const userName = session.data?.user.name
@@ -162,7 +163,8 @@ export default function TaskTable({ groupId, groupMembers, taskTableType }: Prop
                             tasks={tasks}
                             configureModalStatus={configureModalStatus}
                             userEmail={userEmail}
-
+                            setDisplayedTask={setDisplayedTask}
+                            taskTableType={taskTableType}
                         />
                     </tbody>
                 </table>

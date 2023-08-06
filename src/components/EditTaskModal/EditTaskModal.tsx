@@ -14,6 +14,7 @@ interface Props {
     currentTask: TaskInterface
     setTaskEditModalStatus: Dispatch<SetStateAction<"open" | "closed">>
     groupMembers: MemberInterface[]
+
 }
 
 export default function EditTaskModal({ tasks, setTasks, currentTask, setTaskEditModalStatus, groupMembers }: Props) {

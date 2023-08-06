@@ -14,7 +14,8 @@ import InviteMemberModal from '@/components/InviteMemberModal/InviteMemberModal'
 import MembersSection from '@/components/MembersSection/MembersSection'
 import TaskTable from '@/components/TaskTable/TaskTable'
 import { useEffect } from 'react'
-import { TaskMemberType } from '@/lib/mongo/models/TaskModel'
+import { TaskInterface, TaskMemberType } from '@/lib/mongo/models/TaskModel'
+import DisplayedTask from '@/components/DisplayedTask/DisplayedTask'
 export default function GroupDetails({ params }: { params: { groupsId: string } }) {
     const session = useSession()
     const userEmail = session.data?.user.email
@@ -22,6 +23,8 @@ export default function GroupDetails({ params }: { params: { groupsId: string } 
     const [groupName, setGroupName] = useState<string>("")
     const [groupDescription, setGroupDescription] = useState<string>("")
     const [groupMembers, setGroupMembers] = useState<MemberInterface[]>([])
+    const [displayedTask, setDisplayedTask] = useState<TaskInterface>({} as TaskInterface)
+
     const groupCreatorEmail = useRef("")
     const router = useRouter()
     const paramsId = params.groupsId
@@ -90,7 +93,14 @@ export default function GroupDetails({ params }: { params: { groupsId: string } 
                 groupId={params.groupsId}
                 groupMembers={groupMembers}
                 taskTableType='group'
+                setDisplayedTask={setDisplayedTask}
             />
+            {displayedTask.creator &&
+                <DisplayedTask
+                    task={displayedTask}
+                    setDisplayedTask={setDisplayedTask}
+                />
+            }
         </div>
     )
 }
