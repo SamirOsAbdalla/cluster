@@ -44,7 +44,7 @@ export default function GroupTable() {
                 },
                 body: JSON.stringify(currentCreator),
             });
-
+            //check for empty groups
             const finalData = await resp.json()
             setGroups(finalData)
             setLoading(false)

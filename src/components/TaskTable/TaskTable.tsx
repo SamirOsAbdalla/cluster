@@ -56,6 +56,8 @@ export default function TaskTable({ groupId, groupMembers, taskTableType, setDis
             })
 
             const fetchTasksResponseJSON = await fetchTasksResponse.json()
+
+            //check for empty error too
             if (!fetchTasksResponseJSON) {
                 //throw error
             }

@@ -46,6 +46,8 @@ export default function CommentSection({ taskId }: Props) {
         setCurrentComment("")
     }
 
+
+
     useEffect(() => {
         const fetchComments = async () => {
             if (!taskId) {
@@ -75,6 +77,8 @@ export default function CommentSection({ taskId }: Props) {
         }
         fetchComments()
     }, [taskId])
+
+
     return (
         <div className="cs__wrapper">
             <div className="cs__header">
