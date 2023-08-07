@@ -1,0 +1,11 @@
+.cs__wrapper {
+    flex: 1;
+}
+
+.comments__list {
+    display: flex;
+    flex-direction: column;
+    max-height: 200px;
+    overflow: auto;
+    gap: 3em;
+}
