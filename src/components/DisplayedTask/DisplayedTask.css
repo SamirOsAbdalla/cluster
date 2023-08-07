@@ -2,6 +2,7 @@
     background-color: white;
     width: 80%;
     margin-top: 10em;
+
 }
 
 .dt__information {
@@ -18,4 +19,10 @@
 .dt__cell {
     flex: 1;
     max-width: 100px;
+}
+
+.dt__main {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
 }
