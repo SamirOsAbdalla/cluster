@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { useSession } from 'next-auth/react'
@@ -20,7 +20,12 @@ import TablePagination from '../TablePagination/TablePagination'
 import LoadingGroup from '../LoadingGroup/LoadingGroup'
 import EmptyPage from '../EmptyPage/EmptyPage'
 import EditGroupModal from '../EditGroupModal/EditGroupModal'
-export default function GroupTable() {
+
+interface Props {
+    loading: boolean
+    setLoading: Dispatch<SetStateAction<boolean>>
+}
+export default function GroupTable({ setLoading, loading }: Props) {
     const data = useSession()
     const router = useRouter()
     const creatorEmail = data?.data?.user.email
@@ -60,7 +65,6 @@ export default function GroupTable() {
     const [currentGroupModal, setCurrentGroupModal] = useState<GroupInterface | null>(null)
     const [leaveGroupModal, setLeaveGroupModal] = useState<boolean>(false)
     const [currentPage, setCurrentPage] = useState<number>(1)
-    const [loading, setLoading] = useState<boolean>(true)
     const [editGroupModalStatus, setEditGroupModalStatus] = useState<"open" | "closed">("closed")
     const groupsPerPage = 5;
     const totalNumberOfPages = Math.ceil(groups.length / groupsPerPage)
@@ -90,104 +94,107 @@ export default function GroupTable() {
         router.push(`/groups/${gId}`)
     }
     return (
-        <div className="table__wrapper">
-            {modalOpen && <NewGroupModal
-                currentPage={currentPage}
-                groupsPerPage={groupsPerPage}
-                setCurrentPage={setCurrentPage}
-                groups={groups}
-                setGroups={setGroups}
-                modalOpen={modalOpen}
-                setModalOpen={setModalOpen}
-            />}
-            {leaveGroupModal && <LeaveGroupModal
-                groupsPerPage={groupsPerPage}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                groups={groups}
-                setGroups={setGroups}
-                leaveGroupModal={leaveGroupModal}
-                setLeaveGroupModal={setLeaveGroupModal}
-                currentGroup={currentGroupModal}
-            />}
-            {editGroupModalStatus == "open" &&
-                <EditGroupModal
-                    editGroupModalStatus={editGroupModalStatus}
-                    setEditGroupModalStatus={setEditGroupModalStatus}
-                    currentGroup={currentGroupModal}
+        <>
+            {!loading && <div className="table__wrapper">
+                {modalOpen && <NewGroupModal
+                    currentPage={currentPage}
+                    groupsPerPage={groupsPerPage}
+                    setCurrentPage={setCurrentPage}
                     groups={groups}
                     setGroups={setGroups}
+                    modalOpen={modalOpen}
+                    setModalOpen={setModalOpen}
                 />}
-            {loading && <LoadingGroup />}
-            {!loading && groups.length > 0 &&
-                <>
-                    <div className="group__heading">
-                        <h1>My Groups</h1>
+                {leaveGroupModal && <LeaveGroupModal
+                    groupsPerPage={groupsPerPage}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    groups={groups}
+                    setGroups={setGroups}
+                    leaveGroupModal={leaveGroupModal}
+                    setLeaveGroupModal={setLeaveGroupModal}
+                    currentGroup={currentGroupModal}
+                />}
+                {editGroupModalStatus == "open" &&
+                    <EditGroupModal
+                        editGroupModalStatus={editGroupModalStatus}
+                        setEditGroupModalStatus={setEditGroupModalStatus}
+                        currentGroup={currentGroupModal}
+                        groups={groups}
+                        setGroups={setGroups}
+                    />}
+
+                {groups.length > 0 &&
+                    <>
+                        <div className="group__heading">
+                            <h1>My Groups</h1>
+                            <button className="new__group__button" onClick={(e) => {
+                                const modalStatus = modalOpen
+                                setModalOpen(!modalStatus)
+                                setLeaveGroupModal(false)
+                            }}>
+                                <AiOutlinePlusCircle />
+                                <span>New Group</span>
+                            </button>
+                        </div>
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th className="th__left">Name</th>
+                                    <th className="expand">Description</th>
+                                    <th>Creator</th>
+                                    <th className="th__right"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    displayedGroups.map((group: GroupInterface) => (
+                                        <React.Fragment key={group._id}>
+                                            <tr onClick={() => navigateToGroupsPage(group._id as string)}>
+                                                <td data-cell="name: ">{group.name}</td>
+                                                <td data-cell="description: " className="description__cell">{group.description}</td>
+                                                <td data-cell="creator: ">{group.creator.memberName}</td>
+                                                <td >
+                                                    <span className="action__cell td__right">
+                                                        <button data-testid="grouptable__leave" onClick={(e) => handleLeaveClick(group, e)} className="action__button">
+                                                            Leave
+                                                        </button>
+                                                        {creatorEmail == group.creator.memberEmail &&
+                                                            <button className="action__button" onClick={(e) => handleEditClick(group, e)}>
+                                                                Edit
+                                                            </button>
+                                                        }
+
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </React.Fragment>
+                                    ))
+                                }
+                            </tbody>
+                        </table>
+
+                        <TablePagination
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
+                            totalNumberOfPages={totalNumberOfPages}
+                        />
+                    </>}
+                {groups.length == 0 &&
+                    <div className="emptygroup__table">
+                        <EmptyPage type="group" />
                         <button className="new__group__button" onClick={(e) => {
                             const modalStatus = modalOpen
                             setModalOpen(!modalStatus)
-                            setLeaveGroupModal(false)
+
                         }}>
                             <AiOutlinePlusCircle />
                             <span>New Group</span>
                         </button>
                     </div>
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th className="th__left">Name</th>
-                                <th className="expand">Description</th>
-                                <th>Creator</th>
-                                <th className="th__right"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                displayedGroups.map((group: GroupInterface) => (
-                                    <React.Fragment key={group._id}>
-                                        <tr onClick={() => navigateToGroupsPage(group._id as string)}>
-                                            <td data-cell="name: ">{group.name}</td>
-                                            <td data-cell="description: " className="description__cell">{group.description}</td>
-                                            <td data-cell="creator: ">{group.creator.memberName}</td>
-                                            <td >
-                                                <span className="action__cell td__right">
-                                                    <button data-testid="grouptable__leave" onClick={(e) => handleLeaveClick(group, e)} className="action__button">
-                                                        Leave
-                                                    </button>
-                                                    {creatorEmail == group.creator.memberEmail &&
-                                                        <button className="action__button" onClick={(e) => handleEditClick(group, e)}>
-                                                            Edit
-                                                        </button>
-                                                    }
+                }
+            </div>}
+        </>
 
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    </React.Fragment>
-                                ))
-                            }
-                        </tbody>
-                    </table>
-
-                    <TablePagination
-                        currentPage={currentPage}
-                        setCurrentPage={setCurrentPage}
-                        totalNumberOfPages={totalNumberOfPages}
-                    />
-                </>}
-            {!loading && groups.length == 0 &&
-                <div className="emptygroup__table">
-                    <EmptyPage type="group" />
-                    <button className="new__group__button" onClick={(e) => {
-                        const modalStatus = modalOpen
-                        setModalOpen(!modalStatus)
-
-                    }}>
-                        <AiOutlinePlusCircle />
-                        <span>New Group</span>
-                    </button>
-                </div>
-            }
-        </div>
     )
 }

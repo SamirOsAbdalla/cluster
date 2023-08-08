@@ -12,13 +12,15 @@ import { MemberInterface } from "@/lib/mongo/models/GroupModel"
 import CompleteTaskModal from "../CompleteTaskModal/CompleteTaskModal"
 import EditTaskModal from "../EditTaskModal/EditTaskModal"
 import TaskItems from "../TaskItems/TaskItems"
+import { useRouter } from "next/router"
 interface Props {
-    groupId: string
-    groupMembers: MemberInterface[],
+    groupId?: string
+    loading?: boolean
+    groupMembers?: MemberInterface[],
     taskTableType: "group" | "urgent",
-    setDisplayedTask: Dispatch<SetStateAction<TaskInterface>>
+    setDisplayedTask?: Dispatch<SetStateAction<TaskInterface>>
 }
-export default function TaskTable({ groupId, groupMembers, taskTableType, setDisplayedTask }: Props) {
+export default function TaskTable({ loading, groupId, groupMembers, taskTableType, setDisplayedTask }: Props) {
 
     const session = useSession()
     const userName = session.data?.user.name
@@ -65,8 +67,38 @@ export default function TaskTable({ groupId, groupMembers, taskTableType, setDis
             setTasks(fetchTasksResponseJSON)
             return fetchTasksResponseJSON
         }
+
+        const fetchUrgentTasks = async () => {
+            if (!taskTableType || !userEmail) {
+                return;
+            }
+
+            const fetchUrgentTaskBody = {
+                memberEmail: userEmail
+            }
+
+            const fetchUTResponse = await fetch("http://localhost:3000/api/tasks/fetchUrgentTasks", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(fetchUrgentTaskBody),
+            })
+            const fetchUTResponseJSON = await fetchUTResponse.json()
+
+            //check for empty error too
+            if (!fetchUTResponseJSON) {
+                //throw error
+            }
+
+            setTasks(fetchUTResponseJSON)
+        }
+
         if (taskTableType == "group") {
             fetchCurrentGroupTasks()
+        } else if (taskTableType == "urgent") {
+            fetchUrgentTasks()
         }
     }, [userEmail])
 
@@ -108,12 +140,12 @@ export default function TaskTable({ groupId, groupMembers, taskTableType, setDis
 
 
     return (
-        <main className="tasktable__wrapper">
+        <>{loading !== true && <main className="tasktable__wrapper">
             <section className="tasktable__header">
-                <h1>Tasks</h1>
-                <button onClick={() => configureModalStatus("new")}>New Task</button>
+                <h1>{taskTableType == "urgent" ? "Urgent " : ""}Tasks</h1>
+                {taskTableType == "group" && <button onClick={() => configureModalStatus("new")}>New Task</button>}
             </section>
-            {newTaskModalStatus == "open" &&
+            {newTaskModalStatus == "open" && groupId && groupMembers && taskTableType == "group" &&
                 <NewTaskModal
                     setNewTaskModalStatus={setNewTaskModalStatus}
                     tasks={tasks}
@@ -140,7 +172,7 @@ export default function TaskTable({ groupId, groupMembers, taskTableType, setDis
                     memberEmail={userEmail}
                 />
             }
-            {taskEditModalStatus == "open" && currentEditTask &&
+            {taskEditModalStatus == "open" && currentEditTask && groupMembers &&
                 <EditTaskModal
                     groupMembers={groupMembers}
                     tasks={tasks}
@@ -165,12 +197,14 @@ export default function TaskTable({ groupId, groupMembers, taskTableType, setDis
                             tasks={tasks}
                             configureModalStatus={configureModalStatus}
                             userEmail={userEmail}
-                            setDisplayedTask={setDisplayedTask}
+                            setDisplayedTask={setDisplayedTask ? setDisplayedTask : () => { }}
                             taskTableType={taskTableType}
                         />
                     </tbody>
                 </table>
             </section>
-        </main>
+        </main>}</>
+
+
     )
 }

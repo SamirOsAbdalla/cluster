@@ -5,9 +5,6 @@
     flex-direction: column;
     align-items: center;
     width: calc(100% - 5em);
-    min-height: 100vh;
-    margin-left: 4.8em;
-    background-color: #0C0032;
 }
 
 .action__logo {
@@ -124,7 +121,7 @@ tbody tr:nth-child(even) {
     cursor: pointer;
 }
 
-@media screen and (max-width:600px) {
+@media screen and (max-width:660px) {
 
     .group__heading {
         position: static;

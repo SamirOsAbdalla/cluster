@@ -3,7 +3,7 @@ import { TaskInterface, TaskStatusType } from "@/lib/mongo/models/TaskModel"
 import "./TaskItems.css"
 import React from "react"
 import { Dispatch, SetStateAction } from "react"
-
+import { useRouter } from "next/navigation"
 interface Props {
     tasks: TaskInterface[]
     userEmail?: string
@@ -14,6 +14,7 @@ interface Props {
 }
 export default function TaskItems({ tasks, userEmail, configureModalStatus, taskTableType, setDisplayedTask }: Props) {
 
+    const router = useRouter()
     const findMemberStatus = (task: TaskInterface) => {
         const memberIndex = task.members.findIndex(member => member.memberEmail == userEmail)
         if (memberIndex == -1) {
@@ -27,7 +28,10 @@ export default function TaskItems({ tasks, userEmail, configureModalStatus, task
         (task: TaskInterface) => {
             setDisplayedTask(task)
         } :
-        () => { }
+        (task: TaskInterface) => {
+
+            router.push(`/groups/${task.groupId}`)
+        }
     return (
         <>
             {tasks.map(task => {
