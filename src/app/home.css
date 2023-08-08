@@ -1,0 +1,11 @@
+.home__wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-left: 4.85em;
+    width: calc(100% - 5em);
+    padding-left: 0.15em;
+    min-height: 100vh;
+    background-color: #0C0032;
+    padding-bottom: 5em;
+    align-items: center;
+}
