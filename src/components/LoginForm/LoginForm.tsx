@@ -46,6 +46,8 @@ export default function LoginForm({ type }: LoginProps) {
         }
         setLoading(false)
     }
+
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (type == "login") {

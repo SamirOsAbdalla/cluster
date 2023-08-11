@@ -24,39 +24,14 @@ import EditGroupModal from '../EditGroupModal/EditGroupModal'
 interface Props {
     loading: boolean
     setLoading: Dispatch<SetStateAction<boolean>>
+    setFetchGroup: Dispatch<SetStateAction<boolean>>
 }
-export default function GroupTable({ setLoading, loading }: Props) {
+export default function GroupTable({ setLoading, loading, setFetchGroup }: Props) {
     const data = useSession()
     const router = useRouter()
     const creatorEmail = data?.data?.user.email
     const creatorName = data?.data?.user.name
-    useEffect(() => {
-        if (!creatorEmail || !creatorName) {
-            return;
-        }
-        const fetchGroups = async () => {
 
-
-            let currentCreator: Omit<MemberInterface, "profilePicture"> = {
-                memberEmail: creatorEmail,
-                memberName: creatorName
-            }
-            const resp = await fetch("http://localhost:3000/api/groups/findGroups", {
-                method: "POST",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(currentCreator),
-            });
-            //check for empty groups
-            const finalData = await resp.json()
-            setGroups(finalData)
-            setLoading(false)
-        }
-
-        fetchGroups()
-    }, [creatorName])
 
 
     //refactor to maybe use enums for state instead of bool
@@ -72,7 +47,39 @@ export default function GroupTable({ setLoading, loading }: Props) {
     const firstIndex = lastIndex - groupsPerPage
     const displayedGroups = groups.slice(firstIndex, lastIndex)
 
+    const fetchGroups = async () => {
+        if (!creatorEmail || !creatorName) {
+            return;
+        }
 
+        let currentCreator: Omit<MemberInterface, "profilePicture"> = {
+            memberEmail: creatorEmail,
+            memberName: creatorName
+        }
+        const resp = await fetch("http://localhost:3000/api/groups/findGroups", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(currentCreator),
+        });
+        //check for empty groups
+        const finalData = await resp.json()
+        setGroups(finalData)
+        if (finalData.length != 0) {
+            setFetchGroup(true)
+        }
+        setLoading(false)
+    }
+
+    const tmp = async () => {
+        await fetchGroups()
+    }
+    useEffect(() => {
+
+        tmp()
+    }, [creatorName, creatorEmail])
     const handleLeaveClick = (group: GroupInterface, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.stopPropagation()
         setModalOpen(false)
