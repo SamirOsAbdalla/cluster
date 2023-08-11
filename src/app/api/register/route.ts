@@ -23,7 +23,11 @@ export async function POST(request: Request) {
             let user = await UserModel.create({
                 name,
                 email,
-                password
+                password,
+                picture: {
+                    public_id: "",
+                    url: ""
+                }
             })
 
             if (user) {
