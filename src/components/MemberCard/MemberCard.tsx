@@ -5,7 +5,7 @@ import React from 'react'
 import { useSession } from "next-auth/react"
 import { useState } from "react"
 import { Dispatch, SetStateAction } from "react";
-
+import Image from "next/image"
 interface Props {
     memberName: string,
     memberEmail: string,
@@ -37,7 +37,7 @@ export default function MemberCard({
     return (
         <div className="membercard__wrapper">
             <div className="membercard__picture">
-                {memberProfilePicture ? <></> :
+                {memberProfilePicture ? <Image fill src={memberProfilePicture} alt="Profile Picture" className="memberprof__pic" /> :
                     <div className="member__emptypicture">
                         <BsPersonFill className="member__person" />
                     </div>}

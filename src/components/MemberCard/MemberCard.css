@@ -7,3 +7,18 @@
     gap: 1em;
     background-color: aqua;
 }
+
+.membercard__picture {
+    position: relative;
+    width: 40px;
+    padding: 1.5em;
+    height: 40px;
+    background-color: azure;
+    border-radius: 50%;
+}
+
+.memberprof__pic {
+    width: 40px;
+    border-radius: 50%;
+    height: 40px
+}
