@@ -8,15 +8,15 @@ import LoadingGroup from "@/components/LoadingGroup/LoadingGroup"
 
 export default function Home() {
   const [loading, setLoading] = useState<boolean>(true)
-
+  const [fetchGroup, setFetchGroup] = useState<boolean>(false)
   return (
     <div className="home__wrapper">
       {loading && <LoadingGroup />}
-      <GroupTable setLoading={setLoading} loading={loading} />
-      <TaskTable
+      <GroupTable setLoading={setLoading} setFetchGroup={setFetchGroup} loading={loading} />
+      {fetchGroup == true && <TaskTable
         loading={loading}
         taskTableType="urgent"
-      />
+      />}
     </div>
   )
 }
