@@ -49,10 +49,11 @@ export default function NewGroupModal({ modalOpen, setModalOpen, groups,
         }
         else {
             setLoading(true)
+
             const creatorObject: MemberInterface = {
                 memberEmail: creatorEmail as string,
                 memberName: creatorName as string,
-                profilePicture: creatorPicture || ""
+                profilePicture: creatorPicture!
             }
             let allMembers: MemberInterface[] = [];
             allMembers.push(creatorObject)
