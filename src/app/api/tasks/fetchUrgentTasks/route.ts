@@ -1,7 +1,7 @@
 import { TaskInterface } from "@/lib/mongo/models/TaskModel";
 import { db } from "@/lib/mongo/util/connectMongo";
 import TaskModel from "@/lib/mongo/models/TaskModel";
-
+import { NextResponse, NextRequest } from "next/server";
 export async function POST(request: Request) {
     await db.connect()
 
@@ -13,8 +13,7 @@ export async function POST(request: Request) {
             "members.memberEmail": memberEmail
         })
 
-
-    return new Response(JSON.stringify(tasks))
+    return NextResponse.json(tasks)
 
     //return new Response(JSON.stringify(null))
 }
