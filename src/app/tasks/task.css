@@ -1,0 +1,10 @@
+.taskpage__wrapper {
+    padding-top: 3em;
+    margin-left: 4.82em;
+    width: calc(100% - 5em);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: #0C0032;
+    min-height: 100vh;
+}
