@@ -17,7 +17,7 @@ interface Props {
     groupId?: string
     loading?: boolean
     groupMembers?: MemberInterface[],
-    taskTableType: "group" | "urgent",
+    taskTableType: "group" | "urgent" | "user",
     setDisplayedTask?: Dispatch<SetStateAction<TaskInterface>>
 }
 export default function TaskTable({ loading, groupId, groupMembers, taskTableType, setDisplayedTask }: Props) {
@@ -37,70 +37,110 @@ export default function TaskTable({ loading, groupId, groupMembers, taskTableTyp
     const [currentCompleteTaskInfo, setCurrentCompleteTaskInfo] = useState<{ taskId: string, taskName: string }>(
         { taskId: "", taskName: "" }
     )
-
-    useEffect(() => {
-        const fetchCurrentGroupTasks = async () => {
-            if (!groupId || !userEmail) {
-                return;
-            }
-            const fetchTasksBody = {
-                groupId,
-                memberEmail: userEmail
-            }
-
-            const fetchTasksResponse = await fetch("http://localhost:3000/api/tasks/fetchTasks", {
-                method: "POST",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(fetchTasksBody),
-            })
-
-            const fetchTasksResponseJSON = await fetchTasksResponse.json()
-
-            //check for empty error too
-            if (!fetchTasksResponseJSON) {
-                //throw error
-            }
-
-            setTasks(fetchTasksResponseJSON)
-            return fetchTasksResponseJSON
+    const fetchUrgentTasks = async () => {
+        if (!taskTableType || !userEmail) {
+            return;
         }
 
-        const fetchUrgentTasks = async () => {
-            if (!taskTableType || !userEmail) {
-                return;
-            }
-
-            const fetchUrgentTaskBody = {
-                memberEmail: userEmail
-            }
-
-            const fetchUTResponse = await fetch("http://localhost:3000/api/tasks/fetchUrgentTasks", {
-                method: "POST",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(fetchUrgentTaskBody),
-            })
-            const fetchUTResponseJSON = await fetchUTResponse.json()
-
-            //check for empty error too
-            if (!fetchUTResponseJSON) {
-                //throw error
-            }
-
-            setTasks(fetchUTResponseJSON)
+        const fetchUrgentTaskBody = {
+            memberEmail: userEmail
         }
+
+        const fetchUTResponse = await fetch("http://localhost:3000/api/tasks/fetchUrgentTasks", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(fetchUrgentTaskBody),
+        })
+        const fetchUTResponseJSON = await fetchUTResponse.json()
+
+        //check for empty error too
+        if (!fetchUTResponseJSON) {
+            //throw error
+        }
+
+        setTasks(fetchUTResponseJSON)
+    }
+
+    const fetchCurrentGroupTasks = async () => {
+        if (!groupId || !userEmail) {
+            return;
+        }
+        const fetchTasksBody = {
+            groupId,
+            memberEmail: userEmail
+        }
+
+        const fetchTasksResponse = await fetch("http://localhost:3000/api/tasks/fetchTasks", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(fetchTasksBody),
+        })
+
+        const fetchTasksResponseJSON = await fetchTasksResponse.json()
+
+        //check for empty error too
+        if (!fetchTasksResponseJSON) {
+            //throw error
+        }
+
+        setTasks(fetchTasksResponseJSON)
+        return fetchTasksResponseJSON
+    }
+
+    const fetchUserTasks = async () => {
+        if (!userEmail) {
+            return;
+        }
+
+        const body = {
+            memberEmail: userEmail
+        }
+
+        const fetchResp = await fetch("http://localhost:3000/api/tasks/fetchUserTasks", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(body),
+        })
+
+        const fetchRespJson = await fetchResp.json()
+        if (!fetchRespJson) {
+            //throw error
+        }
+
+        setTasks(fetchRespJson)
+    }
+
+    const tmp = async () => {
+
+        if (!taskTableType) {
+            return;
+        }
+
 
         if (taskTableType == "group") {
-            fetchCurrentGroupTasks()
+            await fetchCurrentGroupTasks()
         } else if (taskTableType == "urgent") {
-            fetchUrgentTasks()
+            await fetchUrgentTasks()
+        } else {
+            fetchUserTasks()
         }
-    }, [userEmail])
+
+    }
+
+
+    useEffect(() => {
+        tmp()
+    }
+        , [userEmail, taskTableType])
 
 
     type TaskTableModalTypes = "delete" | "edit" | "complete" | "new"
@@ -142,7 +182,9 @@ export default function TaskTable({ loading, groupId, groupMembers, taskTableTyp
     return (
         <>{loading !== true && <main className="tasktable__wrapper">
             <section className="tasktable__header">
-                <h1>{taskTableType == "urgent" ? "Urgent " : ""}Tasks</h1>
+                {taskTableType == "urgent" && <h1>Urgent Tasks</h1>}
+                {taskTableType == "group" && <h1>Tasks</h1>}
+                {taskTableType == "user" && <h1>My Tasks</h1>}
                 {taskTableType == "group" && <button onClick={() => configureModalStatus("new")}>New Task</button>}
             </section>
             {newTaskModalStatus == "open" && groupId && groupMembers && taskTableType == "group" &&
