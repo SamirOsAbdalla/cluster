@@ -8,7 +8,7 @@ interface Props {
     tasks: TaskInterface[]
     userEmail?: string
     configureModalStatus: any;
-    taskTableType: "group" | "urgent"
+    taskTableType: "group" | "urgent" | "user"
     setDisplayedTask: Dispatch<SetStateAction<TaskInterface>>
 
 }
