@@ -83,7 +83,7 @@ export default function MembersSection({ groupName, groupId, groupCreatorEmail,
                                         setKickModalMemberName={setKickModalMemberName}
                                         memberEmail={member.memberEmail}
                                         memberName={member.memberName}
-                                        memberProfilePicture={member.profilePicture}
+                                        memberProfilePicture={member.profilePicture?.url}
                                         currentUserEmail={userEmail}
                                         isProjectCreator={true}
                                         setInviteMemberModalStatus={setInviteMemberModalStatus}
@@ -96,7 +96,7 @@ export default function MembersSection({ groupName, groupId, groupCreatorEmail,
                                         setKickModalStatus={setKickModalStatus}
                                         memberEmail={member.memberEmail}
                                         memberName={member.memberName}
-                                        memberProfilePicture={member.profilePicture}
+                                        memberProfilePicture={member.profilePicture?.url}
                                     />)
                         }
                     </div>}
