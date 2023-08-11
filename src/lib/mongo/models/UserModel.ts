@@ -5,14 +5,26 @@ export interface UserInterface {
     name: string;
     email: string;
     password: string;
-    picture?: string;
+    picture?: {
+        public_id: string,
+        url: string
+    };
 }
 
 export const userSchema = new Schema<UserInterface>({
     name: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
-    picture: { type: String, required: false, default: "" },
+    picture: {
+        public_id: {
+            type: String,
+            required: false
+        },
+        url: {
+            type: String,
+            required: false
+        }
+    },
 })
 
 userSchema.pre("save", async function (next: (err?: Error) => void) {

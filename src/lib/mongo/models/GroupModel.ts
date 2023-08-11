@@ -8,13 +8,25 @@ import { FcDataEncryption } from 'react-icons/fc';
 export interface MemberInterface {
     memberEmail: string;
     memberName: string;
-    profilePicture?: string
+    profilePicture?: {
+        public_id: string,
+        url: string
+    };
 }
 
 export const memberSchema = new Schema<MemberInterface>({
     memberEmail: { type: String, required: true },
     memberName: { type: String, required: true },
-    profilePicture: { type: String, required: false, default: "" }
+    profilePicture: {
+        public_id: {
+            type: String,
+            required: false
+        },
+        url: {
+            type: String,
+            required: false
+        }
+    }
 })
 
 
