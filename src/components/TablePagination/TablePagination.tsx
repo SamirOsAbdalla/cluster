@@ -1,5 +1,7 @@
 import React from 'react'
+import "./TablePagination.css"
 import { Dispatch, SetStateAction } from 'react'
+import { GrFormNext, GrFormPrevious, } from 'react-icons/gr'
 interface Props {
     currentPage: number,
     setCurrentPage: Dispatch<SetStateAction<number>>,
@@ -25,15 +27,18 @@ export default function TablePagination({ currentPage, setCurrentPage, totalNumb
         <nav className="pagination__nav">
             <ul className="pagination__list">
                 <li onClick={decreasePageNumber} className="pagination__item">
-                    <a>Prev</a>
+                    <a className="prev__link pagination__link"><GrFormPrevious color="white" /></a>
                 </li>
-                {numbersArray.map((n, i) =>
-                    <li onClick={() => setCurrentPage(n)}
-                        className={`pagination__item ${currentPage == n ? "active__pagination__item" : ""}`} key={i}>
-                        <a>{n}</a>
-                    </li>)}
+                <div className="pagination__numbers">
+                    {numbersArray.map((n, i) =>
+                        <li onClick={() => setCurrentPage(n)}
+                            className={`pagination__item`} key={i}>
+                            <a className={`pagination__link ${currentPage == n ? "active__pagination__item" : ""}`}>{n}</a>
+                        </li>)}
+                </div>
+
                 <li onClick={increasePageNumber} className="pagination__item">
-                    <a >Next</a>
+                    <a className="pagination__link"><GrFormNext className="gr" /></a>
                 </li>
             </ul>
         </nav>
