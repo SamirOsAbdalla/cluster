@@ -20,7 +20,6 @@ import TablePagination from '../TablePagination/TablePagination'
 import LoadingGroup from '../LoadingGroup/LoadingGroup'
 import EmptyPage from '../EmptyPage/EmptyPage'
 import EditGroupModal from '../EditGroupModal/EditGroupModal'
-
 interface Props {
     loading: boolean
     setLoading: Dispatch<SetStateAction<boolean>>
@@ -41,7 +40,7 @@ export default function GroupTable({ setLoading, loading, setFetchGroup }: Props
     const [leaveGroupModal, setLeaveGroupModal] = useState<boolean>(false)
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [editGroupModalStatus, setEditGroupModalStatus] = useState<"open" | "closed">("closed")
-    const groupsPerPage = 5;
+    const groupsPerPage = 3;
     const totalNumberOfPages = Math.ceil(groups.length / groupsPerPage)
     const lastIndex = currentPage * groupsPerPage;
     const firstIndex = lastIndex - groupsPerPage
@@ -100,6 +99,7 @@ export default function GroupTable({ setLoading, loading, setFetchGroup }: Props
 
         router.push(`/groups/${gId}`)
     }
+
     return (
         <>
             {!loading && <div className="table__wrapper">
@@ -158,16 +158,16 @@ export default function GroupTable({ setLoading, loading, setFetchGroup }: Props
                                     displayedGroups.map((group: GroupInterface) => (
                                         <React.Fragment key={group._id}>
                                             <tr onClick={() => navigateToGroupsPage(group._id as string)}>
-                                                <td data-cell="name: ">{group.name}</td>
-                                                <td data-cell="description: " className="description__cell">{group.description}</td>
-                                                <td data-cell="creator: ">{group.creator.memberName}</td>
+                                                <td data-cell="NAME ">{group.name}</td>
+                                                <td data-cell="DESCRIPTION " className="description__cell">{group.description}</td>
+                                                <td data-cell="CREATOR ">{group.creator.memberName}</td>
                                                 <td >
                                                     <span className="action__cell td__right">
-                                                        <button data-testid="grouptable__leave" onClick={(e) => handleLeaveClick(group, e)} className="action__button">
+                                                        <button data-testid="grouptable__leave" onClick={(e) => handleLeaveClick(group, e)} className=" grouptable__leave action__button">
                                                             Leave
                                                         </button>
                                                         {creatorEmail == group.creator.memberEmail &&
-                                                            <button className="action__button" onClick={(e) => handleEditClick(group, e)}>
+                                                            <button className="action__button grouptable__edit" onClick={(e) => handleEditClick(group, e)}>
                                                                 Edit
                                                             </button>
                                                         }

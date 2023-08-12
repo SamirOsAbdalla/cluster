@@ -12,6 +12,9 @@ import { TaskInterface } from '@/lib/mongo/models/TaskModel'
 import { MemberInterface } from '@/lib/mongo/models/GroupModel'
 import { CommentInterface } from '@/lib/mongo/models/CommentModel'
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import { BsFillPersonFill } from "react-icons/bs";
+import { AiOutlineCloseCircle } from 'react-icons/ai'
+
 interface Props {
     modalOpen: boolean,
     setModalOpen: Dispatch<SetStateAction<boolean>>,
@@ -116,13 +119,22 @@ export default function NewGroupModal({ modalOpen, setModalOpen, groups,
         //add new group to Group table(create state)
         //send invite links to added users
     }
+
+    const removeMember = (e: React.MouseEvent<SVGElement, MouseEvent>, name: string) => {
+        e.preventDefault()
+        const tmpSet = new Set(Array.from(addedMembers))
+        tmpSet.delete(name);
+        setAddedMembers(tmpSet)
+    }
+
     return (
+
         <div className={`modal__wrapper ${modalOpen ? "modal__open" : ""}`}>
+            <AiFillCloseCircle className="close__circle" onClick={() => {
+                setModalOpen(!modalOpen)
+            }} />
             <div className="newgroupmodal__heading">
                 <p>Create Group</p>
-                <AiFillCloseCircle className="close__circle" onClick={() => {
-                    setModalOpen(!modalOpen)
-                }} />
             </div>
 
             <form onSubmit={handleSubmit}>
@@ -133,6 +145,7 @@ export default function NewGroupModal({ modalOpen, setModalOpen, groups,
                         </div>
                         <input
                             type="text"
+                            placeholder="Name..."
                             value={groupName}
                             required
                             onChange={(e) => setGroupName(e.target.value)}
@@ -144,6 +157,7 @@ export default function NewGroupModal({ modalOpen, setModalOpen, groups,
                         </div>
                         <input
                             type="text"
+                            placeholder="Description..."
                             value={groupDescription}
                             required
                             onChange={(e) => setGroupDescription(e.target.value)}
@@ -156,7 +170,7 @@ export default function NewGroupModal({ modalOpen, setModalOpen, groups,
                             <div className="group__section__title">
                                 Invite Members
                             </div>
-                            <button type="button" onClick={() => {
+                            <button type="button" className="invite__button" onClick={() => {
 
                                 if (newMember == "" || newMember == creatorEmail) {
                                     return;
@@ -172,22 +186,34 @@ export default function NewGroupModal({ modalOpen, setModalOpen, groups,
                         <div>
                             <input
                                 type="email"
+                                placeholder="member@gmail.com"
                                 value={newMember}
                                 onChange={(e) => (setNewMember(e.target.value))}
                             />
                         </div>
                     </div>
-                    {Array.from(addedMembers).map(member => (
-                        <div className="invited__member" key={member}>
-                            {member}
-                        </div>
-                    ))}
+                    {addedMembers.size > 0 &&
+                        <div className="invited__members__list">
+                            {Array.from(addedMembers).map(member => (
+                                <div className="invited__member" key={member}>
+                                    <div className="invited__member__left">
+                                        <BsFillPersonFill className="invited__member__icon" />
+                                        <div className="invited__member__name">
+                                            {member}
+                                        </div>
+                                    </div>
+                                    <AiOutlineCloseCircle onClick={(e) => removeMember(e, member)} className="invited__remove" />
+
+                                </div>
+                            ))}
+                        </div>}
+
                 </div>
                 <div className="newgroup__buttons">
-                    <button type="submit" className="new__group__button">
+                    <button type="submit" className="new__group__button__submit">
                         {loading ? <LoadingSpinner type="button" /> : <span>Submit</span>}
                     </button>
-                    <button onClick={() => setModalOpen(false)}>
+                    <button className="newgroup__cancel" onClick={() => setModalOpen(false)}>
                         Cancel
                     </button>
                 </div>
