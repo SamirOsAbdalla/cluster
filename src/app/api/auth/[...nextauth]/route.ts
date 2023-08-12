@@ -59,7 +59,12 @@ const handler = NextAuth({
         strategy: 'jwt'
     },
     callbacks: {
-        async jwt({ token, user }) {
+        async jwt({ token, trigger, user, session }) {
+            if (trigger === 'update') {
+                if (session.info) {
+                    token.picture = session.info
+                }
+            }
             return { ...token, ...user };
         },
         async session({ session, token }) {

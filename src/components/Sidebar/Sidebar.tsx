@@ -25,11 +25,21 @@ const sidebarToggle = (e: React.MouseEvent<HTMLElement>) => {
 }
 export default function Sidebar() {
     const curSession = useSession()
+    const { data: session, update: sessionUpdate } = useSession()
     const name = curSession?.data?.user.name
 
     const userEmail = curSession?.data?.user.email
     const [image, setImage] = useState<any>(null)
     const pathname = usePathname()
+
+    function handleUpdateSession(url: string) {
+        sessionUpdate({
+            info: {
+                public_id: "",
+                url
+            }
+        })
+    }
 
 
     useEffect(() => {
@@ -56,6 +66,7 @@ export default function Sidebar() {
             }
             if (respJSON) {
                 setImage(respJSON.url)
+                handleUpdateSession(respJSON.url)
                 return;
             }
             if (!respJSON) {
@@ -130,7 +141,7 @@ export default function Sidebar() {
                     <div className="profile__im__container">
                         <Image fill className="default__image" src={image ? image : defaultImage} alt="Default Picture" />
                     </div>
-                    <input onChange={changeImage} type="file" id="file" />
+                    <input onChange={changeImage} type="file" accept="image/*" id="file" />
                     <label className="upload__image" htmlFor='file'><BsCamera className="camera" /></label>
                 </div>
                 <div className="sidebar__profile__name">
