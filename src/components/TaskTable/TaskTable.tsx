@@ -13,6 +13,7 @@ import CompleteTaskModal from "../CompleteTaskModal/CompleteTaskModal"
 import EditTaskModal from "../EditTaskModal/EditTaskModal"
 import TaskItems from "../TaskItems/TaskItems"
 import { useRouter } from "next/router"
+import Image from "next/image"
 interface Props {
     groupId?: string
     loading?: boolean
@@ -175,77 +176,80 @@ export default function TaskTable({ loading, groupId, groupMembers, taskTableTyp
                 break;
         }
     }
-
+    if (taskTableType == "urgent" && tasks.length == 0) {
+        return (<></>)
+    }
 
 
 
     return (
-        <>{loading !== true && <main className="tasktable__wrapper">
-            <section className="tasktable__header">
-                {taskTableType == "urgent" && <h1>Urgent Tasks</h1>}
-                {taskTableType == "group" && <h1>Tasks</h1>}
-                {taskTableType == "user" && <h1>My Tasks</h1>}
-                {taskTableType == "group" && <button onClick={() => configureModalStatus("new")}>New Task</button>}
-            </section>
-            {newTaskModalStatus == "open" && groupId && groupMembers && taskTableType == "group" &&
-                <NewTaskModal
-                    setNewTaskModalStatus={setNewTaskModalStatus}
-                    tasks={tasks}
-                    setTasks={setTasks}
-                    groupId={groupId}
-                    groupMembers={groupMembers}
-                />
-            }
-            {deleteTaskModalStatus == "open" && currentDeleteTask &&
-                <DeleteTaskModal
-                    taskId={currentDeleteTask._id}
-                    taskName={currentDeleteTask.name}
-                    setDeleteTaskModalStatus={setDeleteTaskModalStatus}
-                    tasks={tasks}
-                    setTasks={setTasks}
-                />
-            }
-            {completeTaskModalStatus == "open" &&
-                <CompleteTaskModal
-                    tasks={tasks}
-                    setTasks={setTasks}
-                    setCompleteTaskModalStatus={setCompleteTaskModalStatus}
-                    taskInfo={currentCompleteTaskInfo}
-                    memberEmail={userEmail}
-                />
-            }
-            {taskEditModalStatus == "open" && currentEditTask && groupMembers &&
-                <EditTaskModal
-                    groupMembers={groupMembers}
-                    tasks={tasks}
-                    setTasks={setTasks}
-                    currentTask={currentEditTask}
-                    setTaskEditModalStatus={setTaskEditModalStatus}
-                />
-            }
-            <section className="tasktable__body">
-                <table className="tasktable__table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th className="tasktable__expand">Description</th>
-                            <th>Creator</th>
-                            <th>Priority</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <TaskItems
-                            tasks={tasks}
-                            configureModalStatus={configureModalStatus}
-                            userEmail={userEmail}
-                            setDisplayedTask={setDisplayedTask ? setDisplayedTask : () => { }}
-                            taskTableType={taskTableType}
-                        />
-                    </tbody>
-                </table>
-            </section>
-        </main>}</>
+        <>{loading !== true &&
+            <main className="tasktable__wrapper">
+                <section className="tasktable__header">
+                    {taskTableType == "urgent" && <h1>Urgent Tasks</h1>}
+                    {taskTableType == "group" && <h1>Tasks</h1>}
+                    {taskTableType == "user" && <h1>My Tasks</h1>}
+                    {taskTableType == "group" && <button onClick={() => configureModalStatus("new")}>New Task</button>}
+                </section>
+                {newTaskModalStatus == "open" && groupId && groupMembers && taskTableType == "group" &&
+                    <NewTaskModal
+                        setNewTaskModalStatus={setNewTaskModalStatus}
+                        tasks={tasks}
+                        setTasks={setTasks}
+                        groupId={groupId}
+                        groupMembers={groupMembers}
+                    />
+                }
+                {deleteTaskModalStatus == "open" && currentDeleteTask &&
+                    <DeleteTaskModal
+                        taskId={currentDeleteTask._id}
+                        taskName={currentDeleteTask.name}
+                        setDeleteTaskModalStatus={setDeleteTaskModalStatus}
+                        tasks={tasks}
+                        setTasks={setTasks}
+                    />
+                }
+                {completeTaskModalStatus == "open" &&
+                    <CompleteTaskModal
+                        tasks={tasks}
+                        setTasks={setTasks}
+                        setCompleteTaskModalStatus={setCompleteTaskModalStatus}
+                        taskInfo={currentCompleteTaskInfo}
+                        memberEmail={userEmail}
+                    />
+                }
+                {taskEditModalStatus == "open" && currentEditTask && groupMembers &&
+                    <EditTaskModal
+                        groupMembers={groupMembers}
+                        tasks={tasks}
+                        setTasks={setTasks}
+                        currentTask={currentEditTask}
+                        setTaskEditModalStatus={setTaskEditModalStatus}
+                    />
+                }
+                <section className="tasktable__body">
+                    <table className="tasktable__table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th className="tasktable__expand">Description</th>
+                                <th>Creator</th>
+                                <th>Priority</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <TaskItems
+                                tasks={tasks}
+                                configureModalStatus={configureModalStatus}
+                                userEmail={userEmail}
+                                setDisplayedTask={setDisplayedTask ? setDisplayedTask : () => { }}
+                                taskTableType={taskTableType}
+                            />
+                        </tbody>
+                    </table>
+                </section>
+            </main>}</>
 
 
     )
