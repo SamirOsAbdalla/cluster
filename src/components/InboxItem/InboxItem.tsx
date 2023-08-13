@@ -20,12 +20,12 @@ export default function InboxItem(
             <div className="item__top">
                 <AiOutlineMail className="item__logo" />
                 <div className="item__heading">
-                    <p>Invited to <span>{groupName}</span></p>
+                    <p>Invited to <span className="invite__groupname">{groupName}</span></p>
                 </div>
             </div>
             <div className="item__bottom">
                 <div className="item__bottom__left">
-                    <span>{groupSenderName}</span> has sent you an invitation to join <span>{groupName}</span>
+                    <span>{groupSenderName}</span> has sent you an invitation to join <span className="invite__groupname">{groupName}</span>
                 </div>
                 <div className="item__bottom__right">
                     <InvitationButton type="accept" inviteItemId={inviteItemId} groupId={groupId} inbox={inbox} setInbox={setInbox} />

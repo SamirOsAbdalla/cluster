@@ -1,3 +1,44 @@
+.invbutton span {
+    text-decoration: none;
+}
+
 .invbutton {
-    padding: .5em 1em;
+    cursor: pointer
+}
+
+.invbutton__reject {
+    background-color: #f41839;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #620b18 0 -3px 0 inset;
+    border: none;
+    border-radius: 5px;
+    padding: .6em 1.4em;
+    color: white;
+    font-weight: bold;
+    width: 87px;
+    transition: 0.2s;
+}
+
+.invbutton__reject:hover {
+    background-color: #b1122a;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #3a060e 0 -3px 0 inset;
+    color: white;
+    transform: scale(1.04)
+}
+
+.invbutton__accept {
+    background-color: #3500d3;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #1a3377 0 -3px 0 inset;
+
+    border: none;
+    border-radius: 5px;
+    padding: .6em 1.4em;
+    color: white;
+    width: 90px;
+    transition: 0.2s;
+    font-weight: 700;
+}
+
+.invbutton__accept:hover {
+    background-color: #2f05ac;
+    transform: scale(1.04)
 }

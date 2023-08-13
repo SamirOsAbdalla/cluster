@@ -19,10 +19,24 @@ export default function InvitationButton({ type, groupId, inbox, setInbox, invit
     const userName = data?.data?.user.name
     const userPicture = data?.data?.user.picture
 
-    const [loading, setLoading] = useState<boolean>(false)
+    const [loadingAccept, setLoadingAccept] = useState<boolean>(false)
+    const [loadingReject, setLoadingReject] = useState<boolean>(false)
 
+    const setButtonsDisabled = () => {
+        const acceptButton = document.querySelector(".invbutton__accept") as HTMLButtonElement
+        const rejectButton = document.querySelector(".invbutton__reject") as HTMLButtonElement
+        acceptButton.disabled = true;
+        rejectButton.disabled = true
+    }
+
+    const setButtonsEnabled = () => {
+        const acceptButton = document.querySelector(".invbutton__accept") as HTMLButtonElement
+        const rejectButton = document.querySelector(".invbutton__reject") as HTMLButtonElement
+        acceptButton.disabled = false;
+        rejectButton.disabled = false;
+    }
     const removeInvitation = async () => {
-
+        setButtonsDisabled()
         const inviteBody = {
             inviteItemId,
             userEmail
@@ -37,24 +51,24 @@ export default function InvitationButton({ type, groupId, inbox, setInbox, invit
             body: JSON.stringify(inviteBody),
         });
         const inviteResponse = await acceptInviteResp.json()
-        if (inviteResponse) {
-
-        } else {
-            //show error page
+        if (!inviteResponse) {
+            setButtonsEnabled()
+            //throw error
         }
 
         //remove item from current list of inbox items
         let tmpInbox = inbox.filter((invite: InboxItemInterface) => {
             return invite._id !== inviteItemId
         })
-
+        setButtonsEnabled()
         setInbox(tmpInbox)
     }
 
 
     const handleAccept = async () => {
         if (userEmail && userName) {
-            setLoading(true)
+            setButtonsDisabled()
+            setLoadingAccept(true)
             const group = {
                 groupId,
                 userEmail,
@@ -71,33 +85,32 @@ export default function InvitationButton({ type, groupId, inbox, setInbox, invit
                 body: JSON.stringify(group),
             });
             const newMemberResponse = await addUserResp.json()
-            if (newMemberResponse) {
-
-            } else {
-                //show error page
+            if (!newMemberResponse) {
+                setButtonsEnabled()
+                //throw error
             }
-
+            setButtonsEnabled()
             removeInvitation()
-            setLoading(false)
+            setLoadingAccept(false)
         }
     }
 
     const handleRejection = async () => {
-        setLoading(true)
+        setLoadingReject(true)
         await removeInvitation()
-        setLoading(false)
+        setLoadingReject(false)
     }
 
     if (type == "accept") {
         return (
-            <button onClick={handleAccept} className="invbutton">
-                {loading ? <LoadingSpinner type="button" /> : <span>Accept</span>}
+            <button onClick={handleAccept} className="invbutton invbutton__accept">
+                {loadingAccept ? <LoadingSpinner type="button" /> : <span >Accept</span>}
             </button>
         )
     }
     return (
-        <button onClick={handleRejection} data-testid="reject__button" className="invbutton">
-            {loading ? <LoadingSpinner type="button" /> : <span>Reject</span>}
+        <button onClick={handleRejection} data-testid="reject__button" className="invbutton invbutton__reject">
+            {loadingReject ? <LoadingSpinner type="button" /> : <span>Reject</span>}
         </button>
     )
 

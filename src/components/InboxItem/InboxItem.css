@@ -1,7 +1,7 @@
 .item__wrapper {
-    background-color: red;
+    background-color: #663edf;
     width: 80%;
-    max-width: 40em;
+    max-width: 45em;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,19 +9,28 @@
     padding: 0.4em 1.2em 1.2em 1.2em;
     border-radius: 5px;
     gap: 2em;
+    border: 3px solid #39beff;
 }
 
 .item__logo {
     font-size: 2.5em;
+    color: white;
 }
 
-span {
+.invite__groupname {
+    word-break: break-all;
+    text-decoration: underline;
+}
+
+.item__bottom__left span {
     font-weight: bold;
     font-size: 1.2em;
+    text-decoration: underline;
 }
 
 .item__heading {
     font-size: 2em;
+    color: white
 }
 
 .item__heading span {
@@ -40,20 +49,24 @@ span {
     display: flex;
     gap: 1em;
     flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
 }
 
 .item__bottom__left {
     flex: 1;
+    color: white;
     min-width: 5em;
-    font-size: 1.2em;
+    font-size: 1em;
     text-align: center;
+    text-align: left;
 }
 
 .item__bottom__right {
     flex: 1;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
     gap: 1em;
 }
