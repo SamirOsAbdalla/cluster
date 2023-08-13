@@ -33,6 +33,8 @@ export default function LeaveGroupModal({ currentGroup, leaveGroupModal, setLeav
         setLeaveGroupModal(false)
         setGroups(tmpGroups)
     }
+
+
     const leaveGroup = async () => {
         if (!userEmail) {
             return;
@@ -121,7 +123,7 @@ export default function LeaveGroupModal({ currentGroup, leaveGroupModal, setLeav
         <div className="leavemodal__wrapper">
             <AiFillCloseCircle onClick={() => setLeaveGroupModal(false)} className="leave__circle" />
             <div className="leave__heading">
-                Are you sure you want to leave <span>{typecastedGroup.name}</span>?
+                Are you sure you want to leave <span className="leave__projectname">{typecastedGroup.name}</span>?
             </div>
             <div className="leave__buttons">
                 <button onClick={leaveGroup} className="leave__button leave">

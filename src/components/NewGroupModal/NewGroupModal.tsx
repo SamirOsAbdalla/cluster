@@ -52,7 +52,11 @@ export default function NewGroupModal({ modalOpen, setModalOpen, groups,
         }
         else {
             setLoading(true)
+            const submitButton = document.querySelector(".new__group__button__submit") as HTMLButtonElement
 
+            const cancelButton = document.querySelector(".newgroup__cancel") as HTMLButtonElement
+            submitButton.disabled = true;
+            cancelButton.disabled = true;
             const creatorObject: MemberInterface = {
                 memberEmail: creatorEmail as string,
                 memberName: creatorName as string,
@@ -78,6 +82,8 @@ export default function NewGroupModal({ modalOpen, setModalOpen, groups,
 
             let addedGroup;
             if (resp) {
+                submitButton.disabled = false;
+                cancelButton.disabled = false;
                 setNewMember("")
                 setGroupDescription("")
                 setGroupName("")
@@ -87,6 +93,8 @@ export default function NewGroupModal({ modalOpen, setModalOpen, groups,
                 setCurrentPage(Math.ceil((groups.length + 1) / groupsPerPage))
                 setGroups([...groups, addedGroup])
             } else {
+                submitButton.disabled = false;
+                cancelButton.disabled = false;
                 //handle error
             }
 
@@ -111,13 +119,11 @@ export default function NewGroupModal({ modalOpen, setModalOpen, groups,
                 });
                 setAddedMembers(new Set())
             }
-
+            submitButton.disabled = false;
+            cancelButton.disabled = false;
             setLoading(false)
 
         }
-
-        //add new group to Group table(create state)
-        //send invite links to added users
     }
 
     const removeMember = (e: React.MouseEvent<SVGElement, MouseEvent>, name: string) => {

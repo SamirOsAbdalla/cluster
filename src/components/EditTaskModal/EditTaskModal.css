@@ -2,7 +2,8 @@
     background-color: brown;
     padding: 2em;
     position: absolute;
-    top: -8em;
+    top: 2em;
+    align-self: center;
 }
 
 .et__middle {
