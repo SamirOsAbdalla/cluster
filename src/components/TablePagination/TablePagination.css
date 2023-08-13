@@ -24,6 +24,11 @@
     transition: .2s;
 }
 
+.active__pagination__item {
+    color: white;
+    background-color: #384556
+}
+
 .pagination__link:hover {
     transform: scale(1.05);
     background-color: rgb(253, 253, 253);
@@ -43,7 +48,7 @@
     gap: .2em;
 }
 
-@media screen and (max-width:660px) {
+@media screen and (max-width:790px) {
     .pagination__nav {
         width: 80%;
     }

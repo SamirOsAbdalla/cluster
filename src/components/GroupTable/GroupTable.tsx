@@ -79,6 +79,15 @@ export default function GroupTable({ setLoading, loading, setFetchGroup }: Props
 
         tmp()
     }, [creatorName, creatorEmail])
+
+    useEffect(() => {
+        if (groups.length == 0) {
+            setFetchGroup(false)
+            return;
+        }
+        setFetchGroup(true)
+
+    }, [groups])
     const handleLeaveClick = (group: GroupInterface, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.stopPropagation()
         setModalOpen(false)
@@ -138,6 +147,7 @@ export default function GroupTable({ setLoading, loading, setFetchGroup }: Props
                             <button className="new__group__button" onClick={(e) => {
                                 const modalStatus = modalOpen
                                 setModalOpen(!modalStatus)
+                                setEditGroupModalStatus("closed")
                                 setLeaveGroupModal(false)
                             }}>
                                 <AiOutlinePlusCircle />
@@ -158,10 +168,10 @@ export default function GroupTable({ setLoading, loading, setFetchGroup }: Props
                                     displayedGroups.map((group: GroupInterface) => (
                                         <React.Fragment key={group._id}>
                                             <tr onClick={() => navigateToGroupsPage(group._id as string)}>
-                                                <td data-cell="NAME ">{group.name}</td>
+                                                <td className="name__cell" data-cell="NAME ">{group.name}</td>
                                                 <td data-cell="DESCRIPTION " className="description__cell">{group.description}</td>
                                                 <td data-cell="CREATOR ">{group.creator.memberName}</td>
-                                                <td >
+                                                <td className="action__td">
                                                     <span className="action__cell td__right">
                                                         <button data-testid="grouptable__leave" onClick={(e) => handleLeaveClick(group, e)} className=" grouptable__leave action__button">
                                                             Leave
