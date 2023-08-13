@@ -22,8 +22,8 @@
     content: "";
     width: 10px;
     height: 10px;
-    border: 4px solid black;
-    border-top-color: green;
+    border: 4px solid white;
+    border-top-color: #663edf;
     border-radius: 50%;
     animation: loading 1s linear infinite
 }

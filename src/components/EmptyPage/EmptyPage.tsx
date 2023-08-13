@@ -34,7 +34,7 @@ export default function EmptyPage({ type }: Props) {
             {type == "group" &&
                 <div className="emptypage__container">
                     <h1>
-                        You Have no Groups
+                        You Have No Groups
                     </h1>
                     <div className="empty__message">
                         Looks like you are not a part of any groups at the moment

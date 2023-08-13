@@ -9,7 +9,8 @@
 .loadinggroup__message {
     text-align: center;
     font-size: min(40px, 10vw);
-    color: #d0dafa
+    color: #d0dafa;
+    font-weight: bold;
 }
 
 .loading__circles {
@@ -56,7 +57,7 @@
     }
 
     25% {
-        transform: translateX(30%);
+        transform: translateX(20%);
     }
 
     50% {
@@ -64,7 +65,7 @@
     }
 
     75% {
-        transform: translateX(-30%);
+        transform: translateX(-20%);
     }
 
     100% {
