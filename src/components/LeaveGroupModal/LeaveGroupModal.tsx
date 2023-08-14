@@ -35,11 +35,26 @@ export default function LeaveGroupModal({ currentGroup, leaveGroupModal, setLeav
     }
 
 
+    const setButtonsDisabled = () => {
+        const leaveButton = document.querySelector(".leave") as HTMLButtonElement
+        const cancelButton = document.querySelector(".cancel") as HTMLButtonElement
+        leaveButton.disabled = true;
+        cancelButton.disabled = true
+    }
+
+    const setButtonsEnabled = () => {
+        const leaveButton = document.querySelector(".leave") as HTMLButtonElement
+        const cancelButton = document.querySelector(".cancel") as HTMLButtonElement
+        leaveButton.disabled = false;
+        cancelButton.disabled = false
+    }
+
+
     const leaveGroup = async () => {
         if (!userEmail) {
             return;
         }
-
+        setButtonsDisabled()
         setLoading(true)
         //delete entire group if group creator is the same as current user
         if (typecastedGroup && (typecastedGroup.creator.memberEmail == userEmail)) {
@@ -71,12 +86,14 @@ export default function LeaveGroupModal({ currentGroup, leaveGroupModal, setLeav
 
                 const deleteAllTasksResponseJSON = await deleteAllTasksResponse.json()
                 if (!deleteAllTasksResponseJSON) {
+
+                    setButtonsEnabled()
                     //throw error
                 }
             } else {
+                setButtonsEnabled()
                 //throw error
             }
-
         }//else just remove the current user
         else if (typecastedGroup && (typecastedGroup.creator.memberEmail != userEmail)) {
             const leaveGroupBody = {
@@ -109,14 +126,15 @@ export default function LeaveGroupModal({ currentGroup, leaveGroupModal, setLeav
                 const removeMemberFromTaskResponseJSON = await removeMemberFromTaskResponse.json()
                 if (!removeMemberFromTaskResponseJSON) {
                     //throw error
+                    setButtonsEnabled()
                 }
 
 
             } else {
+                setButtonsEnabled()
                 //handle error
             }
         }
-
         setLoading(false)
     }
     return (
