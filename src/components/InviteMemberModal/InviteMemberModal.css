@@ -1,10 +1,12 @@
 .invitemodal__wrapper {
-    position: absolute;
+    background-color: #202032;
+    border: 1px solid white;
+    position: fixed;
     padding: 2em;
-    background-color: aquamarine;
-    width: 90%;
-    max-width: 300px;
+    width: 350px;
+    max-width: 70%;
     display: flex;
+    top: 6em;
     z-index: 9998;
 }
 
@@ -16,14 +18,78 @@
 
 .invitemodal__top {
     display: flex;
+    color: white;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
     gap: 1em;
 }
 
+.invitemodal__top h2 {
+    text-align: center;
+}
+
 .invitemodal__form input {
-    padding: .5em;
+    padding: 1em;
+    border-radius: 2px;
+    margin-bottom: 2em;
+    border: none;
+    margin-top: 2em;
+}
+
+.invited__member {
+    word-break: break-all;
+}
+
+.invited__members__list {
+    max-width: 100%;
+    min-width: 80%;
+    max-height: 80px;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 1em;
+    overflow: auto;
+    background-color: white;
+    padding: 1em;
+    margin-top: 1em;
+    border-radius: 2px;
+}
+
+.invited__member {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+
+.invited__member__left {
+    display: flex;
+    gap: .5em;
+    justify-content: center;
+    align-items: center;
+    max-width: 80%;
+}
+
+.invited__member__icon {
+    min-width: 1em;
+    min-height: 1em;
+    max-width: 1em;
+    max-height: 1em;
+}
+
+.invited__remove {
+    justify-self: flex-end;
+    cursor: pointer;
+    width: 20px;
+    color: #ea2d49;
+    height: 20px;
+}
+
+.invitemodal__form input:focus {
+    border: none;
 }
 
 .invitemodal__invitedlist {
@@ -47,6 +113,10 @@
     align-self: flex-end;
     position: relative;
     top: -1.2em;
+    color: white;
+    width: 1.3em;
+    height: 1.3em;
+    left: 1em;
     cursor: pointer
 }
 
@@ -60,4 +130,68 @@
 
 .invitemodal__button {
     cursor: pointer
+}
+
+.invitemodal__add {
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #1a3377 0 -3px 0 inset;
+    font-weight: 700;
+    cursor: pointer;
+    background-color: #663edf;
+    color: white;
+    padding: 8px 14px;
+    font-size: .8em;
+    border: none;
+    border-radius: 5px;
+    transition: .2s;
+}
+
+
+
+.invitemodal__add:hover {
+    background-color: #694cc0;
+    transform: scale(1.02)
+}
+
+.invitemodal__submit {
+    background-color: #3500d3;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #1a3377 0 -3px 0 inset;
+
+    border: none;
+    border-radius: 5px;
+    padding: .6em 1.4em;
+    color: white;
+    transition: 0.2s;
+    font-weight: 700;
+    cursor: pointer;
+    width: 80px;
+}
+
+.invitemodal__submit:hover {
+    background-color: #2f05ac;
+    transform: scale(1.04)
+}
+
+.invitemodal__cancel {
+    background-color: #ffffff;
+    color: #ea2d49;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #bebac6 0 -3px 0 inset;
+
+    border-radius: 5px;
+    padding: .6em 1.4em;
+    border: 1px solid #ea2d49;
+    transition: 0.2s;
+    font-weight: 700;
+    cursor: pointer;
+    width: 80px;
+}
+
+.invitemodal__cancel:hover {
+    transform: scale(1.04);
+    background-color: #dbd7e4;
+}
+
+.invitemodal__invitedlist {
+    max-height: 200px;
+    background-color: white;
+    padding: 2em;
 }
