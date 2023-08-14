@@ -71,9 +71,9 @@ export default function EditGroupModal({ groups, setGroups, editGroupModalStatus
             editButton.disabled = false;
             cancelButton.disabled = false;
         } else {
+            setLoading(false)
             editButton.disabled = false;
             cancelButton.disabled = false;
-            setLoading(false)
             //handle error
         }
     }
