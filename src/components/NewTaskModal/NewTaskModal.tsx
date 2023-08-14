@@ -10,6 +10,7 @@ import { useSession } from 'next-auth/react';
 import { MemberInterface } from '@/lib/mongo/models/GroupModel';
 import TaskMemberAdd from '../TaskMemberAdd/TaskMemberAdd';
 import TaskPriorityButtons from '../TaskPriorityButtons/TaskPriorityButtons';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
 
 interface Props {
@@ -18,25 +19,37 @@ interface Props {
     tasks: TaskInterface[]
     setTasks: Dispatch<SetStateAction<TaskInterface[]>>
     groupMembers: MemberInterface[]
+    setCurrentPage: Dispatch<SetStateAction<number>>,
+    tasksPerPage: number;
 }
 
 
-export default function NewTaskModal({ setNewTaskModalStatus, groupId, tasks, setTasks, groupMembers }: Props) {
+export default function NewTaskModal({ tasksPerPage, setCurrentPage, setNewTaskModalStatus, groupId, tasks, setTasks, groupMembers }: Props) {
 
     const [newTaskNameInput, setNewTaskNameInput] = useState<string>("")
     const [newTaskDescriptionInput, setNewTaskDescriptionInput] = useState<string>("")
     const [taskPriority, setTaskPriority] = useState<TaskPriority>("Medium")
     const [addedMembers, setAddedMembers] = useState<TaskMemberType[]>([])
+    const [loading, setLoading] = useState<boolean>(false)
     const session = useSession()
     const userEmail = session.data?.user.email
     const userName = session.data?.user.name
 
+    const setButtonsDisabled = () => {
+        const buttons = document.querySelectorAll(".newtask__button")
+        buttons.forEach(button => {
+            const tmpButton = button as HTMLButtonElement
+            tmpButton.disabled = true;
+        })
+    }
     const createNewTask = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (!userEmail || !userName) {
             return;
         }
+        setButtonsDisabled()
+        setLoading(true)
 
         let tempAddedMembers = addedMembers
         tempAddedMembers.push({ memberEmail: userEmail!, memberName: userName!, status: "In Progress" })
@@ -75,6 +88,8 @@ export default function NewTaskModal({ setNewTaskModalStatus, groupId, tasks, se
         setNewTaskModalStatus("closed")
         const tempTasks = [...tasks]
         tempTasks.push(newTaskResponseJSON)
+        setCurrentPage(Math.ceil((tempTasks.length) / tasksPerPage))
+        setLoading(false)
         setTasks(tempTasks)
     }
     return (
@@ -86,6 +101,7 @@ export default function NewTaskModal({ setNewTaskModalStatus, groupId, tasks, se
                         Task Name
                     </div>
                     <input
+                        className="ntmodal__input"
                         required
                         placeholder='Task name'
                         value={newTaskNameInput}
@@ -97,6 +113,7 @@ export default function NewTaskModal({ setNewTaskModalStatus, groupId, tasks, se
                         Task Description
                     </div>
                     <input
+                        className="ntmodal__input"
                         required
                         placeholder='Task description'
                         value={newTaskDescriptionInput}
@@ -139,11 +156,11 @@ export default function NewTaskModal({ setNewTaskModalStatus, groupId, tasks, se
                     )}
                 </div>
 
-                <div>
-                    <button type="submit">
-                        Create
+                <div className="newtask__buttons">
+                    <button className="newtask__button newtask__create" type="submit">
+                        {loading ? <LoadingSpinner type="button" /> : "Create"}
                     </button>
-                    <button type="button" onClick={() => setNewTaskModalStatus("closed")}>
+                    <button className="newtask__button newtask__cancel" type="button" onClick={() => setNewTaskModalStatus("closed")}>
                         Cancel
                     </button>
                 </div>

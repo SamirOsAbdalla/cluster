@@ -1,11 +1,13 @@
 .ntmodal__wrapper {
-    background-color: rgb(60, 58, 55);
+    background-color: #202032;
+    border: 1px solid white;
+    border-radius: 2px;
     padding: 2em;
     display: flex;
     flex-direction: column;
     width: 400px;
-    position: absolute;
-    top: -8em;
+    position: fixed;
+    top: 5em;
     align-items: center;
     width: 90%;
     max-width: 400px;
@@ -21,15 +23,93 @@
 
 .ntmodal__close {
     cursor: pointer;
-    align-self: flex-end
+    align-self: flex-end;
+    position: relative;
+    top: -1em;
+    left: 1em;
+    width: 1.3em;
+    height: 1.3em;
 }
 
-.ntmodal__urgent:focus {
-    background-color: brown
+.ntmodal__name,
+.ntmodal__description {
+    font-size: 12px;
+    color: white;
 }
+
+.ntmodal__item {
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+    width: 100%;
+}
+
+.ntmodal__input {
+    width: 90%;
+    padding: 1em;
+    border-radius: 2px;
+    border: none;
+}
+
+.newtask__buttons {
+    display: flex;
+    gap: .5em;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+}
+
+.newtask__create {
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #1a3377 0 -3px 0 inset;
+    font-weight: 700;
+    cursor: pointer;
+    background-color: #3500d3;
+    color: white;
+    padding: 10px 14px;
+    width: 85px;
+    font-size: .7em;
+    border: none;
+    border-radius: 5px;
+    transition: .2s;
+}
+
+
+
+.newtask__create:hover {
+    background-color: #2f05ac;
+    transform: scale(1.02)
+}
+
+.newtask__cancel {
+    background-color: #ffffff;
+    color: #ea2d49;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #bebac6 0 -3px 0 inset;
+
+    border-radius: 5px;
+    padding: .6em 1.4em;
+    border: 1px solid #ea2d49;
+    transition: 0.2s;
+    font-weight: 700;
+    cursor: pointer;
+    width: 85px;
+}
+
+.newtask__cancel:hover {
+    transform: scale(1.04);
+    background-color: #dbd7e4;
+}
+
 
 .tmadd__container {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.ntmodal__priority__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
 }
