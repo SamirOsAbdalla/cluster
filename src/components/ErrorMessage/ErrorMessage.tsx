@@ -7,7 +7,7 @@ export default function ErrorMessage({ type }: ErrorMessageProps) {
     if (type == "userExists") {
         return (
             <div className="error__wrapper">
-                <BiErrorCircle />
+                <BiErrorCircle className="error__circle" />
                 <div className="error__message">
                     User already exists
                 </div>
@@ -16,7 +16,7 @@ export default function ErrorMessage({ type }: ErrorMessageProps) {
     }
     return (
         <div className="error__wrapper">
-            <BiErrorCircle />
+            <BiErrorCircle className="error__circle" />
             <div className="error__message">
                 Incorrect username or password
             </div>

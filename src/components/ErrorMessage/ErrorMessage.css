@@ -1,14 +1,24 @@
 .error__wrapper {
-    background-color: red;
-    margin-bottom: 1em;
+    background-color: #fde4e4;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 1em;
-    width: 100%;
+    width: 90%;
+    margin-bottom: 1em;
+    padding: 1.2em;
+    border-radius: 5px;
+    position: relative;
 }
 
 .error__message {
-    font-size: 2em;
+    font-size: 1.1em;
     text-align: center;
+    color: #d10430;
+    font-weight: bold;
+}
+
+.error__circle {
+    color: #d10430;
+    font-size: 1.3em;
 }
