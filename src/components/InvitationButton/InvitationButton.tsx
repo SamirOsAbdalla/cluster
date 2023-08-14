@@ -60,7 +60,6 @@ export default function InvitationButton({ type, groupId, inbox, setInbox, invit
         let tmpInbox = inbox.filter((invite: InboxItemInterface) => {
             return invite._id !== inviteItemId
         })
-        setButtonsEnabled()
         setInbox(tmpInbox)
     }
 
@@ -89,7 +88,7 @@ export default function InvitationButton({ type, groupId, inbox, setInbox, invit
                 setButtonsEnabled()
                 //throw error
             }
-            setButtonsEnabled()
+
             removeInvitation()
             setLoadingAccept(false)
         }

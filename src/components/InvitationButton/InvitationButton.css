@@ -3,7 +3,10 @@
 }
 
 .invbutton {
-    cursor: pointer
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .invbutton__reject {
