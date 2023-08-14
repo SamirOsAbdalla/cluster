@@ -2,7 +2,7 @@ import React from 'react'
 import "./LoadingMessage.css"
 
 interface Props {
-    type: "inbox" | "groups"
+    type: "inbox" | "groups" | "loadingGroups" | "user"
 }
 export default function LoadingMessage({ type }: Props) {
     return (
@@ -12,6 +12,12 @@ export default function LoadingMessage({ type }: Props) {
             </div>}
             {type === "groups" && <div className="loadinggroup__message">
                 Finding Groups
+            </div>}
+            {type === "loadingGroups" && <div className="loadinggroup__message">
+                Loading Group
+            </div>}
+            {type === "user" && <div className="loadinggroup__message">
+                Loading Tasks
             </div>}
             <div className="loading__circles">
                 <div className="loading__circle"></div>

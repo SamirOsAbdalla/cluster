@@ -4,7 +4,11 @@ import spaceship from "../../../public/ufo.svg"
 import React from 'react'
 import LoadingMessage from "../LoadingMessage/LoadingMessage"
 
-export default function LoadingGroup() {
+
+interface Props {
+    type: "groups" | "loadingGroups" | "user"
+}
+export default function LoadingGroup({ type }: Props) {
     return (
         <div className="loadinggroup__wrapper">
             <div className="loading__image__container">
@@ -16,7 +20,7 @@ export default function LoadingGroup() {
                     className="spaceship__svg"
                 />
             </div>
-            <LoadingMessage type="groups" />
+            <LoadingMessage type={type} />
         </div>
     )
 }
