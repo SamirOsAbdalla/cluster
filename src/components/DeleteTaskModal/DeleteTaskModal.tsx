@@ -10,8 +10,11 @@ interface Props {
     tasks: TaskInterface[]
     setTasks: Dispatch<SetStateAction<TaskInterface[]>>
     setDeleteTaskModalStatus: Dispatch<SetStateAction<"open" | "closed">>
+    setCurrentPage: Dispatch<SetStateAction<number>>,
+    tasksPerPage: number
+    currentPage: number
 }
-export default function DeleteTaskModal({ taskName, taskId, setDeleteTaskModalStatus, tasks, setTasks }: Props) {
+export default function DeleteTaskModal({ currentPage, tasksPerPage, setCurrentPage, taskName, taskId, setDeleteTaskModalStatus, tasks, setTasks }: Props) {
 
     const deleteTask = async () => {
         //make api call to backend to delete task
@@ -37,6 +40,9 @@ export default function DeleteTaskModal({ taskName, taskId, setDeleteTaskModalSt
             //throw error
         }
         const filteredTasks = tasks.filter(task => task._id != taskId)
+        if (filteredTasks.length % tasksPerPage == 0 && filteredTasks.length > 1 && currentPage != 1) {
+            setCurrentPage((prevState) => prevState - 1)
+        }
         setTasks(filteredTasks)
         setDeleteTaskModalStatus("closed")
     }
