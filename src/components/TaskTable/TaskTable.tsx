@@ -5,6 +5,7 @@ import { useState } from "react"
 import NewTaskModal from "../NewTaskModal/NewTaskModal"
 import { useQuery } from '@tanstack/react-query'
 import { TaskInterface, TaskMemberType } from "@/lib/mongo/models/TaskModel"
+import { AiOutlinePlusCircle } from "react-icons/ai"
 import { useEffect } from "react"
 import { useSession } from "next-auth/react"
 import DeleteTaskModal from "../DeleteTaskModal/DeleteTaskModal"
@@ -14,6 +15,9 @@ import EditTaskModal from "../EditTaskModal/EditTaskModal"
 import TaskItems from "../TaskItems/TaskItems"
 import { useRouter } from "next/router"
 import Image from "next/image"
+import TablePagination from "../TablePagination/TablePagination"
+import EmptyPage from "../EmptyPage/EmptyPage"
+import LoadingGroup from "../LoadingGroup/LoadingGroup"
 interface Props {
     groupId?: string
     loading?: boolean
@@ -29,6 +33,7 @@ export default function TaskTable({ loading, groupId, groupMembers, taskTableTyp
 
 
     const [tasks, setTasks] = useState<TaskInterface[]>([])
+    const [taskLoading, setTaskLoading] = useState<boolean>(false)
     const [currentDeleteTask, setCurrentDeleteTask] = useState<TaskInterface | null>(null)
     const [currentEditTask, setCurrentEditTask] = useState<TaskInterface | null>(null)
     const [deleteTaskModalStatus, setDeleteTaskModalStatus] = useState<"open" | "closed">("closed")
@@ -38,6 +43,14 @@ export default function TaskTable({ loading, groupId, groupMembers, taskTableTyp
     const [currentCompleteTaskInfo, setCurrentCompleteTaskInfo] = useState<{ taskId: string, taskName: string }>(
         { taskId: "", taskName: "" }
     )
+
+    const [currentPage, setCurrentPage] = useState<number>(1)
+    const tasksPerPage = 3;
+    const totalNumberOfPages = Math.ceil(tasks.length / tasksPerPage)
+    const lastIndex = currentPage * tasksPerPage;
+    const firstIndex = lastIndex - tasksPerPage
+    const displayedTasks = tasks.slice(firstIndex, lastIndex)
+
     const fetchUrgentTasks = async () => {
         if (!taskTableType || !userEmail) {
             return;
@@ -118,6 +131,7 @@ export default function TaskTable({ loading, groupId, groupMembers, taskTableTyp
         }
 
         setTasks(fetchRespJson)
+        setTaskLoading(false)
     }
 
     const tmp = async () => {
@@ -132,6 +146,7 @@ export default function TaskTable({ loading, groupId, groupMembers, taskTableTyp
         } else if (taskTableType == "urgent") {
             await fetchUrgentTasks()
         } else {
+            setTaskLoading(true)
             fetchUserTasks()
         }
 
@@ -141,7 +156,8 @@ export default function TaskTable({ loading, groupId, groupMembers, taskTableTyp
     useEffect(() => {
         tmp()
     }
-        , [userEmail, taskTableType])
+        , [userEmail, taskTableType]
+    )
 
 
     type TaskTableModalTypes = "delete" | "edit" | "complete" | "new"
@@ -177,10 +193,22 @@ export default function TaskTable({ loading, groupId, groupMembers, taskTableTyp
         }
     }
     if (taskTableType == "urgent" && tasks.length == 0) {
-        return (<></>)
+        return (
+            <></>
+        )
     }
 
+    if (taskTableType == "user") {
+        if (taskLoading) {
+            return <LoadingGroup type="user" />
+        }
 
+        if (!taskLoading && tasks.length == 0) {
+            return (
+                <EmptyPage type="user" />
+            )
+        }
+    }
 
     return (
         <>{loading !== true &&
@@ -189,7 +217,10 @@ export default function TaskTable({ loading, groupId, groupMembers, taskTableTyp
                     {taskTableType == "urgent" && <h1>Urgent Tasks</h1>}
                     {taskTableType == "group" && <h1>Tasks</h1>}
                     {taskTableType == "user" && <h1>My Tasks</h1>}
-                    {taskTableType == "group" && <button onClick={() => configureModalStatus("new")}>New Task</button>}
+                    {taskTableType == "group" && <button className="newtask__button__new" onClick={() => configureModalStatus("new")}>
+                        <AiOutlinePlusCircle />
+                        New Task
+                    </button>}
                 </section>
                 {newTaskModalStatus == "open" && groupId && groupMembers && taskTableType == "group" &&
                     <NewTaskModal
@@ -198,10 +229,15 @@ export default function TaskTable({ loading, groupId, groupMembers, taskTableTyp
                         setTasks={setTasks}
                         groupId={groupId}
                         groupMembers={groupMembers}
+                        tasksPerPage={tasksPerPage}
+                        setCurrentPage={setCurrentPage}
                     />
                 }
                 {deleteTaskModalStatus == "open" && currentDeleteTask &&
                     <DeleteTaskModal
+                        tasksPerPage={tasksPerPage}
+                        setCurrentPage={setCurrentPage}
+                        currentPage={currentPage}
                         taskId={currentDeleteTask._id}
                         taskName={currentDeleteTask.name}
                         setDeleteTaskModalStatus={setDeleteTaskModalStatus}
@@ -231,16 +267,16 @@ export default function TaskTable({ loading, groupId, groupMembers, taskTableTyp
                     <table className="tasktable__table">
                         <thead>
                             <tr>
-                                <th>Name</th>
+                                <th className="tasktable__left">Name</th>
                                 <th className="tasktable__expand">Description</th>
                                 <th>Creator</th>
                                 <th>Priority</th>
-                                <th></th>
+                                <th className="tasktable__right"></th>
                             </tr>
                         </thead>
                         <tbody>
                             <TaskItems
-                                tasks={tasks}
+                                tasks={displayedTasks}
                                 configureModalStatus={configureModalStatus}
                                 userEmail={userEmail}
                                 setDisplayedTask={setDisplayedTask ? setDisplayedTask : () => { }}
@@ -248,6 +284,8 @@ export default function TaskTable({ loading, groupId, groupMembers, taskTableTyp
                             />
                         </tbody>
                     </table>
+                    <TablePagination type={"task"} currentPage={currentPage} setCurrentPage={setCurrentPage} totalNumberOfPages={totalNumberOfPages} />
+
                 </section>
             </main>}</>
 
