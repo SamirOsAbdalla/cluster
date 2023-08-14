@@ -38,8 +38,9 @@ export default function GroupTable({ setLoading, loading, setFetchGroup }: Props
     const [groups, setGroups] = useState<GroupInterface[]>([])
     const [currentGroupModal, setCurrentGroupModal] = useState<GroupInterface | null>(null)
     const [leaveGroupModal, setLeaveGroupModal] = useState<boolean>(false)
-    const [currentPage, setCurrentPage] = useState<number>(1)
+
     const [editGroupModalStatus, setEditGroupModalStatus] = useState<"open" | "closed">("closed")
+    const [currentPage, setCurrentPage] = useState<number>(1)
     const groupsPerPage = 3;
     const totalNumberOfPages = Math.ceil(groups.length / groupsPerPage)
     const lastIndex = currentPage * groupsPerPage;
@@ -170,7 +171,7 @@ export default function GroupTable({ setLoading, loading, setFetchGroup }: Props
                                             <tr onClick={() => navigateToGroupsPage(group._id as string)}>
                                                 <td className="name__cell" data-cell="NAME ">{group.name}</td>
                                                 <td data-cell="DESCRIPTION " className="description__cell">{group.description}</td>
-                                                <td data-cell="CREATOR ">{group.creator.memberName}</td>
+                                                <td className="creator__cell" data-cell="CREATOR ">{group.creator.memberName}</td>
                                                 <td className="action__td">
                                                     <span className="action__cell td__right">
                                                         <button data-testid="grouptable__leave" onClick={(e) => handleLeaveClick(group, e)} className=" grouptable__leave action__button">
@@ -193,6 +194,7 @@ export default function GroupTable({ setLoading, loading, setFetchGroup }: Props
 
                         <TablePagination
                             currentPage={currentPage}
+                            type={"group"}
                             setCurrentPage={setCurrentPage}
                             totalNumberOfPages={totalNumberOfPages}
                         />
