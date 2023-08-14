@@ -6,8 +6,9 @@ interface Props {
     currentPage: number,
     setCurrentPage: Dispatch<SetStateAction<number>>,
     totalNumberOfPages: number,
+    type: "group" | "task"
 }
-export default function TablePagination({ currentPage, setCurrentPage, totalNumberOfPages }: Props) {
+export default function TablePagination({ type, currentPage, setCurrentPage, totalNumberOfPages }: Props) {
     const numbersArray: number[] = Array.from({ length: totalNumberOfPages }, (v, i) => i + 1)
 
     const increasePageNumber = () => {
@@ -24,7 +25,7 @@ export default function TablePagination({ currentPage, setCurrentPage, totalNumb
 
 
     return (
-        <nav className="pagination__nav">
+        <nav className={`pagination__nav ${type}__pagination`}>
             <ul className="pagination__list">
                 <li onClick={decreasePageNumber} className="pagination__item">
                     <a className="prev__link pagination__link"><GrFormPrevious color="white" /></a>

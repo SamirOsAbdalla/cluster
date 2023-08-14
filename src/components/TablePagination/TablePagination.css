@@ -49,7 +49,14 @@
 }
 
 @media screen and (max-width:790px) {
-    .pagination__nav {
+    .group__pagination {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width:980px) {
+    .task__pagination {
+        max-width: 400px;
         width: 80%;
     }
 }
