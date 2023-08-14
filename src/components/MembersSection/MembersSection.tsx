@@ -40,15 +40,17 @@ export default function MembersSection({ groupName, groupId, groupCreatorEmail,
 
 
             <div className="members__section">
-
                 <div className="members__section__container">
-                    <div className="memberssection__icon__container">
-                        <GrGroup className="memberssection__icon" />
+                    <div className="members__section__container__top">
+                        <div className="memberssection__icon__container">
+                            <GrGroup className="memberssection__icon" />
+                        </div>
+
+                        <div className="members__heading">
+                            Members
+                        </div>
                     </div>
 
-                    <div className="members__heading">
-                        Group Members
-                    </div>
                     <button
                         onClick={() => {
                             setInviteMemberModalStatus("open")

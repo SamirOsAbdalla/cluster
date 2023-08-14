@@ -5,7 +5,9 @@
     flex-direction: column;
     align-items: center;
     gap: 1em;
-    background-color: aqua;
+    background-color: #676781;
+    border-radius: 5px;
+    border: 1px solid white;
 }
 
 .membercard__picture {
@@ -21,4 +23,9 @@
     width: 40px;
     border-radius: 50%;
     height: 40px
+}
+
+.membercard__text {
+    word-break: break-word;
+    color: white;
 }
