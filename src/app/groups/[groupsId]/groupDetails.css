@@ -15,6 +15,7 @@
 .groupdetails__container {
     display: flex;
     flex-direction: column;
+    align-self: flex-start;
     align-items: flex-start;
     justify-content: center;
     flex-wrap: wrap;
@@ -22,12 +23,22 @@
     gap: 1em;
     padding-bottom: 2em;
     color: #d0dafa;
-    width: 100%;
+    max-width: 80%;
+    width: 800px;
+}
+
+.groupdetails__container h1 {
+    word-break: break-word;
+    text-decoration: underline;
+}
+
+.groupdetails__container div {
+    word-break: break-word;
 }
 
 @media screen and (max-width:600px) {
     .groupdetails__container {
-        padding-left: 0em;
+        padding: 1em;
         align-items: flex-start;
         width: 80%;
     }

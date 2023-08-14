@@ -16,6 +16,7 @@ import TaskTable from '@/components/TaskTable/TaskTable'
 import { useEffect } from 'react'
 import { TaskInterface, TaskMemberType } from '@/lib/mongo/models/TaskModel'
 import DisplayedTask from '@/components/DisplayedTask/DisplayedTask'
+import LoadingGroup from '@/components/LoadingGroup/LoadingGroup'
 export default function GroupDetails({ params }: { params: { groupsId: string } }) {
     const session = useSession()
     const userEmail = session.data?.user.email
@@ -24,7 +25,7 @@ export default function GroupDetails({ params }: { params: { groupsId: string } 
     const [groupDescription, setGroupDescription] = useState<string>("")
     const [groupMembers, setGroupMembers] = useState<MemberInterface[]>([])
     const [displayedTask, setDisplayedTask] = useState<TaskInterface>({} as TaskInterface)
-
+    const [loading, setLoading] = useState<boolean>(false)
     const groupCreatorEmail = useRef("")
     const router = useRouter()
     const paramsId = params.groupsId
@@ -34,7 +35,7 @@ export default function GroupDetails({ params }: { params: { groupsId: string } 
             if (!paramsId) {
                 return;
             }
-
+            setLoading(true)
             const groupBody = {
                 groupId: paramsId
             }
@@ -59,6 +60,7 @@ export default function GroupDetails({ params }: { params: { groupsId: string } 
             } else {
                 //throw error
             }
+            setLoading(false)
         }
         fetchCurrentGroup()
     }, [paramsId])
@@ -72,35 +74,38 @@ export default function GroupDetails({ params }: { params: { groupsId: string } 
 
     return (
         <div className="groupdetails__wrapper">
-            <div className="groupdetails__container">
-                <h1>
-                    {groupName}
-                </h1>
-                <div>
-                    {groupDescription}
+            {loading ? <LoadingGroup type="loadingGroups" /> : <>
+                <div className="groupdetails__container">
+                    <h1>
+                        {groupName}
+                    </h1>
+                    <div>
+                        {groupDescription}
+                    </div>
                 </div>
-            </div>
-            <MembersSection
-                groupCreatorEmail={groupCreatorEmail.current}
-                groupName={groupName}
-                userEmail={userEmail}
-                groupMembers={groupMembers}
-                setGroupMembers={setGroupMembers}
-                groupId={params.groupsId}
-                userName={userName}
-            />
-            <TaskTable
-                groupId={params.groupsId}
-                groupMembers={groupMembers}
-                taskTableType='group'
-                setDisplayedTask={setDisplayedTask}
-            />
-            {displayedTask.creator &&
-                <DisplayedTask
-                    task={displayedTask}
+                <MembersSection
+                    groupCreatorEmail={groupCreatorEmail.current}
+                    groupName={groupName}
+                    userEmail={userEmail}
+                    groupMembers={groupMembers}
+                    setGroupMembers={setGroupMembers}
+                    groupId={params.groupsId}
+                    userName={userName}
+                />
+                <TaskTable
+                    groupId={params.groupsId}
+                    groupMembers={groupMembers}
+                    taskTableType='group'
                     setDisplayedTask={setDisplayedTask}
                 />
-            }
+                {displayedTask.creator &&
+                    <DisplayedTask
+                        task={displayedTask}
+                        setDisplayedTask={setDisplayedTask}
+                    />
+                }
+            </>}
+
         </div>
     )
 }
