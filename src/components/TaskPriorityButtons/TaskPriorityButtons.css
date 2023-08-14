@@ -1,0 +1,73 @@
+.tpbuttons__wrapper {
+    display: flex;
+    gap: .5em;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.tpbuttons__button {
+    width: 70px;
+    padding: 8px 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    transition: 0.2s
+}
+
+.tpbuttons__button:focus {
+    border: 2px solid white;
+}
+
+.tpbuttons__button:hover {
+    transform: scale(1.02);
+}
+
+.tpbuttons__medium {
+    background-color: #356bbb;
+    color: white;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #254d89 0 -3px 0 inset;
+
+}
+
+.tpbuttons__medium:hover {
+    background-color: #295495;
+
+}
+
+
+.tpbuttons__low {
+    background-color: #5ac4f8;
+    color: white;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #2c93c6 0 -3px 0 inset;
+}
+
+.tpbuttons__low:hover {
+    background-color: #4ba5d1;
+
+}
+
+.tpbuttons__high {
+    background-color: #9a72f8;
+    color: white;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #654aa5 0 -3px 0 inset;
+}
+
+.tpbuttons__high:hover {
+    background-color: #805fcd;
+    color: white;
+}
+
+
+.tpbuttons__urgent {
+    background-color: #6d025f;
+    color: white;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #160224 0 -3px 0 inset;
+}
+
+.tpbuttons__urgent:hover {
+    background-color: #49023f;
+}
