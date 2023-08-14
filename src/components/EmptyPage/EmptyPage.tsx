@@ -5,7 +5,7 @@ import "./EmptyPage.css"
 import React from 'react'
 
 interface Props {
-    type: "inbox" | "group"
+    type: "inbox" | "group" | "user"
 }
 export default function EmptyPage({ type }: Props) {
     return (
@@ -38,6 +38,17 @@ export default function EmptyPage({ type }: Props) {
                     </h1>
                     <div className="empty__message">
                         Looks like you are not a part of any groups at the moment
+                    </div>
+                </div>
+
+            }
+            {type == "user" &&
+                <div className="emptypage__container">
+                    <h1>
+                        You Have No Tasks
+                    </h1>
+                    <div className="empty__message">
+                        Looks like you are not assigned any tasks at the moment
                     </div>
                 </div>
 
