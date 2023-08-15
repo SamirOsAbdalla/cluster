@@ -61,6 +61,7 @@ export default function InvitationButton({ type, groupId, inbox, setInbox, invit
             return invite._id !== inviteItemId
         })
         setInbox(tmpInbox)
+        setButtonsEnabled()
     }
 
 
