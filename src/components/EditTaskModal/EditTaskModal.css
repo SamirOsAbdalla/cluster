@@ -1,12 +1,176 @@
 .etmodal__wrapper {
     background-color: brown;
     padding: 2em;
-    position: absolute;
-    top: 2em;
+    position: fixed;
+    z-index: 9998;
+    top: .5em;
     align-self: center;
+    width: 400px;
+    max-width: 70%;
+    background-color: #202032;
+    border: 1px solid white;
+    border-radius: 5px;
+}
+
+.etmodal__title {
+    padding-bottom: 1.5em;
+}
+
+.etmodal__wrapper form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.etmodal__close {
+    width: 1.3em;
+    height: 1.3em;
+    position: relative;
+    align-self: flex-end;
+    cursor: pointer;
+    top: -1em;
+    left: 1em;
+}
+
+.etmodal__item {
+    align-self: flex-start;
+    padding-bottom: 1.5em;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: .2em;
+}
+
+.etmodal__item div {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.et__middle__add {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    gap: .2em;
+    align-items: center;
+}
+
+.etmodal__wrapper div {
+    font-weight: bold;
+}
+
+
+.etmodal__item input {
+    padding: .8em;
+    width: 100%;
+    border-radius: 2px;
+    border: none;
+}
+
+.etmodal__members__list {
+    padding: 1em;
+    background-color: white;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: 120px;
+    overflow: auto;
+    align-items: center;
+    gap: .5em;
+}
+
+.etmodal__members__list div {
+    width: 100%;
 }
 
 .et__middle {
     display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
     gap: 1em;
+    padding-bottom: 1.5em;
+}
+
+.et__middle__status {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2em;
+}
+
+.et__middle__status select {
+    padding: .5em;
+    cursor: pointer;
+    border: none;
+}
+
+.etmodal__option {
+    cursor: pointer;
+}
+
+.etmodal__priority {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+    gap: .2em;
+    padding-bottom: 2.2em;
+}
+
+.etmodal__save {
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #1a3377 0 -3px 0 inset;
+    font-weight: 700;
+    cursor: pointer;
+    background-color: #3500d3;
+    color: white;
+    padding: 10px 14px;
+    width: 85px;
+    font-size: .7em;
+    border: none;
+    border-radius: 5px;
+    transition: .2s;
+}
+
+
+.etmodal__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5em;
+}
+
+.etmodal__save:hover {
+    background-color: #2f05ac;
+    transform: scale(1.02)
+}
+
+.etmodal__cancel {
+    background-color: #ffffff;
+    color: #ea2d49;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #bebac6 0 -3px 0 inset;
+
+    border-radius: 5px;
+    padding: .6em 1.4em;
+    border: 1px solid #ea2d49;
+    transition: 0.2s;
+    font-weight: 700;
+    cursor: pointer;
+    width: 85px;
+}
+
+.etmodal__cancel:hover {
+    transform: scale(1.04);
+    background-color: #dbd7e4;
+}
+
+@media screen and (max-width:519px) {
+
+    .et__middle {
+        align-items: center;
+        justify-content: center;
+    }
 }

@@ -4,10 +4,11 @@ import { Dispatch, SetStateAction, useState, useEffect } from "react"
 import { MemberInterface } from "@/lib/mongo/models/GroupModel"
 import TaskMemberAdd from "../TaskMemberAdd/TaskMemberAdd"
 import React from "react"
-import { AiOutlineCloseCircle } from "react-icons/ai"
+import { AiFillCloseCircle, AiOutlineCloseCircle } from "react-icons/ai"
 import { EditTaskBodyType } from "@/app/api/tasks/editTask/route"
 import TaskPriorityButtons from "../TaskPriorityButtons/TaskPriorityButtons"
 import { useSession } from "next-auth/react"
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner"
 interface Props {
     tasks: TaskInterface[]
     setTasks: Dispatch<SetStateAction<TaskInterface[]>>
@@ -23,6 +24,7 @@ export default function EditTaskModal({ tasks, setTasks, currentTask, setTaskEdi
     const [addedMembers, setAddedMembers] = useState<TaskMemberType[]>([])
     const [taskPriority, setTaskPriority] = useState<TaskPriority>(currentTask.priority)
     const [taskStatus, setTaskStatus] = useState<TaskStatusType>(currentTask.status)
+    const [loading, setLoading] = useState<boolean>(false)
     const options: TaskStatusType[] = ["In Progress", "Resolved"]
 
     const session = useSession()
@@ -34,6 +36,7 @@ export default function EditTaskModal({ tasks, setTasks, currentTask, setTaskEdi
         const tmpMembers = [...currentTask.members]
         setAddedMembers(tmpMembers)
     }, [])
+
 
     const taskMembersChanged = () => {
         if (currentTask.members.length != addedMembers.length) {
@@ -52,6 +55,15 @@ export default function EditTaskModal({ tasks, setTasks, currentTask, setTaskEdi
 
         return false;
     }
+
+
+    const setButtonsDisabled = () => {
+        const buttons = document.querySelectorAll(".etmodal__button")
+        buttons.forEach(button => {
+            const tmpButton = button as HTMLButtonElement
+            tmpButton.disabled = true;
+        })
+    }
     const handleTaskEditSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
@@ -65,6 +77,9 @@ export default function EditTaskModal({ tasks, setTasks, currentTask, setTaskEdi
             setTaskEditModalStatus("closed")
             return;
         }
+
+        setButtonsDisabled()
+        setLoading(true)
         const didNameChange: boolean = !!editTaskName
         const didDescriptionChange: boolean = !!editTaskDescription
         const newTaskName = didNameChange ? editTaskName : currentTask.name
@@ -107,12 +122,15 @@ export default function EditTaskModal({ tasks, setTasks, currentTask, setTaskEdi
         tempTasks[taskIndex].priority = newTaskPriority
         setTasks(tempTasks)
         setTaskEditModalStatus("closed")
+        setLoading(false)
     }
+
     return (
         <div className="etmodal__wrapper">
             <form onSubmit={handleTaskEditSubmit}>
-                <AiOutlineCloseCircle onClick={() => setTaskEditModalStatus("closed")} />
-                <div>
+                <AiFillCloseCircle className="etmodal__close" onClick={() => setTaskEditModalStatus("closed")} />
+                <div className="etmodal__title">Edit Task</div>
+                <div className="etmodal__item">
                     <div>
                         Task Name
                     </div>
@@ -122,7 +140,7 @@ export default function EditTaskModal({ tasks, setTasks, currentTask, setTaskEdi
                         placeholder={currentTask.name}
                     />
                 </div>
-                <div>
+                <div className="etmodal__item">
                     <div>
                         Task Description
                     </div>
@@ -133,17 +151,31 @@ export default function EditTaskModal({ tasks, setTasks, currentTask, setTaskEdi
                     />
                 </div>
                 <div className="et__middle">
-                    <div>
+                    <div className="et__middle__add">
                         <div>
                             Add members
                         </div>
-                        {groupMembers.map(member => {
-                            if (currentTask.creator.memberEmail == userEmail) {
-                                return <React.Fragment key={member.memberEmail}>
+                        <div className="etmodal__members__list">
+                            {groupMembers.map(member => {
+                                if ((currentTask.creator.memberEmail == userEmail) && member.memberEmail == userEmail) {
+                                    return <React.Fragment key={member.memberEmail}>
 
-                                </React.Fragment>
-                            }
-                            if (currentTask.members.findIndex(currentTaskMember => currentTaskMember.memberEmail == member.memberEmail) != -1) {
+                                    </React.Fragment>
+                                }
+                                if (currentTask.members.findIndex(currentTaskMember => currentTaskMember.memberEmail == member.memberEmail) != -1) {
+
+                                    return (
+                                        <React.Fragment key={member.memberEmail}>
+                                            <TaskMemberAdd
+                                                memberEmail={member.memberEmail}
+                                                memberName={member.memberName}
+                                                addedMembers={addedMembers}
+                                                setAddedMembers={setAddedMembers}
+                                                initialActiveStatus="active"
+                                            />
+                                        </React.Fragment>
+                                    )
+                                }
                                 return (
                                     <React.Fragment key={member.memberEmail}>
                                         <TaskMemberAdd
@@ -151,24 +183,13 @@ export default function EditTaskModal({ tasks, setTasks, currentTask, setTaskEdi
                                             memberName={member.memberName}
                                             addedMembers={addedMembers}
                                             setAddedMembers={setAddedMembers}
-                                            initialActiveStatus="active"
                                         />
                                     </React.Fragment>
                                 )
-                            }
-                            return (
-                                <React.Fragment key={member.memberEmail}>
-                                    <TaskMemberAdd
-                                        memberEmail={member.memberEmail}
-                                        memberName={member.memberName}
-                                        addedMembers={addedMembers}
-                                        setAddedMembers={setAddedMembers}
-                                    />
-                                </React.Fragment>
-                            )
-                        })}
+                            })}
+                        </div>
                     </div>
-                    <div>
+                    <div className="et__middle__status">
                         <div>
                             Task Status
                         </div>
@@ -176,14 +197,14 @@ export default function EditTaskModal({ tasks, setTasks, currentTask, setTaskEdi
                             {options.map((option: TaskStatusType) => {
 
                                 return (
-                                    <option value={option} key={option}>
+                                    <option className="etmodal__option" value={option} key={option}>
                                         {option}
                                     </option>)
                             })}
                         </select>
                     </div>
                 </div>
-                <div>
+                <div className="etmodal__priority">
                     <div>
                         Task Priority
                     </div>
@@ -192,11 +213,11 @@ export default function EditTaskModal({ tasks, setTasks, currentTask, setTaskEdi
                     />
                 </div>
 
-                <div>
-                    <button type="submit">
-                        Save
+                <div className="etmodal__buttons">
+                    <button className="etmodal__button etmodal__save" type="submit">
+                        {loading ? <LoadingSpinner type="button" /> : "Save"}
                     </button>
-                    <button type="button" onClick={() => setTaskEditModalStatus("closed")}>
+                    <button className="etmodal__button etmodal__cancel" type="button" onClick={() => setTaskEditModalStatus("closed")}>
                         Cancel
                     </button>
                 </div>
