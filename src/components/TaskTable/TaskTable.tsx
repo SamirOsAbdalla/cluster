@@ -134,7 +134,7 @@ export default function TaskTable({ loading, groupId, groupMembers, taskTableTyp
         setTaskLoading(false)
     }
 
-    const tmp = async () => {
+    const decideTaskFunction = async () => {
 
         if (!taskTableType) {
             return;
@@ -154,7 +154,7 @@ export default function TaskTable({ loading, groupId, groupMembers, taskTableTyp
 
 
     useEffect(() => {
-        tmp()
+        decideTaskFunction()
     }, [userEmail, taskTableType]
     )
 
