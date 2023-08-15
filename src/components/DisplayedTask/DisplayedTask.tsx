@@ -10,64 +10,89 @@ interface Props {
 export default function DisplayedTask({ task, setDisplayedTask }: Props) {
     return (
         <div className="dt__wrapper">
-            <div className="dt__header">
+            <div className="displaytask__header">
                 Task Info
             </div>
-            <AiFillCloseCircle onClick={() => setDisplayedTask({} as TaskInterface)} />
-            <div className="dt__main">
-                <div className='dt__information'>
-                    <div className="dt__cell">
-                        <div>
-                            Name
-                        </div>
 
-                        <div>
-                            {task.name}
+            <div className="dt__main">
+                <AiFillCloseCircle className="displaytask__close" onClick={() => setDisplayedTask({} as TaskInterface)} />
+                <div className="displaytask__bottom">
+                    <div className='dt__information'>
+                        <div className="dt__cell">
+                            <div className="dt__cell__header">
+                                Name
+                            </div>
+
+                            <div className="dt__cell__info">
+                                {task.name}
+                            </div>
+                        </div>
+                        <div className="dt__cell">
+                            <div className="dt__cell__header">
+                                Description
+                            </div>
+                            <div className="dt__cell__info">
+                                {task.description}
+                            </div>
+                        </div>
+                        <div className="dt__cell">
+                            <div className="dt__cell__header">
+                                Creator
+                            </div>
+                            <div className="dt__cell__info">
+                                {task.creator.memberName}
+                            </div>
+                        </div>
+                        <div className="dt__cell">
+                            <div className="dt__cell__header">
+                                Date Created
+                            </div>
+                            <div>
+                                {new Intl.DateTimeFormat("en-US", {
+                                    year: "numeric",
+                                    month: "2-digit",
+                                    day: "2-digit"
+                                }).format(new Date(task.dateCreated.toString()))
+                                }
+                            </div>
+                        </div>
+                        <div className="dt__cell">
+                            <div className="dt__cell__header">
+                                Priority
+                            </div>
+                            <button className={`${(task.priority as string)}__button taskitem__button`}>
+                                {task.priority}
+                            </button>
+                        </div>
+                        <div className="dt__cell">
+                            <div className="dt__cell__header">
+                                Status
+                            </div>
+                            <div>
+                                {task.status}
+                            </div>
+                        </div>
+                        <div className="dt__cell dt__cell__members">
+                            <div className="dt__cell__header">
+                                Members
+                            </div>
+                            <div className="displaytask__member__list">
+                                {task.members.map(member => {
+                                    return (
+                                        <div className="displaytask__member" key={member.memberEmail}>
+                                            <div>{member.memberName}</div>
+                                            <div>{member.status}</div>
+                                        </div>
+                                    )
+                                })}
+                            </div>
                         </div>
                     </div>
-                    <div className="dt__cell">
-                        <div>
-                            Description
-                        </div>
-                        <div>
-                            {task.description}
-                        </div>
-                    </div>
-                    <div className="dt__cell">
-                        <div>
-                            Creator
-                        </div>
-                        <div>
-                            {task.creator.memberName}
-                        </div>
-                    </div>
-                    <div className="dt__cell">
-                        <div>
-                            Date Created
-                        </div>
-                        <div>
-                            {task.dateCreated.toString()}
-                        </div>
-                    </div>
-                    <div className="dt__cell">
-                        <div>
-                            Priority
-                        </div>
-                        <button>
-                            {task.priority}
-                        </button>
-                    </div>
-                    <div className="dt__cell">
-                        <div>
-                            Status
-                        </div>
-                        <div>
-                            {task.status}
-                        </div>
-                    </div>
+                    <CommentSection
+                        taskId={task._id!}
+                    />
                 </div>
-                <CommentSection
-                    taskId={task._id!} />
+
             </div>
 
         </div>

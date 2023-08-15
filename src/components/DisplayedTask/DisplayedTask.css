@@ -1,28 +1,116 @@
 .dt__wrapper {
-    background-color: white;
-    width: 80%;
-    margin-top: 10em;
 
+    max-width: 80%;
+    width: 1200px;
+    margin-top: 5em;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
 }
 
 .dt__information {
     flex: 1;
-    background-color: aquamarine;
+    background-color: #4a4a5c;
     flex-wrap: wrap;
     padding: 2em;
     max-width: 500px;
+    border-radius: 5px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     gap: 4em;
 }
 
+.displaytask__close {
+    cursor: pointer;
+    width: 1.3em;
+    height: 1.3em;
+    align-self: flex-end;
+}
+
+.displaytask__header {
+    font-weight: bold;
+    font-size: 2em;
+    padding-left: 2em;
+    padding-bottom: .3em;
+    color: white;
+}
+
 .dt__cell {
-    flex: 1;
-    max-width: 100px;
+    min-width: 20%;
+    max-width: 150px;
+    flex-direction: column;
+    gap: .5em;
+    align-items: center;
+    display: flex;
+}
+
+.dt__cell__info {
+    max-width: 100%;
+    max-height: 100px;
+    text-align: left;
+    overflow: auto;
+}
+
+.dt__cell__header {
+    text-decoration: underline;
+    font-weight: bold;
+    text-align: center;
 }
 
 .dt__main {
+    background-color: #221f2a;
+    border: 1px solid white;
+    color: white;
     width: 100%;
     display: flex;
+    padding: 1em;
+    flex-direction: column;
+    border-radius: 5px;
+}
+
+.displaytask__bottom {
+    display: flex;
+    font-size: 12px;
+    padding-top: 1em;
     flex-wrap: wrap;
+    justify-content: center;
+    gap: 2em;
+}
+
+.dt__cell__members {
+    min-width: 70%;
+}
+
+.displaytask__member__list {
+    display: flex;
+    width: 100%;
+    max-height: 90px;
+    overflow: auto;
+    border-radius: 5px;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    padding: 1em;
+    color: black;
+    font-weight: bold;
+    gap: 1em;
+}
+
+.displaytask__member {
+    justify-content: space-between;
+    width: 100%;
+    background-color: black;
+    color: white;
+    padding: 1em;
+    border-radius: 2px;
+    flex-wrap: wrap;
+    display: flex;
+    gap: .5em;
+}
+
+@media screen and (max-width:950px) {
+    .displaytask__bottom {
+        flex-direction: column;
+        align-items: center;
+    }
 }
