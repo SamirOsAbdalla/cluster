@@ -46,7 +46,7 @@ export default function TaskItems({ tasks, userEmail, configureModalStatus, task
                 }
                 return (
                     <React.Fragment key={task._id}>
-                        <tr onClick={(e) => {
+                        <tr data-testid="tasktable__tr" onClick={(e) => {
                             if (e.currentTarget != e.target) {
                                 return;
                             }

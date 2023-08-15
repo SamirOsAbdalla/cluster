@@ -39,4 +39,29 @@ export const handlers = [
             }
         ))
     }),
+    rest.post("/api/tasks/fetchTasks", (req, res, ctx) => {
+        return res(ctx.json(
+            [
+                {
+                    groupId: "101041041",
+                    name: "Test Task",
+                    priority: "Low",
+                    status: "In Progress",
+                    description: "This is a test task",
+                    creator: {
+                        memberEmail: "test@gmail.com",
+                        memberName: "Test User"
+                    },
+                    dateCreated: new Date(),
+                    isUrgent: false,
+                    members: {
+                        memberEmail: "test@gmail.com",
+                        memberName: "Test User",
+                        status: "In Progress"
+                    },
+                }
+            ]
+        ))
+    }),
+
 ]

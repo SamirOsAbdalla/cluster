@@ -164,7 +164,7 @@ export default function NewTaskModal({ tasksPerPage, setCurrentPage, setNewTaskM
                 </div>
 
                 <div className="newtask__buttons">
-                    <button className="newtask__button newtask__create" type="submit">
+                    <button data-testid="newtaskmodal__create" className="newtask__button newtask__create" type="submit">
                         {loading ? <LoadingSpinner type="button" /> : "Create"}
                     </button>
                     <button className="newtask__button newtask__cancel" type="button" onClick={() => setNewTaskModalStatus("closed")}>

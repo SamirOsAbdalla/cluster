@@ -216,10 +216,11 @@ export default function TaskTable({ loading, groupId, groupMembers, taskTableTyp
                     {taskTableType == "urgent" && <h1>Urgent Tasks</h1>}
                     {taskTableType == "group" && <h1>Tasks</h1>}
                     {taskTableType == "user" && <h1>My Tasks</h1>}
-                    {taskTableType == "group" && <button className="newtask__button__new" onClick={() => configureModalStatus("new")}>
-                        <AiOutlinePlusCircle />
-                        New Task
-                    </button>}
+                    {taskTableType == "group" &&
+                        <button data-testid="newtask__button" className="newtask__button__new" onClick={() => configureModalStatus("new")}>
+                            <AiOutlinePlusCircle />
+                            New Task
+                        </button>}
                 </section>
                 {newTaskModalStatus == "open" && groupId && groupMembers && taskTableType == "group" &&
                     <NewTaskModal

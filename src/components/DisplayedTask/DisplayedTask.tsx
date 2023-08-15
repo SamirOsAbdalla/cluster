@@ -10,7 +10,7 @@ interface Props {
 export default function DisplayedTask({ task, setDisplayedTask }: Props) {
     return (
         <div className="dt__wrapper">
-            <div className="displaytask__header">
+            <div data-testid="displaytask__header" className="displaytask__header">
                 Task Info
             </div>
 
