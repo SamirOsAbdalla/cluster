@@ -95,7 +95,7 @@ export default function EditTaskModal({ tasks, setTasks, currentTask, setTaskEdi
             currentTaskId: currentTask._id
         }
 
-        const editTaskResponse = await fetch("/api/tasks/editTask", {
+        const editTaskResponse = await fetch("http://localhost:3000/api/tasks/editTask", {
             method: "POST",
             headers: {
                 "Accept": "application/json",

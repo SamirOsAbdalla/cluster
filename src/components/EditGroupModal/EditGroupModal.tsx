@@ -43,7 +43,7 @@ export default function EditGroupModal({ groups, setGroups, editGroupModalStatus
             newDescription
         }
 
-        const editGroupResponse = await fetch("/api/groups/editGroup", {
+        const editGroupResponse = await fetch("http://localhost:3000/api/groups/editGroup", {
             method: "POST",
             headers: {
                 "Accept": "application/json",

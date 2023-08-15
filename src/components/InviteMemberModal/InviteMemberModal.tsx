@@ -57,7 +57,7 @@ export default function InviteMemberModal({ groupName, userEmail, groupId,
                 addedMembers: membersArray
             }
 
-            const inviteResponse = await fetch("/api/inbox/sendInvites", {
+            const inviteResponse = await fetch("http://localhost:3000/api/inbox/sendInvites", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",

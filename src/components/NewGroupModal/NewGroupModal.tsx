@@ -71,7 +71,7 @@ export default function NewGroupModal({ modalOpen, setModalOpen, groups,
                 members: allMembers,
             }
             //make api call to backend 
-            const resp = await fetch("/api/groups/createNewGroup", {
+            const resp = await fetch("http://localhost:3000/api/groups/createNewGroup", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
@@ -105,7 +105,7 @@ export default function NewGroupModal({ modalOpen, setModalOpen, groups,
                     groupName: groupName,
                     groupId: addedGroup._id
                 }
-                const response = await fetch("/api/inbox/sendInvites", {
+                const response = await fetch("http://localhost:3000/api/inbox/sendInvites", {
                     method: "POST",
                     headers: {
                         "Accept": "application/json",

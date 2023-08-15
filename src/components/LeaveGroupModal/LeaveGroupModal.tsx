@@ -62,7 +62,7 @@ export default function LeaveGroupModal({ currentGroup, leaveGroupModal, setLeav
                 groupId: typecastedGroup._id
             }
 
-            const resp = await fetch("/api/groups/deleteGroup", {
+            const resp = await fetch("http://localhost:3000/api/groups/deleteGroup", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
@@ -75,7 +75,7 @@ export default function LeaveGroupModal({ currentGroup, leaveGroupModal, setLeav
             if (finalGroupResponse) {
                 editGroupTable()
 
-                const deleteAllTasksResponse = await fetch("/api/tasks/deleteAllGroupTasks", {
+                const deleteAllTasksResponse = await fetch("http://localhost:3000/api/tasks/deleteAllGroupTasks", {
                     method: "POST",
                     headers: {
                         "Accept": "application/json",
@@ -100,7 +100,7 @@ export default function LeaveGroupModal({ currentGroup, leaveGroupModal, setLeav
                 groupId: typecastedGroup._id,
                 userEmail
             }
-            const resp = await fetch("/api/groupmember/removeGroupMember", {
+            const resp = await fetch("http://localhost:3000/api/groupmember/removeGroupMember", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
@@ -115,7 +115,7 @@ export default function LeaveGroupModal({ currentGroup, leaveGroupModal, setLeav
                 const removeMemberBody = {
                     userEmail
                 }
-                const removeMemberFromTaskResponse = await fetch("/api/tasks/removeMemberFromAllTasks", {
+                const removeMemberFromTaskResponse = await fetch("http://localhost:3000/api/tasks/removeMemberFromAllTasks", {
                     method: "POST",
                     headers: {
                         "Accept": "application/json",

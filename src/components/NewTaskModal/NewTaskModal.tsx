@@ -70,7 +70,7 @@ export default function NewTaskModal({ tasksPerPage, setCurrentPage, setNewTaskM
         }
 
 
-        const newTaskResponse = await fetch("/api/tasks/createNewTask", {
+        const newTaskResponse = await fetch("http://localhost:3000/api/tasks/createNewTask", {
             method: "POST",
             headers: {
                 "Accept": "application/json",

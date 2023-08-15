@@ -83,7 +83,7 @@ export default function LoginForm({ type }: LoginProps) {
                 email,
                 password
             }
-            const resp = await fetch("/api/register", {
+            const resp = await fetch("http://localhost:3000/api/register", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",

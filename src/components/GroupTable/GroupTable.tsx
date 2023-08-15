@@ -60,7 +60,7 @@ export default function GroupTable({ setLoading, loading, setFetchGroup }: Props
                 memberEmail: creatorEmail,
                 memberName: creatorName
             }
-            const resp = await fetch("/api/groups/findGroups", {
+            const resp = await fetch("http://localhost:3000/api/groups/findGroups", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",

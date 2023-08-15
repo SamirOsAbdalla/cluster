@@ -28,7 +28,7 @@ export default function GroupDetailModal({ group, setGroupDetailModal }: Props) 
                     groupName: currentGroup.name,
                     groupId: currentGroup._id
                 }
-                const response = await fetch("/api/sendInvites", {
+                const response = await fetch("http://localhost:3000/api/sendInvites", {
                     method: "POST",
                     headers: {
                         "Accept": "application/json",
