@@ -1,11 +1,43 @@
 .tm__wrapper {
     padding: .5em;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1em;
+    width: 100%;
+    overflow: hidden;
 }
 
 .tm__wrapper__inactive {
-    background-color: aquamarine;
+    background-color: #676781;
+    font-weight: bold;
+    cursor: pointer;
+    border: 1px solid white;
+    border-radius: 2px;
+    transition: 0.2s;
+    color: rgb(255, 255, 255);
+}
+
+.tm__wrapper__inactive:hover {
+    background-color: #545469;
+}
+
+.tm__name {
+    /* max-width: 65%; */
+    flex: 1;
+    max-height: 40px;
+    overflow: auto;
 }
 
 .tm__wrapper__active {
-    background-color: aliceblue;
+    background-color: rgb(28, 35, 42);
+    cursor: pointer;
+    font-weight: bold;
+    border: 1px solid white;
+    border-radius: 2px;
+    transition: 0.2s;
+}
+
+.tm__wrapper__active:hover {
+    background-color: rgb(47, 59, 70);
 }

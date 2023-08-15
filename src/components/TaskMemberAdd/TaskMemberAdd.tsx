@@ -36,7 +36,10 @@ export default function TaskMemberAdd({ memberName, memberEmail, addedMembers, s
 
     return (
         <div onClick={handleActiveStatusChange} className={`tm__wrapper ${"tm__wrapper__" + activeStatus}`}>
-            {memberName}
+            <div className="tm__name">
+                {memberName}
+            </div>
+            {activeStatus == "active" ? <span>*Added*</span> : <></>}
         </div>
     )
 }
