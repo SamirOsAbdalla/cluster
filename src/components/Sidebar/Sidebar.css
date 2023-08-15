@@ -134,11 +134,11 @@
      display: none;
      word-break: break-all;
      font-weight: bold;
-     color: #e4e8f5
+     color: white
  }
 
  .sidebar__link__text {
-     color: #e4e8f5;
+     color: white;
      display: none;
  }
 
