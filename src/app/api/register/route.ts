@@ -16,7 +16,7 @@ export async function POST(request: Request) {
     try {
         const { name, email, password } = await request.json()
         const userResult = await UserModel.findOne({ email })
-
+        console.log(userResult)
         if (userResult) {
             throw new Error("User already exists")
         } else {
