@@ -47,38 +47,36 @@ export default function GroupTable({ setLoading, loading, setFetchGroup }: Props
     const firstIndex = lastIndex - groupsPerPage
     const displayedGroups = groups.slice(firstIndex, lastIndex)
 
-    const fetchGroups = async () => {
-        if (!creatorEmail || !creatorName) {
-            return;
-        }
 
-        let currentCreator: Omit<MemberInterface, "profilePicture"> = {
-            memberEmail: creatorEmail,
-            memberName: creatorName
-        }
-        const resp = await fetch("http://localhost:3000/api/groups/findGroups", {
-            method: "POST",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(currentCreator),
-        });
-        //check for empty groups
-        const finalData = await resp.json()
-        setGroups(finalData)
-        if (finalData.length != 0) {
-            setFetchGroup(true)
-        }
-        setLoading(false)
-    }
 
-    const tmp = async () => {
-        await fetchGroups()
-    }
+
     useEffect(() => {
+        const fetchGroups = async () => {
+            if (!creatorEmail || !creatorName) {
+                return;
+            }
 
-        tmp()
+            let currentCreator: Omit<MemberInterface, "profilePicture"> = {
+                memberEmail: creatorEmail,
+                memberName: creatorName
+            }
+            const resp = await fetch("http://localhost:3000/api/groups/findGroups", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(currentCreator),
+            });
+            //check for empty groups
+            const finalData = await resp.json()
+            setGroups(finalData)
+            if (finalData.length != 0) {
+                setFetchGroup(true)
+            }
+            setLoading(false)
+        }
+        fetchGroups()
     }, [creatorName, creatorEmail])
 
     useEffect(() => {

@@ -35,7 +35,7 @@ export default function EditTaskModal({ tasks, setTasks, currentTask, setTaskEdi
         }
         const tmpMembers = [...currentTask.members]
         setAddedMembers(tmpMembers)
-    }, [])
+    }, [currentTask])
 
 
     const taskMembersChanged = () => {

@@ -155,8 +155,7 @@ export default function TaskTable({ loading, groupId, groupMembers, taskTableTyp
 
     useEffect(() => {
         tmp()
-    }
-        , [userEmail, taskTableType]
+    }, [userEmail, taskTableType]
     )
 
 

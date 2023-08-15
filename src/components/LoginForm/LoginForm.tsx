@@ -215,7 +215,7 @@ export default function LoginForm({ type }: LoginProps) {
                 </form>
                 {type == "login" ?
                     <div className="signup">
-                        <span>Don't have an account?</span>
+                        <span>Don&apos;t have an account?</span>
                         <Link href="/signup" className="sign__link"> Sign up</Link>
                     </div>
                     :

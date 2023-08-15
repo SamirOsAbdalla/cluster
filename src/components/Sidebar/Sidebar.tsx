@@ -75,7 +75,7 @@ export default function Sidebar() {
         }
 
         fetchUserPicture()
-    }, [userEmail])
+    }, [userEmail, handleUpdateSession])
 
 
 
