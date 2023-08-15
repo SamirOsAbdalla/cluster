@@ -16,9 +16,8 @@ export async function POST(request: Request) {
     try {
         const { name, email, password } = await request.json()
         const userResult = await UserModel.findOne({ email })
-        console.log(userResult + "in register after model")
         if (userResult) {
-            throw new Error("User already exists")
+            return new Response(JSON.stringify(null))
         } else {
             let user = await UserModel.create({
                 name,
@@ -31,6 +30,7 @@ export async function POST(request: Request) {
             })
 
             if (user) {
+                console.log("User:", user)
                 const inboxResult = await InboxModel.create({
                     inboxItems: [],
                     userEmail: email

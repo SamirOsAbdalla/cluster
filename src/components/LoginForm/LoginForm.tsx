@@ -91,7 +91,9 @@ export default function LoginForm({ type }: LoginProps) {
                 },
                 body: JSON.stringify(newUser),
             });
-            if (resp.statusText == "OK") {
+
+            const respJSON = await resp.json()
+            if (respJSON) {
                 setError("")
                 handleLogin()
             } else {
