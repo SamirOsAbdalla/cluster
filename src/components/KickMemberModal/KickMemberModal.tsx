@@ -33,7 +33,7 @@ export default function KickMemberModal({ groupId, kickedMemberName, kickedMembe
             groupId
         }
 
-        const kickMemberResponse = await fetch("http://localhost:3000/api/groupmember/removeGroupMember", {
+        const kickMemberResponse = await fetch("/api/groupmember/removeGroupMember", {
             method: "POST",
             headers: {
                 "Accept": "application/json",

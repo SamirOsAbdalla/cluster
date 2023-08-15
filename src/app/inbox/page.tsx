@@ -25,7 +25,7 @@ export default function Inbox() {
             const user = {
                 userEmail: userEmail
             }
-            const response = await fetch("http://localhost:3000/api/inbox/fetchInbox", {
+            const response = await fetch("/api/inbox/fetchInbox", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",

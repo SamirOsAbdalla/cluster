@@ -32,7 +32,7 @@ export default function CompleteTaskModal({ tasks, setTasks, taskInfo, memberEma
             memberEmail
         }
 
-        const taskMemberStatusResponse = await fetch("http://localhost:3000/api/tasks/changeTaskMemberStatus", {
+        const taskMemberStatusResponse = await fetch("/api/tasks/changeTaskMemberStatus", {
             method: "POST",
             headers: {
                 "Accept": "application/json",
