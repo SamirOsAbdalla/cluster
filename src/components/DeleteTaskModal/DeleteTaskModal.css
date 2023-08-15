@@ -1,5 +1,80 @@
 .dtmodal__wrapper {
     padding: 2em;
     background-color: gray;
-    position: absolute
+    position: fixed;
+    top: 7em;
+    background-color: #202032;
+    border: 1px solid white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+    max-width: 70%;
+    width: 300px;
+}
+
+.dt__close {
+    width: 1.3em;
+    height: 1.3em;
+    align-self: flex-end;
+    position: relative;
+    top: -1.3em;
+    left: 1.3em;
+    cursor: pointer;
+}
+
+.dt__heading span {
+    text-decoration: underline;
+    font-weight: bold;
+    word-break: break-word;
+}
+
+.dt__heading {
+    padding-bottom: 2em;
+    text-align: center;
+}
+
+.dt__buttons {
+    display: flex;
+    gap: .5em;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.dt__confirm {
+    background-color: #3500d3;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #1a3377 0 -3px 0 inset;
+
+    border: none;
+    border-radius: 5px;
+    padding: .6em 1.4em;
+    color: white;
+    transition: 0.2s;
+    font-weight: 700;
+    cursor: pointer;
+    width: 80px;
+}
+
+.dt__confirm:hover {
+    background-color: #2f05ac;
+    transform: scale(1.04)
+}
+
+.dt__cancel {
+    background-color: #ffffff;
+    color: #ea2d49;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #bebac6 0 -3px 0 inset;
+
+    border-radius: 5px;
+    padding: .6em 1.4em;
+    border: 1px solid #ea2d49;
+    transition: 0.2s;
+    font-weight: 700;
+    cursor: pointer;
+    width: 80px;
+}
+
+.dt__cancel:hover {
+    transform: scale(1.04);
+    background-color: #dbd7e4;
 }

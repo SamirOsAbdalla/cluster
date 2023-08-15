@@ -1,8 +1,9 @@
 "use client"
 import { TaskInterface } from "@/lib/mongo/models/TaskModel"
 import "./CompleteTaskModal.css"
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 import { AiFillCloseCircle } from "react-icons/ai"
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner"
 interface Props {
     tasks: TaskInterface[],
     setTasks: Dispatch<SetStateAction<TaskInterface[]>>
@@ -12,11 +13,20 @@ interface Props {
 }
 
 export default function CompleteTaskModal({ tasks, setTasks, taskInfo, memberEmail, setCompleteTaskModalStatus }: Props) {
+    const [loading, setLoading] = useState<boolean>(false)
+    const setButtonsDisabled = () => {
+        const confirmButton = document.querySelector(".ctmodal__confirm") as HTMLButtonElement
+        const cancelButton = document.querySelector(".ctmodal__cancel") as HTMLButtonElement
+        confirmButton.disabled = true
+        cancelButton.disabled = true
+    }
     const updateTaskMemberStatus = async (taskId: string) => {
         if (!memberEmail || !taskId) {
             return;
         }
 
+        setButtonsDisabled()
+        setLoading(true)
         const taskMemberStatusBody = {
             taskId,
             memberEmail
@@ -47,19 +57,20 @@ export default function CompleteTaskModal({ tasks, setTasks, taskInfo, memberEma
                 setTasks(tempTasks)
             }
         }
+        setLoading(false)
     }
 
     return (
         <div className="ctmodal__wrapper">
-            <AiFillCloseCircle onClick={() => setCompleteTaskModalStatus("closed")} />
-            <div>
-                Are you sure {taskInfo.taskName} is completed?
+            <AiFillCloseCircle className="ctmodal__close" onClick={() => setCompleteTaskModalStatus("closed")} />
+            <div className="ctmodal__heading">
+                Are you sure <span>{taskInfo.taskName}</span> is completed?
             </div>
-            <div>
-                <button onClick={() => updateTaskMemberStatus(taskInfo.taskId)}>
-                    Confirm
+            <div className="ctmodal__buttons">
+                <button className="ctmodal__button ctmodal__confirm" onClick={() => updateTaskMemberStatus(taskInfo.taskId)}>
+                    {loading ? <LoadingSpinner type="button" /> : "Confirm"}
                 </button>
-                <button onClick={() => setCompleteTaskModalStatus("closed")}>
+                <button className="ctmodal__button ctmodal__cancel" onClick={() => setCompleteTaskModalStatus("closed")}>
                     Cancel
                 </button>
             </div>

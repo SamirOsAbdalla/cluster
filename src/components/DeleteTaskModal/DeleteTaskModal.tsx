@@ -1,8 +1,9 @@
 import "./DeleteTaskModal.css"
 import { AiFillCloseCircle } from "react-icons/ai";
 
-import React, { Dispatch, SetStateAction } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 import { TaskInterface } from "@/lib/mongo/models/TaskModel";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 interface Props {
     taskName: string
@@ -16,12 +17,21 @@ interface Props {
 }
 export default function DeleteTaskModal({ currentPage, tasksPerPage, setCurrentPage, taskName, taskId, setDeleteTaskModalStatus, tasks, setTasks }: Props) {
 
+    const [loading, setLoading] = useState<boolean>(false)
+
+    const setButtonsDisabled = () => {
+        const confirmButton = document.querySelector(".dt__confirm") as HTMLButtonElement
+        const cancelButton = document.querySelector(".dt__cancel") as HTMLButtonElement
+        confirmButton.disabled = true
+        cancelButton.disabled = true
+    }
     const deleteTask = async () => {
         //make api call to backend to delete task
         if (!taskId) {
             return;
         }
-
+        setButtonsDisabled()
+        setLoading(true)
         const deleteTaskBody = {
             taskId: taskId!
         }
@@ -45,17 +55,18 @@ export default function DeleteTaskModal({ currentPage, tasksPerPage, setCurrentP
         }
         setTasks(filteredTasks)
         setDeleteTaskModalStatus("closed")
+        setLoading(false)
     }
 
     return (
         <div className="dtmodal__wrapper">
             <AiFillCloseCircle onClick={() => setDeleteTaskModalStatus("closed")} className="dt__close" />
             <div className="dt__heading">
-                Are you sure you want to delete {taskName}
+                Are you sure you want to delete <span>{taskName} </span>
             </div>
             <div className="dt__buttons">
                 <button onClick={deleteTask} className="dt__button dt__confirm">
-                    Confirm
+                    {loading ? <LoadingSpinner type="button" /> : "Confirm"}
                 </button>
                 <button onClick={() => setDeleteTaskModalStatus("closed")} className="dt__button dt__cancel">
                     Cancel
