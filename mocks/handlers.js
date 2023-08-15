@@ -1,7 +1,7 @@
 import { rest } from "msw";
 
 export const handlers = [
-    rest.get("http://localhost:3000/api/auth/session", (req, res, ctx) => {
+    rest.get("/api/auth/session", (req, res, ctx) => {
         return res(ctx.json({
             user: {
                 name: "TestName",
@@ -10,7 +10,7 @@ export const handlers = [
 
         }))
     }),
-    rest.post("http://localhost:3000/api/groups/findGroups", (req, res, ctx) => {
+    rest.post("/api/groups/findGroups", (req, res, ctx) => {
         return res(ctx.json([{
             name: "Test Group",
             creator: {
@@ -22,10 +22,10 @@ export const handlers = [
             dateCreated: new Date()
         }]))
     }),
-    rest.post("http://localhost:3000/api/inbox/removeInvitation", (req, res, ctx) => {
+    rest.post("/api/inbox/removeInvitation", (req, res, ctx) => {
         return res(ctx.json({}))
     }),
-    rest.post("http://localhost:3000/api/inbox/fetchInbox", (req, res, ctx) => {
+    rest.post("/api/inbox/fetchInbox", (req, res, ctx) => {
         return res(ctx.json(
             {
                 inboxItems: [{
