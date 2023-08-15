@@ -1,7 +1,7 @@
 import { rest } from "msw";
 
 export const handlers = [
-    rest.get("http://localhost/api/auth/session", (req, res, ctx) => {
+    rest.get("http://localhost:3000/api/auth/session", (req, res, ctx) => {
         return res(ctx.json({
             user: {
                 name: "TestName",
