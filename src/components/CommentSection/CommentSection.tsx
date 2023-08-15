@@ -3,6 +3,7 @@ import "./CommentSection.css"
 import { useState, useEffect } from 'react'
 import { CommentInterface } from '@/lib/mongo/models/CommentModel'
 import { useSession } from 'next-auth/react'
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 interface Props {
     taskId: string
 }
@@ -11,16 +12,27 @@ export default function CommentSection({ taskId }: Props) {
 
     const [currentComment, setCurrentComment] = useState<string>("")
     const [commentList, setCommentList] = useState<CommentInterface[]>([])
-
+    const [loading, setLoading] = useState<boolean>(false)
     const session = useSession()
     const userName = session.data?.user.name
     const userEmail = session.data?.user.email
+
+    const setButtonsDisabled = () => {
+        const addButton = document.querySelector(".csform__add") as HTMLButtonElement
+        addButton.disabled = true;
+    }
+
+    const setButtonsEnabled = () => {
+        const addButton = document.querySelector(".csform__add") as HTMLButtonElement
+        addButton.disabled = false;
+    }
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (!taskId || !currentComment) {
             return;
         }
-
+        setButtonsDisabled()
+        setLoading(true)
         const commentBody: CommentInterface = {
             creator: userName!,
             dateCreated: new Date(),
@@ -44,6 +56,8 @@ export default function CommentSection({ taskId }: Props) {
         tmpComments.push(commentResponseJSON)
         setCommentList(tmpComments)
         setCurrentComment("")
+        setButtonsEnabled()
+        setLoading(false)
     }
 
 
@@ -84,16 +98,21 @@ export default function CommentSection({ taskId }: Props) {
             <div className="cs__header">
                 Comments
             </div>
-            <div className="comments__list">
+            {commentList.length > 0 && <div className="comments__list">
                 {commentList.map(comment => {
                     return (
-                        <div key={comment._id}>
-                            <div>
-                                <div>
+                        <div className="comment" key={comment._id}>
+                            <div className="comment__top">
+                                <div className="comment__top__name">
                                     {comment.creator}
                                 </div>
                                 <div>
-                                    {comment.dateCreated.toString()}
+                                    {new Intl.DateTimeFormat("en-US", {
+                                        year: "numeric",
+                                        month: "2-digit",
+                                        day: "2-digit"
+                                    }).format(new Date(comment.dateCreated.toString()))
+                                    }
                                 </div>
                             </div>
                             <div>
@@ -102,16 +121,17 @@ export default function CommentSection({ taskId }: Props) {
                         </div>
                     )
                 })}
-            </div>
-            <div>
+            </div>}
+            <div className="cs__form__wrapper">
                 <form onSubmit={handleSubmit}>
                     <input
                         value={currentComment}
                         onChange={(e) => setCurrentComment(e.target.value)}
                         placeholder="Add comment here..."
+                        className="csform__input"
                     />
-                    <button type="submit">
-                        Add Comment
+                    <button className="csform__add" type="submit">
+                        {loading ? <LoadingSpinner type="button" /> : "Add Comment"}
                     </button>
                 </form>
             </div>

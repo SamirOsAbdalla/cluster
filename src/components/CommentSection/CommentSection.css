@@ -2,10 +2,83 @@
     flex: 1;
 }
 
+
+.cs__header {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.csform__input {
+    width: 80%;
+    padding: 1em;
+}
+
 .comments__list {
     display: flex;
+    margin-top: 1em;
     flex-direction: column;
+    padding: 1em;
     max-height: 200px;
     overflow: auto;
-    gap: 3em;
+    gap: 2em;
+    background-color: black;
+    color: black;
+    box-shadow: rgba(220, 220, 220, 0.25) 0px 2px 5px -2px, rgba(248, 248, 248, 0.3) 0px 1px 3px 2px;
+    margin-bottom: 3em;
+
+}
+
+.comment {
+    background-color: rgb(255, 255, 255);
+    border-radius: 2px;
+    padding: .5em;
+}
+
+.comment__top {
+    display: flex;
+    gap: 1em;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: bold;
+    word-break: break-word;
+    margin-bottom: 1em;
+    border-bottom: 1px solid grey;
+}
+
+.cs__form__wrapper form {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    flex-wrap: wrap;
+    margin-top: 1em;
+    justify-content: flex-start;
+
+}
+
+.comment__top__name {
+    max-width: 60%;
+}
+
+.csform__add {
+    background-color: #fdfdfd;
+    color: black(255, 255, 255);
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #bebac6 0 -3px 0 inset;
+
+    border-radius: 5px;
+    padding: .8em 1.4em;
+    border: 1px solid #663edf;
+    transition: 0.2s;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    width: 120px;
+    font-size: 10px;
+    width: 80px;
+    max-width: 60%;
+}
+
+.csform__add:hover {
+    transform: scale(1.04);
+    background-color: #f1ecff;
 }
