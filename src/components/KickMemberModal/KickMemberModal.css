@@ -1,12 +1,89 @@
 .kickmodal__wrapper {
     padding: 2em;
-    position: absolute;
-    background-color: dimgray;
-    top: 0em;
-    left: 0em;
-    right: 0em;
-    bottom: 0em;
-    margin: auto;
-    max-width: min(300px, 70vw);
-    height: fit-content
+    position: fixed;
+    background-color: #202032;
+    border: 1px solid white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    max-width: 70%;
+    border-radius: 5px;
+    z-index: 9998;
+    top: 10em;
+
+}
+
+.kickmodal__close {
+    color: white;
+    width: 1.3em;
+    height: 1.3em;
+    cursor: pointer;
+    align-self: flex-end;
+    position: relative;
+    top: -1em;
+    left: 1em;
+}
+
+.kickmodal__heading {
+    color: white;
+    text-align: center;
+    padding-bottom: 2em;
+}
+
+.kickmodal__heading span {
+    text-decoration: underline;
+    font-weight: bold;
+    word-break: break-word;
+
+}
+
+.kickmodal__button {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+}
+
+.kickmodal__buttons {
+    display: flex;
+    justify-content: center;
+    gap: 0.5em;
+}
+
+.kickmodal__kick {
+    background-color: #3500d3;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #1a3377 0 -3px 0 inset;
+
+    border: none;
+    border-radius: 5px;
+    padding: .6em 1.4em;
+    color: white;
+    transition: 0.2s;
+    font-weight: 700;
+    cursor: pointer;
+    width: 80px;
+}
+
+.kickmodal__kick:hover {
+    background-color: #2f05ac;
+    transform: scale(1.04)
+}
+
+.kickmodal__cancel {
+    background-color: #ffffff;
+    color: #ea2d49;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #bebac6 0 -3px 0 inset;
+
+    border-radius: 5px;
+    padding: .6em 1.4em;
+    border: 1px solid #ea2d49;
+    transition: 0.2s;
+    font-weight: 700;
+    cursor: pointer;
+    width: 80px;
+}
+
+.kickmodal__cancel:hover {
+    transform: scale(1.04);
+    background-color: #dbd7e4;
 }
