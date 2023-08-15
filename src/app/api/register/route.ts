@@ -42,7 +42,7 @@ export async function POST(request: Request) {
         }
     }
     catch (error: unknown) {
-        console.log(error);
+        console.log(error + "in register");
         throw new Error("User creation error")
     }
 
