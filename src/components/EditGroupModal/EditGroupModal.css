@@ -26,6 +26,12 @@
     height: 1.3em;
 }
 
+.editgroupmodal__input {
+    padding: .8em;
+    margin-top: .1em;
+    width: 100%;
+}
+
 .editgroupmodal__heading {
     color: white;
     display: flex;
