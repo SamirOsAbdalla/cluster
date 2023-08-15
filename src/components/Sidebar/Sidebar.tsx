@@ -51,7 +51,7 @@ export default function Sidebar() {
                 memberEmail: userEmail
             }
 
-            const resp = await fetch("http://localhost:3000/api/user/fetchPicture", {
+            const resp = await fetch("/api/user/fetchPicture", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
@@ -93,7 +93,7 @@ export default function Sidebar() {
                     memberEmail: userEmail,
                     newPicture: reader.result
                 }
-                const resp = await fetch("http://localhost:3000/api/user/changePicture", {
+                const resp = await fetch("/api/user/changePicture", {
                     method: "POST",
                     headers: {
                         "Accept": "application/json",

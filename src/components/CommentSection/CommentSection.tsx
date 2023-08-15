@@ -39,7 +39,7 @@ export default function CommentSection({ taskId }: Props) {
             taskId,
             message: currentComment
         }
-        const commentResponse = await fetch("http://localhost:3000/api/comments/createNewComment", {
+        const commentResponse = await fetch("/api/comments/createNewComment", {
             method: "POST",
             headers: {
                 "Accept": "application/json",
@@ -71,7 +71,7 @@ export default function CommentSection({ taskId }: Props) {
             const fetchCommentBody = {
                 taskId
             }
-            const fetchCommentResponse = await fetch("http://localhost:3000/api/comments/fetchComments", {
+            const fetchCommentResponse = await fetch("/api/comments/fetchComments", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",

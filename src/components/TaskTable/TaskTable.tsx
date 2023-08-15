@@ -60,7 +60,7 @@ export default function TaskTable({ loading, groupId, groupMembers, taskTableTyp
             memberEmail: userEmail
         }
 
-        const fetchUTResponse = await fetch("http://localhost:3000/api/tasks/fetchUrgentTasks", {
+        const fetchUTResponse = await fetch("/api/tasks/fetchUrgentTasks", {
             method: "POST",
             headers: {
                 "Accept": "application/json",
@@ -87,7 +87,7 @@ export default function TaskTable({ loading, groupId, groupMembers, taskTableTyp
             memberEmail: userEmail
         }
 
-        const fetchTasksResponse = await fetch("http://localhost:3000/api/tasks/fetchTasks", {
+        const fetchTasksResponse = await fetch("/api/tasks/fetchTasks", {
             method: "POST",
             headers: {
                 "Accept": "application/json",
@@ -116,7 +116,7 @@ export default function TaskTable({ loading, groupId, groupMembers, taskTableTyp
             memberEmail: userEmail
         }
 
-        const fetchResp = await fetch("http://localhost:3000/api/tasks/fetchUserTasks", {
+        const fetchResp = await fetch("/api/tasks/fetchUserTasks", {
             method: "POST",
             headers: {
                 "Accept": "application/json",

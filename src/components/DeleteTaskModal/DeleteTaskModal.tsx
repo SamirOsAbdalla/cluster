@@ -36,7 +36,7 @@ export default function DeleteTaskModal({ currentPage, tasksPerPage, setCurrentP
             taskId: taskId!
         }
 
-        const deleteTaskResponse = await fetch("http://localhost:3000/api/tasks/deleteTask", {
+        const deleteTaskResponse = await fetch("/api/tasks/deleteTask", {
             method: "POST",
             headers: {
                 "Accept": "application/json",

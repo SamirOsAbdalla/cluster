@@ -42,7 +42,7 @@ export default function InvitationButton({ type, groupId, inbox, setInbox, invit
             userEmail
         }
         //backend call to remove invitation from user inbox list
-        const acceptInviteResp = await fetch("http://localhost:3000/api/inbox/removeInvitation", {
+        const acceptInviteResp = await fetch("/api/inbox/removeInvitation", {
             method: "POST",
             headers: {
                 "Accept": "application/json",
@@ -76,7 +76,7 @@ export default function InvitationButton({ type, groupId, inbox, setInbox, invit
                 userPicture: userPicture || ""
             }
             //backend call to add member to group members list
-            const addUserResp = await fetch("http://localhost:3000/api/groupmember/addGroupMember", {
+            const addUserResp = await fetch("/api/groupmember/addGroupMember", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",

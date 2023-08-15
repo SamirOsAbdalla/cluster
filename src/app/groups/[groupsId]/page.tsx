@@ -40,7 +40,7 @@ export default function GroupDetails({ params }: { params: { groupsId: string } 
                 groupId: paramsId
             }
 
-            const groupResponse = await fetch("http://localhost:3000/api/groups/fetchGroupById", {
+            const groupResponse = await fetch("/api/groups/fetchGroupById", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
