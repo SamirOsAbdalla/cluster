@@ -52,12 +52,13 @@
 
 .tasktable__table thead {
     background-color: #221f2a;
-    color: #d5daeb;
+    color: white;
 
 }
 
 .tasktable__table tbody tr:hover {
     background-color: #b9c3d3;
+    cursor: pointer;
     color: rgb(54, 52, 52);
 }
 
