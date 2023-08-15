@@ -3,7 +3,7 @@ import mongoose from "mongoose"
 interface RequestBody {
     userEmail: string,
     userName: string,
-    userPicture: string,
+    userPicture: { public_id: string; url: string; },
     groupId: string
 }
 
