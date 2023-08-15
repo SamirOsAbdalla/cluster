@@ -8,6 +8,7 @@
     display: flex;
     top: 6em;
     z-index: 9998;
+    border-radius: 5px;
 }
 
 .invitemodal__form {

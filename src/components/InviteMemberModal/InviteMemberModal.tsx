@@ -95,6 +95,14 @@ export default function InviteMemberModal({ groupName, userEmail, groupId,
                         <span>Invite</span>
                     </button>
                 </div>
+
+
+                <input
+                    type="email"
+                    placeholder="newmember@gmail.com"
+                    value={inputInvitedMember}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputInvitedMember(e.target.value)}
+                />
                 {invitedMembers.size > 0 ? <div className="invited__members__list">
                     {Array.from(invitedMembers).map(member => (
                         <div className="invited__member" key={member}>
@@ -111,14 +119,6 @@ export default function InviteMemberModal({ groupName, userEmail, groupId,
                 </div> :
                     <></>
                 }
-
-                <input
-                    type="email"
-                    placeholder="newmember@gmail.com"
-                    value={inputInvitedMember}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputInvitedMember(e.target.value)}
-                />
-
                 <div className="invitemodal__buttons">
                     <button type="submit" className="invitemodal__button invitemodal__submit">{loading ? <LoadingSpinner type="button" /> : "Submit"}</button>
                     <button onClick={() => setInviteMemberModalStatus("closed")} className="invitemodal__button invitemodal__cancel">Cancel</button>
