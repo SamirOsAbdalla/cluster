@@ -3,6 +3,7 @@
     gap: .5em;
     width: 100%;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .tpbuttons__button {
