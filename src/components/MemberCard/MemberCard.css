@@ -1,13 +1,25 @@
 .membercard__wrapper {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-    padding: 2em;
+    padding: 1.5em;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1em;
+    justify-content: space-between;
+    gap: 1.3em;
     background-color: #676781;
     border-radius: 5px;
+    width: 230px;
+    max-width: 100%;
     border: 1px solid white;
+    height: 270px;
+}
+
+.membercard__top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+    gap: 1.2em;
 }
 
 .membercard__picture {
@@ -25,7 +37,80 @@
     height: 40px
 }
 
-.membercard__text {
-    word-break: break-word;
+.membercard__buttons {
+    display: flex;
+    gap: .5em;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+.membercard__creator__button {
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #282531 0 -3px 0 inset;
+    font-weight: 700;
+    cursor: pointer;
+    background-color: #07011a;
     color: white;
+    padding: 10px 14px;
+    width: 85px;
+    font-size: .7em;
+    border: none;
+    border-radius: 5px;
+    transition: .2s;
+
+}
+
+.membercard__member__button {
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #322461 0 -3px 0 inset;
+    font-weight: 700;
+    cursor: pointer;
+    background-color: #463286;
+    color: white;
+    padding: 10px 14px;
+    width: 85px;
+    font-size: .7em;
+    border: none;
+    border-radius: 5px;
+    transition: .2s;
+
+}
+
+.membercard__text {
+
+    color: white;
+    overflow: auto;
+    font-size: 1.1em;
+    word-break: break-word;
+    overflow: auto;
+}
+
+.membercard__name {
+    text-align: center;
+    width: 100%;
+    height: 45px;
+    word-break: break-word;
+    overflow: auto;
+}
+
+.membercard__email {
+    font-size: .9em;
+}
+
+.membercard__kick {
+    background-color: #ffffff;
+    color: #ea2d49;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #bebac6 0 -3px 0 inset;
+
+    border-radius: 5px;
+    padding: .6em 1.4em;
+    border: 1px solid #ea2d49;
+    transition: 0.2s;
+    font-weight: 700;
+    cursor: pointer;
+    width: 80px;
+}
+
+.membercard__kick:hover {
+    transform: scale(1.04);
+    background-color: #dbd7e4;
 }

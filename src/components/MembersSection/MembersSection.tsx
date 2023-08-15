@@ -79,6 +79,7 @@ export default function MembersSection({ groupName, groupId, groupCreatorEmail,
                             groupCreatorEmail == userEmail ?
                                 groupMembers.map(member =>
                                     <MemberCard key={member.memberEmail}
+                                        groupCreatorEmail={groupCreatorEmail}
                                         setKickModalStatus={setKickModalStatus}
                                         setKickModalMemberEmail={setKickModalMemberEmail}
                                         kickModalStatus={kickModalStatus}
@@ -92,6 +93,7 @@ export default function MembersSection({ groupName, groupId, groupCreatorEmail,
                                     />) :
                                 groupMembers.map(member =>
                                     <MemberCard key={member.memberEmail}
+                                        groupCreatorEmail={groupCreatorEmail}
                                         setKickModalMemberEmail={setKickModalMemberEmail}
                                         setKickModalMemberName={setKickModalMemberName}
                                         kickModalStatus={kickModalStatus}
