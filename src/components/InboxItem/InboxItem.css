@@ -18,7 +18,7 @@
 }
 
 .invite__groupname {
-    word-break: break-all;
+    word-break: break-word;
     text-decoration: underline;
 }
 
@@ -59,6 +59,7 @@
     color: white;
     min-width: 5em;
     font-size: 1em;
+    word-break: break-word;
     text-align: center;
     text-align: left;
 }
@@ -68,5 +69,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    word-break: break-word;
     gap: 1em;
 }
