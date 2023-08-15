@@ -95,6 +95,7 @@ export default function NewTaskModal({ tasksPerPage, setCurrentPage, setNewTaskM
     return (
         <div className="ntmodal__wrapper">
             <AiFillCloseCircle className="ntmodal__close" onClick={() => setNewTaskModalStatus("closed")} />
+            <div className="ntmodal__title">Create task</div>
             <form onSubmit={createNewTask} className="ntmodal__form">
                 <div className="ntmodal__item">
                     <div className="ntmodal__name">
@@ -134,26 +135,32 @@ export default function NewTaskModal({ tasksPerPage, setCurrentPage, setNewTaskM
                         <div className="ntmodal__addmember">
                             Add Members
                         </div>
+
                     }
-                    {groupMembers.map(groupMember => {
-                        if (groupMember.memberEmail == userEmail) {
+                    {groupMembers.length > 1 && <div className="ntmodal__members__list">
+                        {groupMembers.map(groupMember => {
+                            if (groupMember.memberEmail == userEmail) {
+                                return (
+                                    <React.Fragment key={groupMember.memberEmail}>
+
+                                    </React.Fragment>
+                                )
+                            }
                             return (
                                 <React.Fragment key={groupMember.memberEmail}>
-
-                                </React.Fragment>
-                            )
+                                    <TaskMemberAdd
+                                        memberEmail={groupMember.memberEmail}
+                                        memberName={groupMember.memberName}
+                                        addedMembers={addedMembers}
+                                        setAddedMembers={setAddedMembers}
+                                    />
+                                </React.Fragment>)
                         }
-                        return (
-                            <React.Fragment key={groupMember.memberEmail}>
-                                <TaskMemberAdd
-                                    memberEmail={groupMember.memberEmail}
-                                    memberName={groupMember.memberName}
-                                    addedMembers={addedMembers}
-                                    setAddedMembers={setAddedMembers}
-                                />
-                            </React.Fragment>)
-                    }
-                    )}
+                        )}
+                    </div>}
+
+
+
                 </div>
 
                 <div className="newtask__buttons">

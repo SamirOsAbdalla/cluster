@@ -1,16 +1,24 @@
 .ntmodal__wrapper {
     background-color: #202032;
     border: 1px solid white;
-    border-radius: 2px;
     padding: 2em;
     display: flex;
     flex-direction: column;
     width: 400px;
     position: fixed;
-    top: 5em;
+    top: 2em;
     align-items: center;
-    width: 90%;
-    max-width: 400px;
+    max-width: 70%;
+    width: 400px;
+    border-radius: 5px;
+}
+
+.ntmodal__wrapper div {
+    font-weight: bold;
+}
+
+.ntmodal__title {
+    padding-bottom: 1.5em;
 }
 
 .ntmodal__form {
@@ -40,7 +48,8 @@
 .ntmodal__item {
     display: flex;
     flex-direction: column;
-    gap: .5em;
+    justify-content: flex-start;
+    gap: .2em;
     width: 100%;
 }
 
@@ -49,6 +58,24 @@
     padding: 1em;
     border-radius: 2px;
     border: none;
+    margin: none;
+}
+
+.tmadd__container {
+    width: 100%;
+}
+
+.ntmodal__members__list {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    width: 80%;
+    border-radius: 2px;
+    max-height: 100px;
+    overflow: auto;
+    gap: .5em;
+    padding: 1em;
+    margin-top: .5em;
 }
 
 .newtask__buttons {
@@ -111,5 +138,5 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 1em;
+    gap: .5em;
 }
