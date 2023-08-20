@@ -1,5 +1,11 @@
 
+# Cluster
 
-ATTRIBUTE CREATOR OF SVG https://thenounproject.com/icon/ufo-160183/
+A group and task manager app where users can invite others to join a group and assign
+tasks to one another.
 
-<a href="https://www.flaticon.com/free-icons/rocket" title="rocket icons">Rocket icons created by Freepik - Flaticon</a>
+
+## Attribution
+UFO Icon: https://thenounproject.com/icon/ufo-160183/
+
+Rocket Icon: https://www.flaticon.com/free-icons/rocket
