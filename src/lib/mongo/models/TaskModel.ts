@@ -18,6 +18,7 @@ const taskMemberSchema = new Schema<TaskMemberType>({
 
 export interface TaskInterface {
     groupId: string;
+    groupName: string;
     name: string;
     priority: TaskPriority;
     status: TaskStatusType
@@ -31,6 +32,7 @@ export interface TaskInterface {
 const taskSchema = new Schema<TaskInterface>({
     name: { type: String, required: true },
     description: { type: String, required: true },
+    groupName: { type: String, required: true },
     creator: memberSchema,
     dateCreated: { type: Date, default: new Date() },
     isUrgent: { type: Boolean, default: false },
