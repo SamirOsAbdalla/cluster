@@ -55,27 +55,6 @@
     transform: scale(1.04)
 }
 
-.taskitem__edit {
-    background-color: #3500d3;
-    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #1a3377 0 -3px 0 inset;
-
-    border: none;
-    border-radius: 5px;
-    padding: .6em 1.4em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    transition: 0.2s;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 14px;
-}
-
-.taskitem__edit:hover {
-    background-color: #2f05ac;
-    transform: scale(1.04)
-}
 
 .taskitem__complete {
     background-color: #fdfdfd;
@@ -90,7 +69,7 @@
     justify-content: center;
     font-weight: 700;
     cursor: pointer;
-    width: 105px;
+    min-width: 90px;
 }
 
 
@@ -117,7 +96,7 @@
 
 
 
-@media screen and (max-width:980px) {
+@media screen and (max-width:1100px) {
 
     .tasktable__buttons {
         flex-wrap: wrap;
@@ -132,7 +111,8 @@
 
     .tasktable__table .name__cell,
     .tasktable__table .creator__cell,
-    .tasktable__table .description__cell {
+    .tasktable__table .description__cell,
+    .tasktable__table .group__cell {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;

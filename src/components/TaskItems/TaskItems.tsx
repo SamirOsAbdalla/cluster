@@ -70,6 +70,12 @@ export default function TaskItems({ tasks, userEmail, configureModalStatus, task
                                     return;
                                 }
                                 clickHandler(task)
+                            }} data-cell="GROUP " className="group__cell">{task.groupName}</td>
+                            <td onClick={(e) => {
+                                if (e.currentTarget != e.target) {
+                                    return;
+                                }
+                                clickHandler(task)
                             }} className="creator__cell" data-cell="CREATOR ">{task.creator.memberName}</td>
                             <td onClick={(e) => {
                                 if (e.currentTarget != e.target) {
@@ -103,7 +109,7 @@ export default function TaskItems({ tasks, userEmail, configureModalStatus, task
                                     }
 
                                     {userEmail && task.creator.memberEmail == userEmail! && taskTableType == "group" &&
-                                        <button className="taskitem__edit" onClick={() => configureModalStatus("edit", { taskName: "", taskId: "" }, task)}>
+                                        <button className="taskitem__edit blue__button" onClick={() => configureModalStatus("edit", { taskName: "", taskId: "" }, task)}>
                                             Edit
                                         </button>
                                     }
