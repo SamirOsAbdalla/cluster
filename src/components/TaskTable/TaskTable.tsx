@@ -19,13 +19,14 @@ import TablePagination from "../TablePagination/TablePagination"
 import EmptyPage from "../EmptyPage/EmptyPage"
 import LoadingGroup from "../LoadingGroup/LoadingGroup"
 interface Props {
+    groupName?: string
     groupId?: string
     loading?: boolean
     groupMembers?: MemberInterface[],
     taskTableType: "group" | "urgent" | "user",
     setDisplayedTask?: Dispatch<SetStateAction<TaskInterface>>
 }
-export default function TaskTable({ loading, groupId, groupMembers, taskTableType, setDisplayedTask }: Props) {
+export default function TaskTable({ loading, groupId, groupMembers, taskTableType, setDisplayedTask, groupName }: Props) {
 
     const session = useSession()
     const userName = session.data?.user.name
@@ -212,19 +213,21 @@ export default function TaskTable({ loading, groupId, groupMembers, taskTableTyp
     return (
         <>{loading !== true &&
             <main className="tasktable__wrapper">
-                <section className="tasktable__header">
-                    {taskTableType == "urgent" && <h1>Urgent Tasks</h1>}
-                    {taskTableType == "group" && <h1>Tasks</h1>}
-                    {taskTableType == "user" && <h1>My Tasks</h1>}
-                    {taskTableType == "group" &&
-                        <button data-testid="newtask__button" className="newtask__button__new" onClick={() => configureModalStatus("new")}>
-                            <AiOutlinePlusCircle />
-                            New Task
-                        </button>}
-                </section>
+
+                {taskTableType == "urgent" && <div className="table__heading"><h1>Urgent Tasks</h1></div>}
+                {taskTableType == "group" && <div className="table__heading">
+                    <h1>Tasks</h1>
+                    <button data-testid="newtask__button" className="taskable__newtaskbutton" onClick={() => configureModalStatus("new")}>
+                        <AiOutlinePlusCircle />
+                        New Task
+                    </button>
+                </div>}
+                {taskTableType == "user" && <div className="table__heading"><h1>My Tasks</h1></div>}
+
                 {newTaskModalStatus == "open" && groupId && groupMembers && taskTableType == "group" &&
                     <NewTaskModal
                         setNewTaskModalStatus={setNewTaskModalStatus}
+                        groupName={groupName!}
                         tasks={tasks}
                         setTasks={setTasks}
                         groupId={groupId}
@@ -263,30 +266,30 @@ export default function TaskTable({ loading, groupId, groupMembers, taskTableTyp
                         setTaskEditModalStatus={setTaskEditModalStatus}
                     />
                 }
-                <section className="tasktable__body">
-                    <table className="tasktable__table">
-                        <thead>
-                            <tr>
-                                <th className="tasktable__left">Name</th>
-                                <th className="tasktable__expand">Description</th>
-                                <th>Creator</th>
-                                <th>Priority</th>
-                                <th className="tasktable__right"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <TaskItems
-                                tasks={displayedTasks}
-                                configureModalStatus={configureModalStatus}
-                                userEmail={userEmail}
-                                setDisplayedTask={setDisplayedTask ? setDisplayedTask : () => { }}
-                                taskTableType={taskTableType}
-                            />
-                        </tbody>
-                    </table>
-                    <TablePagination type={"task"} currentPage={currentPage} setCurrentPage={setCurrentPage} totalNumberOfPages={totalNumberOfPages} />
 
-                </section>
+                <table className="table tasktable__table">
+                    <thead>
+                        <tr>
+                            <th className="tasktable__left">Name</th>
+                            <th className="tasktable__expand">Description</th>
+                            <th className="tasktable__expand">Group</th>
+                            <th>Creator</th>
+                            <th>Priority</th>
+                            <th className="tasktable__right"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <TaskItems
+                            tasks={displayedTasks}
+                            configureModalStatus={configureModalStatus}
+                            userEmail={userEmail}
+                            setDisplayedTask={setDisplayedTask ? setDisplayedTask : () => { }}
+                            taskTableType={taskTableType}
+                        />
+                    </tbody>
+                </table>
+                <TablePagination type={"task"} currentPage={currentPage} setCurrentPage={setCurrentPage} totalNumberOfPages={totalNumberOfPages} />
+
             </main>}</>
 
 

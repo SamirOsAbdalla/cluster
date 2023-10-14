@@ -1,4 +1,46 @@
 .tasktable__wrapper {
+    width: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+}
+
+
+.tasktable__buttons {
+    display: flex;
+    gap: .5em;
+}
+
+.taskable__newtaskbutton {
+    cursor: pointer;
+    padding: 8px 2px;
+    font-size: .6em;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .2em;
+    width: 80px;
+    cursor: pointer;
+    background-color: #384556;
+    border: none;
+    color: white;
+    font-weight: 700;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #29333f 0 -3px 0 inset;
+    transition: .2s;
+}
+
+
+.taskable__newtaskbutton:hover {
+    background-color: #27313c;
+    transform: scale(1.02)
+}
+
+@media screen and (max-width:790px) {}
+
+/* .tasktable__wrapper {
     width: 90%;
     display: flex;
     align-items: center;
@@ -112,7 +154,6 @@
 
 .tasktable__table td {
 
-    /* border-top: 0.5px solid #ddd; */
     overflow: hidden;
     text-overflow: ellipsis;
 
@@ -198,4 +239,4 @@
 
 
 
-}
+} */
