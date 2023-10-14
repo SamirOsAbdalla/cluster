@@ -123,19 +123,21 @@ export default function Sidebar() {
         <nav className="sidebar__wrapper">
             <div className="sidebar__heading">
                 <div className="sidebar__heading__left">
-                    <div className="rocky__container">
-                        <Image fill src={rocket} alt="rocket icon" />
-                    </div>
 
                     <h1 className='sidebar__title' >
                         Cluster
                     </h1>
-
+                    <div className="rocky__wrapper">
+                        <div className="rocky__container">
+                            <Image fill src={rocket} alt="rocket icon" />
+                        </div>
+                    </div>
                 </div>
                 <div className="sidebar__menu" onClick={(e) => sidebarToggle(e)}>
                     <div className="sidebar__menu__burger"></div>
                 </div>
             </div>
+
             <div className="sidebar__profile">
                 <div className="sidebar__profile__picture">
                     <div className="profile__im__container">
