@@ -1,8 +1,10 @@
 import { db } from "@/lib/mongo/util/connectMongo";
 import GroupModel from "@/lib/mongo/models/GroupModel";
 import mongoose from "mongoose";
+import TaskModel from "@/lib/mongo/models/TaskModel";
 
 interface RequestBody {
+    oldName?: string;
     groupId: string;
     didNameChange: boolean
     didDescriptionChange: boolean
@@ -12,7 +14,7 @@ interface RequestBody {
 
 export async function POST(request: Request) {
     await db.connect()
-    const { groupId, didNameChange, didDescriptionChange, newName, newDescription } = await request.json()
+    const { groupId, didNameChange, didDescriptionChange, newName, newDescription, oldName } = await request.json()
     const id = new mongoose.Types.ObjectId(groupId)
     let response;
     if (didNameChange && didDescriptionChange) {
@@ -25,6 +27,12 @@ export async function POST(request: Request) {
     }
 
     if (response) {
+        if (oldName) {
+            let taskResponse = await TaskModel.updateMany(
+                { groupName: oldName },
+                { groupName: newName }
+            )
+        }
         return new Response(JSON.stringify(response))
     } else {
         return new Response(JSON.stringify(null))
