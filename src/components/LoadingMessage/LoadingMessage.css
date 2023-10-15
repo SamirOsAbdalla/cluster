@@ -8,14 +8,14 @@
 
 .loadinggroup__message {
     text-align: center;
-    font-size: min(40px, 10vw);
-    color: #d0dafa;
+    font-size: min(20px, 7vw);
+    color: black;
     font-weight: bold;
 }
 
 .loading__circles {
     display: flex;
-    gap: 1em;
+    gap: .4em;
     align-self: flex-end;
     position: relative;
     top: -.5em;
@@ -23,9 +23,9 @@
 }
 
 .loading__circle {
-    width: 10px;
-    height: 10px;
-    background-color: #d0dafa;
+    width: 5px;
+    height: 5px;
+    background-color: black;
     border-radius: 50%;
     animation-name: jumpingDots;
     animation-duration: 1.4s;
@@ -47,7 +47,7 @@
     }
 
     50% {
-        transform: translateY(-10px)
+        transform: translateY(-6px)
     }
 }
 
