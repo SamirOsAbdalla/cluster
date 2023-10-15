@@ -1,12 +1,22 @@
 .home__wrapper {
     display: flex;
     flex-direction: column;
-    margin-left: 4.85em;
-    width: calc(100% - 5em);
-    padding-left: 0.15em;
-    min-height: 100vh;
-    background-color: #0C0032;
-    padding-bottom: 5em;
+    width: 100%;
     align-items: center;
-    gap: 4em;
+    gap: 1em;
+    background-color: #f6f6fe;
+    padding-bottom: 3em;
+
+}
+
+.home__header {
+    font-size: 1.4em;
+    color: white;
+    font-weight: bold;
+    width: 100%;
+    background: linear-gradient(180deg, rgba(149, 188, 255, 1) 0%, rgba(89, 169, 252, 1) 65%, rgba(20, 106, 255, 1) 100%);
+    padding: .5em 2em 7em .5em;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 }
