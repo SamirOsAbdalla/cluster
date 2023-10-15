@@ -14,6 +14,8 @@ import { CommentInterface } from '@/lib/mongo/models/CommentModel'
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import { BsFillPersonFill } from "react-icons/bs";
 import { AiOutlineCloseCircle } from 'react-icons/ai'
+import ModalWrapper from "../ModalWrapper/ModalWrapper";
+import { motion } from "framer-motion"
 
 interface Props {
     modalOpen: boolean,
@@ -126,98 +128,110 @@ export default function NewGroupModal({ modalOpen, setModalOpen, groups,
         setAddedMembers(tmpSet)
     }
 
+    const animations = {
+        inital: { scale: 0 },
+        animate: { scale: 1 },
+        exit: { scale: 0 }
+    }
+    let closeModal = () => {
+        setModalOpen(false)
+    }
     return (
-
-        <div className={`modal__wrapper ${modalOpen ? "modal__open" : ""}`}>
-            <AiFillCloseCircle className="close__circle" onClick={() => {
-                setModalOpen(!modalOpen)
-            }} />
-            <div className="newgroupmodal__heading">
-                <p>Create Group</p>
-            </div>
-
-            <form className="modal__wrapperform" onSubmit={handleSubmit}>
-                <div className="group__form__top">
-                    <div className="form__section">
-                        <div className="group__section__title">
-                            Group Name
-                        </div>
-                        <input
-                            type="text"
-                            placeholder="Name..."
-                            value={groupName}
-                            required
-                            onChange={(e) => setGroupName(e.target.value)}
-                        />
-                    </div>
-                    <div className="form__section">
-                        <div className="group__section__title">
-                            Group Description
-                        </div>
-                        <input
-                            type="text"
-                            placeholder="Description..."
-                            value={groupDescription}
-                            required
-                            onChange={(e) => setGroupDescription(e.target.value)}
-                        />
-                    </div>
+        <ModalWrapper closeModal={closeModal}>
+            <div className={`modal ${modalOpen ? "modal__open" : ""}`}>
+                <AiFillCloseCircle className="modal__close  close__circle" onClick={() => {
+                    setModalOpen(!modalOpen)
+                }} />
+                <div className="newgroupmodal__heading">
+                    <p>Create Group</p>
                 </div>
-                <div className="group__form__bottom">
-                    <div className="form__section">
-                        <div className="add__member">
-                            <div className="group__section__title">
-                                Invite Members
-                            </div>
-                            <button type="button" className="invite__button" onClick={() => {
 
-                                if (newMember == "" || newMember == creatorEmail) {
-                                    return;
-                                }
-                                const newSet = new Set(addedMembers)
-                                newSet.add(newMember)
-                                setAddedMembers(newSet)
-                                setNewMember("")
-                            }}>
-                                Add Member
-                            </button>
-                        </div>
-                        <div>
+                <form className="modal__wrapperform" onSubmit={handleSubmit}>
+                    <div className="group__form__top">
+                        <div className="form__section">
+                            <p className="group__section__title">
+                                Group Name
+                            </p>
                             <input
-                                type="email"
-                                placeholder="member@gmail.com"
-                                value={newMember}
-                                onChange={(e) => (setNewMember(e.target.value))}
+                                type="text"
+                                placeholder="Name..."
+                                value={groupName}
+                                required
+                                onChange={(e) => setGroupName(e.target.value)}
+                            />
+                        </div>
+                        <div className="form__section">
+                            <p className="group__section__title">
+                                Group Description
+                            </p>
+                            <input
+                                type="text"
+                                placeholder="Description..."
+                                value={groupDescription}
+                                required
+                                onChange={(e) => setGroupDescription(e.target.value)}
                             />
                         </div>
                     </div>
-                    {addedMembers.size > 0 &&
-                        <div className="invited__members__list">
-                            {Array.from(addedMembers).map(member => (
-                                <div className="invited__member" key={member}>
-                                    <div className="invited__member__left">
-                                        <BsFillPersonFill className="invited__member__icon" />
-                                        <div className="invited__member__name">
-                                            {member}
+                    <div className="group__form__bottom">
+                        <div className="form__section">
+                            <div className="add__member">
+                                <p className="group__section__title">
+                                    Invite Members
+                                </p>
+                                <button type="button" className="invite__button" onClick={() => {
+
+                                    if (newMember == "" || newMember == creatorEmail) {
+                                        return;
+                                    }
+                                    const newSet = new Set(addedMembers)
+                                    newSet.add(newMember)
+                                    setAddedMembers(newSet)
+                                    setNewMember("")
+                                }}>
+                                    Add Member
+                                </button>
+                            </div>
+                            <div>
+                                <input
+                                    type="email"
+                                    placeholder="member@gmail.com"
+                                    value={newMember}
+                                    onChange={(e) => (setNewMember(e.target.value))}
+                                />
+                            </div>
+                        </div>
+                        {addedMembers.size > 0 &&
+                            <div className="invited__members__list">
+                                {Array.from(addedMembers).map(member => (
+                                    <div className="invited__member" key={member}>
+                                        <div className="invited__member__left">
+                                            <BsFillPersonFill className="invited__member__icon" />
+                                            <div className="invited__member__name">
+                                                {member}
+                                            </div>
                                         </div>
+                                        <AiOutlineCloseCircle onClick={(e) => removeMember(e, member)} className="invited__remove" />
+
                                     </div>
-                                    <AiOutlineCloseCircle onClick={(e) => removeMember(e, member)} className="invited__remove" />
+                                ))}
+                            </div>}
 
-                                </div>
-                            ))}
-                        </div>}
+                    </div>
+                    <div className="newgroup__buttons">
+                        <button type="submit" className="blue__button new__group__button__submit">
+                            {loading ? <LoadingSpinner type="button" /> : <span>Submit</span>}
+                        </button>
+                        <button className="cancel__button newgroup__cancel" onClick={() => setModalOpen(false)}>
+                            Cancel
+                        </button>
+                    </div>
 
-                </div>
-                <div className="newgroup__buttons">
-                    <button type="submit" className="new__group__button__submit">
-                        {loading ? <LoadingSpinner type="button" /> : <span>Submit</span>}
-                    </button>
-                    <button className="newgroup__cancel" onClick={() => setModalOpen(false)}>
-                        Cancel
-                    </button>
-                </div>
+                </form>
+            </div>
 
-            </form>
-        </div>
+
+        </ModalWrapper>
+
     )
 }
