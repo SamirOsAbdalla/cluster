@@ -30,6 +30,7 @@
 }
 
 .tm__wrapper__active {
+    color: white;
     background-color: rgb(28, 35, 42);
     cursor: pointer;
     font-weight: bold;
