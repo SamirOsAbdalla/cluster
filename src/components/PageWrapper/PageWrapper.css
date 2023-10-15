@@ -1,6 +1,8 @@
 .page__wrapper {
+    display: flex;
+    flex-direction: column;
     margin-left: 6em;
     background-color: #f6f6fe;
     width: calc(100vw-6em);
-    height: 100vh;
+    min-height: 100vh;
 }
