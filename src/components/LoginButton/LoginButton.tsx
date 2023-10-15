@@ -9,7 +9,7 @@ export default function LoginButton() {
     const { data: session } = useSession()
     if (session && session.user) {
         return (
-            <button className="sidebar__button" onClick={() => {
+            <button className="sidebar__button sidebar__login" onClick={() => {
                 setLoading(true)
                 signOut()
             }}>
@@ -23,7 +23,7 @@ export default function LoginButton() {
     }
     else {
         return (
-            <button className="sidebar__button" onClick={() => signIn()}>
+            <button className="sidebar__button sidebar__login" onClick={() => signIn()}>
                 <BiLogOut />
                 <span className="sidebar__button__text">Log in</span>
             </button>
