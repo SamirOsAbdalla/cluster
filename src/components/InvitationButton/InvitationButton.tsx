@@ -103,7 +103,7 @@ export default function InvitationButton({ type, groupId, inbox, setInbox, invit
 
     if (type == "accept") {
         return (
-            <button onClick={handleAccept} className="invbutton invbutton__accept">
+            <button onClick={handleAccept} className="invbutton invbutton__accept blue__button">
                 {loadingAccept ? <LoadingSpinner type="button" /> : <span >Accept</span>}
             </button>
         )
