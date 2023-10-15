@@ -53,11 +53,13 @@ export default function LoginForm({ type }: LoginProps) {
     }
 
     const handleLogin = async () => {
+
         const result = await signIn("credentials", {
             email: email,
             password: password,
             redirect: false,
         })
+
         if (result && result.error != null) {
             const tmpError = "login"
             setError(tmpError)
