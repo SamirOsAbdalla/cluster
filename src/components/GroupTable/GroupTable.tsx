@@ -141,8 +141,8 @@ export default function GroupTable({ setLoading, loading, setFetchGroup }: Props
 
                 {groups.length > 0 &&
                     <>
-                        <div className="group__heading">
-                            <h1>My Groups</h1>
+                        <div className="table__heading">
+                            <h1>Groups</h1>
                             <button className="new__group__button" onClick={(e) => {
                                 const modalStatus = modalOpen
                                 setModalOpen(!modalStatus)
@@ -153,7 +153,7 @@ export default function GroupTable({ setLoading, loading, setFetchGroup }: Props
                                 <span>New Group</span>
                             </button>
                         </div>
-                        <table className="table">
+                        <table className="table grouptable">
                             <thead>
                                 <tr>
                                     <th className="th__left">Name</th>
@@ -176,7 +176,7 @@ export default function GroupTable({ setLoading, loading, setFetchGroup }: Props
                                                             Leave
                                                         </button>
                                                         {creatorEmail == group.creator.memberEmail &&
-                                                            <button className="action__button grouptable__edit" onClick={(e) => handleEditClick(group, e)}>
+                                                            <button className="blue__button action__button grouptable__edit" onClick={(e) => handleEditClick(group, e)}>
                                                                 Edit
                                                             </button>
                                                         }
@@ -198,7 +198,7 @@ export default function GroupTable({ setLoading, loading, setFetchGroup }: Props
                         />
                     </>}
                 {groups.length == 0 &&
-                    <div className="emptygroup__table">
+                    <div className="emptygroup">
                         <EmptyPage type="group" />
                         <button className="new__group__button" onClick={(e) => {
                             const modalStatus = modalOpen

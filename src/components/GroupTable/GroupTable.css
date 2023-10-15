@@ -1,4 +1,154 @@
 .table__wrapper {
+    width: 90%;
+    padding-top: 3em;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    bottom: 6em;
+}
+
+.table__heading {
+    background-color: white;
+    padding: 1em;
+    border-radius: 3px 3px 0px 0px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.table__heading h1 {
+    font-size: 1.1em;
+}
+
+
+.table {
+    width: 100%;
+}
+
+thead {
+
+    border-top: .5px solid rgba(189, 189, 189, 0.628);
+    border-bottom: .5px solid rgba(189, 189, 189, 0.628);
+    background-color: #e6e6ec;
+}
+
+.table,
+th,
+td {
+    border-collapse: collapse;
+}
+
+
+th {
+    text-align: left;
+    font-size: .7em;
+    padding: .5rem;
+    color: rgba(0, 0, 0, 0.654);
+    padding-left: 1em;
+}
+
+.description__cell {
+    width: 100%;
+}
+
+td {
+    background-color: white;
+    min-width: 120px;
+    text-align: left;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.654);
+    font-size: .8em;
+    padding: .5rem;
+    padding-left: 1em;
+
+}
+
+td {
+    cursor: pointer;
+}
+
+tbody tr {
+    border-bottom: .5px solid rgba(189, 189, 189, 0.628);
+}
+
+.grouptable tbody tr:hover {
+    background-color: #001f51;
+    color: rgb(7, 7, 7);
+}
+
+.grouptable__leave {
+    cursor: pointer;
+    background-color: #ea2d49;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #620b18 0 -3px 0 inset;
+    border: none;
+    border-radius: 5px;
+    padding: .6em 1.4em;
+    color: white;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.grouptable__leave:hover {
+    background-color: #8b1123;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #3a060e 0 -3px 0 inset;
+    color: white;
+    transform: scale(1.04)
+}
+
+.blue__button {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    justify-content: center;
+    cursor: pointer;
+    background-color: #0861fc;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #044fd1 0 -3px 0 inset;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    padding: .8em 1.4em;
+    color: white;
+    transition: 0.2s;
+    font-weight: 700;
+}
+
+.blue__button:hover {
+    background-color: #0c5ae2;
+    transform: scale(1.04)
+}
+
+.new__group__button {
+    cursor: pointer;
+    padding: 8px 2px;
+    font-size: .6em;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .2em;
+    width: 80px;
+    cursor: pointer;
+    background-color: #384556;
+    border: none;
+    color: white;
+    font-weight: 700;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #29333f 0 -3px 0 inset;
+    transition: .2s;
+}
+
+.new__group__button:hover {
+    background-color: #27313c;
+    transform: scale(1.02)
+}
+
+.td__right {
+    display: flex;
+    gap: .5em;
+}
+
+/* .table__wrapper {
     padding-bottom: 4em;
     display: flex;
     padding-top: 3em;
@@ -7,6 +157,7 @@
     max-width: 90%;
     width: 60em;
 }
+
 
 .action__logo {
     cursor: pointer;
@@ -20,33 +171,33 @@
     align-items: center;
     align-self: center;
     gap: 2em;
-}
+} */
 
-.action__button {
+/* .action__button {
     cursor: pointer;
 }
 
 .group__heading {
     position: relative;
+    justify-content: space-between;
     display: flex;
     left: 2em;
     align-items: center;
     gap: 2em;
-    width: 30em;
+    width: 52em;
     max-width: 100%;
     margin-bottom: 1em;
     flex-wrap: wrap;
 }
 
 .group__heading h1 {
-    color: white;
+    color: black;
 }
 
 .table {
     display: block;
     border-collapse: collapse;
-    border-radius: 10px;
-    box-shadow: rgba(220, 220, 220, 0.25) 0px 2px 5px -5px, rgba(248, 248, 248, 0.3) 0px 1px 10px 4px;
+    border-radius: 2px;
     width: 100%;
 }
 
@@ -69,15 +220,15 @@
 
 .table th,
 .table td {
-    color: white;
+    color: black;
     padding: 0.8rem;
 }
 
 
 .table td {
-    /* border-top: 0.5px solid #ddd; */
-    overflow: hidden;
-    text-overflow: ellipsis;
+    
+overflow: hidden;
+text-overflow: ellipsis;
 }
 
 
@@ -111,19 +262,19 @@
 }
 
 .table tbody td {
-    text-align: center;
+    text-align: left;
 }
 
 .action__cell {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: .3em;
 }
 
 .table thead {
-    background-color: #221f2a;
-    color: #d5daeb;
+   
+color: black;
 
 }
 
@@ -141,7 +292,8 @@ tbody tr {
     color: #d0dafa
 }
 
-.new__group__button {
+*/
+/* .new__group__button {
     padding: 14px 6px;
     border-radius: 5px;
     display: flex;
@@ -150,7 +302,7 @@ tbody tr {
     gap: .2em;
     width: 120px;
     cursor: pointer;
-    background-color: #663edf;
+    background-color: #384556;
     border: none;
     color: white;
     font-weight: 700;
@@ -163,23 +315,6 @@ tbody tr {
     transform: scale(1.02)
 }
 
-.grouptable__leave {
-    background-color: #ea2d49;
-    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #620b18 0 -3px 0 inset;
-    border: none;
-    border-radius: 5px;
-    padding: .6em 1.4em;
-    color: white;
-    font-weight: bold;
-    transition: 0.2s;
-}
-
-.grouptable__leave:hover {
-    background-color: #8b1123;
-    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #3a060e 0 -3px 0 inset;
-    color: white;
-    transform: scale(1.04)
-}
 
 .grouptable__edit {
     background-color: #3500d3;
@@ -196,14 +331,21 @@ tbody tr {
 .grouptable__edit:hover {
     background-color: #2f05ac;
     transform: scale(1.04)
+} */
+
+.emptygroup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
 }
 
 
+@media screen and (max-width:1100px) {
 
-
-@media screen and (max-width:790px) {
-
-    .group__heading {
+    .table__heading {
+        width: 80%;
         position: static;
         justify-content: center;
         gap: 1em;
@@ -220,7 +362,7 @@ tbody tr {
     }
 
     .table tr {
-        border-bottom: 8px solid #130202;
+        border-bottom: .5px solid rgba(189, 189, 189, 0.628);
     }
 
     .table tbody {
@@ -241,7 +383,8 @@ tbody tr {
 
     .name__cell,
     .creator__cell,
-    .description__cell {
+    .description__cell,
+    .group__cell {
         display: flex;
         max-width: 100%;
         justify-content: space-between;
@@ -253,7 +396,7 @@ tbody tr {
         border-top: none;
         word-break: break-word;
         text-align: left;
-        color: white;
+        color: black;
     }
 
     th {
@@ -264,13 +407,11 @@ tbody tr {
         content: attr(data-cell);
         text-decoration: underline;
         text-transform: capitalize;
-        color: white;
+        color: black;
         float: left;
     }
 
-    .table tr:last-child {
-        border-bottom: none;
-    }
+
 
 
 }
