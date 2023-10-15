@@ -17,6 +17,9 @@ import { useEffect } from 'react'
 import { TaskInterface, TaskMemberType } from '@/lib/mongo/models/TaskModel'
 import DisplayedTask from '@/components/DisplayedTask/DisplayedTask'
 import LoadingGroup from '@/components/LoadingGroup/LoadingGroup'
+import PageWrapper from '@/components/PageWrapper/PageWrapper'
+import Header from '@/components/Header/Header'
+
 export default function GroupDetails({ params }: { params: { groupsId: string } }) {
     const session = useSession()
     const userEmail = session.data?.user.email
@@ -73,39 +76,38 @@ export default function GroupDetails({ params }: { params: { groupsId: string } 
 
 
     return (
-        <div className="groupdetails__wrapper">
-            {loading ? <LoadingGroup type="loadingGroups" /> : <>
-                <div className="groupdetails__container">
-                    <h1>
-                        {groupName}
-                    </h1>
-                    <div>
-                        {groupDescription}
-                    </div>
-                </div>
-                <MembersSection
-                    groupCreatorEmail={groupCreatorEmail.current}
-                    groupName={groupName}
-                    userEmail={userEmail}
-                    groupMembers={groupMembers}
-                    setGroupMembers={setGroupMembers}
-                    groupId={params.groupsId}
-                    userName={userName}
-                />
-                <TaskTable
-                    groupId={params.groupsId}
-                    groupMembers={groupMembers}
-                    taskTableType='group'
-                    setDisplayedTask={setDisplayedTask}
-                />
-                {displayedTask.creator &&
-                    <DisplayedTask
-                        task={displayedTask}
+        <PageWrapper>
+            <Header headerText={groupName} />
+
+            <div className="groupdetails__wrapper">
+                {loading ? <LoadingGroup type="loadingGroups" /> : <>
+                    <MembersSection
+                        groupCreatorEmail={groupCreatorEmail.current}
+                        groupName={groupName}
+                        userEmail={userEmail}
+                        groupMembers={groupMembers}
+                        setGroupMembers={setGroupMembers}
+                        groupId={params.groupsId}
+                        userName={userName}
+                    />
+                    <TaskTable
+                        groupName={groupName}
+                        groupId={params.groupsId}
+                        groupMembers={groupMembers}
+                        taskTableType='group'
                         setDisplayedTask={setDisplayedTask}
                     />
-                }
-            </>}
+                    {displayedTask.creator &&
+                        <DisplayedTask
+                            task={displayedTask}
+                            setDisplayedTask={setDisplayedTask}
+                        />
+                    }
+                </>}
+            </div>
 
-        </div>
+
+        </PageWrapper >
+
     )
 }
