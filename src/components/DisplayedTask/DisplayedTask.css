@@ -29,10 +29,17 @@
 
 .displaytask__header {
     font-weight: bold;
-    font-size: 2em;
+    font-size: 1.2em;
     padding-left: 2em;
-    padding-bottom: .3em;
+    padding-top: 0.8em;
+    padding-bottom: .8em;
     color: white;
+    border-radius: 5px 5px 0px 0px;
+    background-color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 1em;
 }
 
 .dt__cell {
@@ -59,13 +66,11 @@
 
 .dt__main {
     background-color: #221f2a;
-    border: 1px solid white;
     color: white;
     width: 100%;
     display: flex;
     padding: 1em;
     flex-direction: column;
-    border-radius: 5px;
 }
 
 .displaytask__bottom {

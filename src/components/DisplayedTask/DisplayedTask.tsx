@@ -11,11 +11,11 @@ export default function DisplayedTask({ task, setDisplayedTask }: Props) {
     return (
         <div className="dt__wrapper">
             <div data-testid="displaytask__header" className="displaytask__header">
-                Task Info
-            </div>
-
-            <div className="dt__main">
+                <span>Task Info</span>
                 <AiFillCloseCircle className="displaytask__close" onClick={() => setDisplayedTask({} as TaskInterface)} />
+            </div>
+            <div className="dt__main">
+
                 <div className="displaytask__bottom">
                     <div className='dt__information'>
                         <div className="dt__cell">
