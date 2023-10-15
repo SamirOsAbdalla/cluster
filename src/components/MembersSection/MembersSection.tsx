@@ -56,7 +56,7 @@ export default function MembersSection({ groupName, groupId, groupCreatorEmail,
                             setInviteMemberModalStatus("open")
                             setKickModalStatus("closed")
                         }}
-                        className="member__button"
+                        className="blue__button invitemember__button"
                     >
                         <AiOutlinePlusCircle className="memberbutton__circle" />
                         <span className="memberbutton__text">Invite Member</span>
