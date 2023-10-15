@@ -4,6 +4,7 @@ import "./CompleteTaskModal.css"
 import { Dispatch, SetStateAction, useState } from "react"
 import { AiFillCloseCircle } from "react-icons/ai"
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner"
+import ModalWrapper from "../ModalWrapper/ModalWrapper"
 interface Props {
     tasks: TaskInterface[],
     setTasks: Dispatch<SetStateAction<TaskInterface[]>>
@@ -60,20 +61,26 @@ export default function CompleteTaskModal({ tasks, setTasks, taskInfo, memberEma
         setLoading(false)
     }
 
+    const closeModal = () => {
+        setCompleteTaskModalStatus("closed")
+    }
     return (
-        <div className="ctmodal__wrapper">
-            <AiFillCloseCircle className="ctmodal__close" onClick={() => setCompleteTaskModalStatus("closed")} />
-            <div className="ctmodal__heading">
-                Are you sure <span>{taskInfo.taskName}</span> is completed?
+        <ModalWrapper closeModal={closeModal}>
+            <div className="modal">
+                <AiFillCloseCircle className="ctmodal__close" onClick={() => setCompleteTaskModalStatus("closed")} />
+                <div className="ctmodal__heading">
+                    Are you sure <span>{taskInfo.taskName}</span> is completed?
+                </div>
+                <div className="ctmodal__buttons">
+                    <button className="blue__button" onClick={() => updateTaskMemberStatus(taskInfo.taskId)}>
+                        {loading ? <LoadingSpinner type="button" /> : "Confirm"}
+                    </button>
+                    <button className="cancel" onClick={() => setCompleteTaskModalStatus("closed")}>
+                        Cancel
+                    </button>
+                </div>
             </div>
-            <div className="ctmodal__buttons">
-                <button className="ctmodal__button ctmodal__confirm" onClick={() => updateTaskMemberStatus(taskInfo.taskId)}>
-                    {loading ? <LoadingSpinner type="button" /> : "Confirm"}
-                </button>
-                <button className="ctmodal__button ctmodal__cancel" onClick={() => setCompleteTaskModalStatus("closed")}>
-                    Cancel
-                </button>
-            </div>
-        </div>
+        </ModalWrapper>
+
     )
 }

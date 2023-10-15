@@ -1,26 +1,7 @@
-.leavemodal__wrapper {
-    background-color: aquamarine;
-    padding: 2em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    flex-direction: column;
-    gap: 1em;
-    top: 10em;
-    align-self: center;
-    background-color: #202032;
-    max-width: 70%;
-    width: 400px;
-    border: 1px solid white;
-    z-index: 9998;
-    border-radius: 5px;
-}
-
 .leave__circle {
     align-self: flex-end;
     cursor: pointer;
-    color: white;
+    color: black;
     position: relative;
     top: -1em;
     left: 1em;
@@ -31,11 +12,11 @@
 .leave__projectname {
     font-weight: bold;
     text-decoration: underline;
-    word-break: break-all;
+    word-break: break-word;
 }
 
 .leave__heading {
-    color: white;
+    color: black;
     font-size: 18px;
     max-width: 80%;
     text-align: left;

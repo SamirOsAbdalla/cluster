@@ -9,6 +9,7 @@ import { MemberInterface } from "@/lib/mongo/models/GroupModel";
 import { BsFillPersonFill } from "react-icons/bs";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import ModalWrapper from "../ModalWrapper/ModalWrapper";
 interface Props {
     groupMembers: MemberInterface[]
     inviteMemberModalStatus: "open" | "closed"
@@ -84,48 +85,55 @@ export default function InviteMemberModal({ groupName, userEmail, groupId,
         tmpSet.delete(name);
         setInvitedmembers(tmpSet)
     }
+
+    const closeModal = () => {
+        setInviteMemberModalStatus("closed")
+    }
     return (
-        <div className="invitemodal__wrapper">
-            <form onSubmit={inviteMembers} className="invitemodal__form">
-                <AiFillCloseCircle onClick={() => setInviteMemberModalStatus("closed")} className="invitemodal__close" />
-                <div className="invitemodal__top">
-                    <h2>Invite member</h2>
-                    <button type="button" className="invitemodal__add" onClick={addInvitedMember}>
-                        <AiOutlinePlusCircle />
-                        <span>Invite</span>
-                    </button>
-                </div>
+        <ModalWrapper closeModal={closeModal}>
+            <div className="modal">
+                <form onSubmit={inviteMembers} className="invitemodal__form">
+                    <AiFillCloseCircle onClick={() => setInviteMemberModalStatus("closed")} className="invitemodal__close" />
+                    <div className="invitemodal__top">
+                        <h2>Invite member</h2>
+                        <button type="button" className="invitemodal__add" onClick={addInvitedMember}>
+                            <AiOutlinePlusCircle />
+                            <span>Invite</span>
+                        </button>
+                    </div>
 
 
-                <input
-                    type="email"
-                    placeholder="newmember@gmail.com"
-                    value={inputInvitedMember}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputInvitedMember(e.target.value)}
-                />
-                {invitedMembers.size > 0 ? <div className="invited__members__list">
-                    {Array.from(invitedMembers).map(member => (
-                        <div className="invited__member" key={member}>
-                            <div className="invited__member__left">
-                                <BsFillPersonFill className="invited__member__icon" />
-                                <div className="invited__member__name">
-                                    {member}
+                    <input
+                        type="email"
+                        placeholder="newmember@gmail.com"
+                        value={inputInvitedMember}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputInvitedMember(e.target.value)}
+                    />
+                    {invitedMembers.size > 0 ? <div className="invited__members__list">
+                        {Array.from(invitedMembers).map(member => (
+                            <div className="invited__member" key={member}>
+                                <div className="invited__member__left">
+                                    <BsFillPersonFill className="invited__member__icon" />
+                                    <div className="invited__member__name">
+                                        {member}
+                                    </div>
                                 </div>
+                                <AiOutlineCloseCircle onClick={(e) => removeMember(e, member)} className="invited__remove" />
+
                             </div>
-                            <AiOutlineCloseCircle onClick={(e) => removeMember(e, member)} className="invited__remove" />
-
-                        </div>
-                    ))}
-                </div> :
-                    <></>
-                }
-                <div className="invitemodal__buttons">
-                    <button type="submit" className="invitemodal__button invitemodal__submit">{loading ? <LoadingSpinner type="button" /> : "Submit"}</button>
-                    <button onClick={() => setInviteMemberModalStatus("closed")} className="invitemodal__button invitemodal__cancel">Cancel</button>
-                </div>
-            </form>
+                        ))}
+                    </div> :
+                        <></>
+                    }
+                    <div className="invitemodal__buttons">
+                        <button type="submit" className="invitemodal__button invitemodal__submit blue__button">{loading ? <LoadingSpinner type="button" /> : "Submit"}</button>
+                        <button onClick={() => setInviteMemberModalStatus("closed")} className="invitemodal__button invitemodal__cancel cancel">Cancel</button>
+                    </div>
+                </form>
 
 
-        </div>
+            </div>
+        </ModalWrapper>
+
     )
 }

@@ -5,6 +5,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { TaskMemberType } from "@/lib/mongo/models/TaskModel";
 import { AiFillCloseCircle } from "react-icons/ai";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import ModalWrapper from "../ModalWrapper/ModalWrapper";
 
 interface Props {
     kickedMemberName: string;
@@ -52,20 +53,28 @@ export default function KickMemberModal({ groupId, kickedMemberName, kickedMembe
             //throw error
         }
     }
+
+    const closeModal = () => {
+        setKickModalStatus("closed")
+
+    }
     return (
-        <div className="kickmodal__wrapper">
-            <AiFillCloseCircle onClick={() => setKickModalStatus("closed")} className="kickmodal__close" />
-            <div className="kickmodal__heading">
-                <p>Are you sure you want to kick <span>{kickedMemberName}</span></p>
+        <ModalWrapper closeModal={closeModal}>
+            <div className="modal">
+                <AiFillCloseCircle onClick={() => setKickModalStatus("closed")} className="kickmodal__close" />
+                <div className="kickmodal__heading">
+                    <p>Are you sure you want to kick <span>{kickedMemberName}</span></p>
+                </div>
+                <div className="kickmodal__buttons">
+                    <button onClick={kickMember} className="kickmodal__button kickmodal__kick blue__button">
+                        {loading ? <LoadingSpinner type="button" /> : "Kick"}
+                    </button>
+                    <button onClick={() => setKickModalStatus("closed")} className="kickmodal__button kickmodal__cancel cancel">
+                        Cancel
+                    </button>
+                </div>
             </div>
-            <div className="kickmodal__buttons">
-                <button onClick={kickMember} className="kickmodal__button kickmodal__kick">
-                    {loading ? <LoadingSpinner type="button" /> : "Kick"}
-                </button>
-                <button onClick={() => setKickModalStatus("closed")} className="kickmodal__button kickmodal__cancel">
-                    Cancel
-                </button>
-            </div>
-        </div>
+        </ModalWrapper>
+
     )
 }

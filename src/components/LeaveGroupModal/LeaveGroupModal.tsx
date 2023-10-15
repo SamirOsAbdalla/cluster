@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import React from 'react'
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
-
+import ModalWrapper from "../ModalWrapper/ModalWrapper";
 interface Props {
     groups: GroupInterface[],
     setGroups: Dispatch<SetStateAction<GroupInterface[]>>,
@@ -137,20 +137,27 @@ export default function LeaveGroupModal({ currentGroup, leaveGroupModal, setLeav
         }
         setLoading(false)
     }
+
+    const closeModal = () => {
+        setLeaveGroupModal(false)
+    }
     return (
-        <div className="leavemodal__wrapper">
-            <AiFillCloseCircle onClick={() => setLeaveGroupModal(false)} className="leave__circle" />
-            <div className="leave__heading">
-                Are you sure you want to leave <span className="leave__projectname">{typecastedGroup.name}</span>?
+        <ModalWrapper closeModal={closeModal}>
+            <div className="modal leave__group">
+                <AiFillCloseCircle onClick={() => setLeaveGroupModal(false)} className="leave__circle" />
+                <div className="leave__heading">
+                    Are you sure you want to leave <span className="leave__projectname">{typecastedGroup.name}</span>?
+                </div>
+                <div className="leave__buttons">
+                    <button onClick={leaveGroup} className="leave__button leave">
+                        {loading ? <LoadingSpinner type="button" /> : <span data-testid="modal__leavebutton">Leave</span>}
+                    </button>
+                    <button onClick={() => setLeaveGroupModal(false)} className="leave__button cancel">
+                        Cancel
+                    </button>
+                </div>
             </div>
-            <div className="leave__buttons">
-                <button onClick={leaveGroup} className="leave__button leave">
-                    {loading ? <LoadingSpinner type="button" /> : <span data-testid="modal__leavebutton">Leave</span>}
-                </button>
-                <button onClick={() => setLeaveGroupModal(false)} className="leave__button cancel">
-                    Cancel
-                </button>
-            </div>
-        </div>
+        </ModalWrapper>
+
     )
 }

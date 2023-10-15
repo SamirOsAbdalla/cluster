@@ -17,7 +17,7 @@
 
 .editgroupmodal__close {
     cursor: pointer;
-    color: white;
+    color: black;
     align-self: flex-end;
     position: relative;
     top: -1em;
@@ -33,7 +33,7 @@
 }
 
 .editgroupmodal__heading {
-    color: white;
+    color: black;
     display: flex;
     justify-content: center;
     width: 100%;
@@ -42,11 +42,13 @@
 }
 
 .editgroup__text {
+    font-weight: bold;
     font-size: 12px;
-    color: white;
+    color: black;
 }
 
 .editgroupmodal__fields {
+    width: 90%;
     display: flex;
     gap: 2em;
     padding-bottom: 2em;
@@ -63,44 +65,4 @@
     gap: 1em;
     justify-content: center;
     flex-wrap: wrap;
-}
-
-.editgroupmodal__button__cancel {
-
-    background-color: #ffffff;
-    color: #ea2d49;
-    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #bebac6 0 -3px 0 inset;
-
-    border-radius: 5px;
-    padding: .6em 1.4em;
-    border: 1px solid #ea2d49;
-    transition: 0.2s;
-    font-weight: 700;
-    width: 80px;
-    cursor: pointer;
-
-}
-
-.editgroupmodal__button__cancel:hover {
-    transform: scale(1.04);
-    background-color: #dbd7e4;
-}
-
-.editgroupmodal__button__save {
-    width: 80px;
-    background-color: #3500d3;
-    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #1a3377 0 -3px 0 inset;
-
-    border: none;
-    border-radius: 5px;
-    padding: .6em 1.4em;
-    color: white;
-    transition: 0.2s;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.editgroupmodal__button__save:hover {
-    background-color: #2f05ac;
-    transform: scale(1.04)
 }

@@ -15,7 +15,7 @@
 }
 
 .kickmodal__close {
-    color: white;
+    color: black;
     width: 1.3em;
     height: 1.3em;
     cursor: pointer;
@@ -42,48 +42,11 @@
     cursor: pointer;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .kickmodal__buttons {
     display: flex;
     justify-content: center;
     gap: 0.5em;
-}
-
-.kickmodal__kick {
-    background-color: #3500d3;
-    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #1a3377 0 -3px 0 inset;
-
-    border: none;
-    border-radius: 5px;
-    padding: .6em 1.4em;
-    color: white;
-    transition: 0.2s;
-    font-weight: 700;
-    cursor: pointer;
-    width: 80px;
-}
-
-.kickmodal__kick:hover {
-    background-color: #2f05ac;
-    transform: scale(1.04)
-}
-
-.kickmodal__cancel {
-    background-color: #ffffff;
-    color: #ea2d49;
-    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #bebac6 0 -3px 0 inset;
-
-    border-radius: 5px;
-    padding: .6em 1.4em;
-    border: 1px solid #ea2d49;
-    transition: 0.2s;
-    font-weight: 700;
-    cursor: pointer;
-    width: 80px;
-}
-
-.kickmodal__cancel:hover {
-    transform: scale(1.04);
-    background-color: #dbd7e4;
 }

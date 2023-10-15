@@ -11,11 +11,12 @@ import { MemberInterface } from '@/lib/mongo/models/GroupModel';
 import TaskMemberAdd from '../TaskMemberAdd/TaskMemberAdd';
 import TaskPriorityButtons from '../TaskPriorityButtons/TaskPriorityButtons';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
-
+import ModalWrapper from '../ModalWrapper/ModalWrapper';
 
 interface Props {
     setNewTaskModalStatus: Dispatch<SetStateAction<"open" | "closed">>
     groupId: string,
+    groupName: string,
     tasks: TaskInterface[]
     setTasks: Dispatch<SetStateAction<TaskInterface[]>>
     groupMembers: MemberInterface[]
@@ -24,7 +25,8 @@ interface Props {
 }
 
 
-export default function NewTaskModal({ tasksPerPage, setCurrentPage, setNewTaskModalStatus, groupId, tasks, setTasks, groupMembers }: Props) {
+export default function NewTaskModal({ tasksPerPage, setCurrentPage, setNewTaskModalStatus,
+    groupId, tasks, setTasks, groupMembers, groupName }: Props) {
 
     const [newTaskNameInput, setNewTaskNameInput] = useState<string>("")
     const [newTaskDescriptionInput, setNewTaskDescriptionInput] = useState<string>("")
@@ -55,6 +57,7 @@ export default function NewTaskModal({ tasksPerPage, setCurrentPage, setNewTaskM
         tempAddedMembers.push({ memberEmail: userEmail!, memberName: userName!, status: "In Progress" })
 
         const newTaskBody: TaskInterface = {
+            groupName,
             name: newTaskNameInput,
             description: newTaskDescriptionInput,
             creator: {
@@ -92,87 +95,94 @@ export default function NewTaskModal({ tasksPerPage, setCurrentPage, setNewTaskM
         setLoading(false)
         setTasks(tempTasks)
     }
+
+    const closeModal = () => {
+        setNewTaskModalStatus("closed")
+    }
     return (
-        <div className="ntmodal__wrapper">
-            <AiFillCloseCircle className="ntmodal__close" onClick={() => setNewTaskModalStatus("closed")} />
-            <div className="ntmodal__title">Create task</div>
-            <form onSubmit={createNewTask} className="ntmodal__form">
-                <div className="ntmodal__item">
-                    <div className="ntmodal__name">
-                        Task Name
-                    </div>
-                    <input
-                        className="ntmodal__input"
-                        required
-                        placeholder='Task name'
-                        value={newTaskNameInput}
-                        onChange={(e) => setNewTaskNameInput(e.target.value)}
-                    />
-                </div>
-                <div className="ntmodal__item">
-                    <div className="ntmodal__description">
-                        Task Description
-                    </div>
-                    <input
-                        className="ntmodal__input"
-                        required
-                        placeholder='Task description'
-                        value={newTaskDescriptionInput}
-                        onChange={(e) => setNewTaskDescriptionInput(e.target.value)}
-                    />
-                </div>
-                <div className="ntmodal__priority__container">
-                    <div className="ntmodal__priority__heading">
-                        Priority
-                    </div>
-                    <TaskPriorityButtons
-                        setTaskPriority={setTaskPriority}
-                    />
-                </div>
-                <div className="tmadd__container">
-
-                    {groupMembers.length > 1 &&
-                        <div className="ntmodal__addmember">
-                            Add Members
+        <ModalWrapper closeModal={closeModal}>
+            <div className="ntmodal modal">
+                <AiFillCloseCircle className="ntmodal__close" onClick={() => setNewTaskModalStatus("closed")} />
+                <div className="ntmodal__title">Create task</div>
+                <form onSubmit={createNewTask} className="ntmodal__form">
+                    <div className="ntmodal__item">
+                        <div className="ntmodal__name">
+                            Task Name
                         </div>
+                        <input
+                            className="ntmodal__input"
+                            required
+                            placeholder='Task name'
+                            value={newTaskNameInput}
+                            onChange={(e) => setNewTaskNameInput(e.target.value)}
+                        />
+                    </div>
+                    <div className="ntmodal__item">
+                        <div className="ntmodal__description">
+                            Task Description
+                        </div>
+                        <input
+                            className="ntmodal__input"
+                            required
+                            placeholder='Task description'
+                            value={newTaskDescriptionInput}
+                            onChange={(e) => setNewTaskDescriptionInput(e.target.value)}
+                        />
+                    </div>
+                    <div className="ntmodal__priority__container">
+                        <div className="ntmodal__priority__heading">
+                            Priority
+                        </div>
+                        <TaskPriorityButtons
+                            setTaskPriority={setTaskPriority}
+                        />
+                    </div>
+                    <div className="tmadd__container">
 
-                    }
-                    {groupMembers.length > 1 && <div className="ntmodal__members__list">
-                        {groupMembers.map(groupMember => {
-                            if (groupMember.memberEmail == userEmail) {
+                        {groupMembers.length > 1 &&
+                            <div className="ntmodal__addmember">
+                                Add Members
+                            </div>
+
+                        }
+                        {groupMembers.length > 1 && <div className="ntmodal__members__list">
+                            {groupMembers.map(groupMember => {
+                                if (groupMember.memberEmail == userEmail) {
+                                    return (
+                                        <React.Fragment key={groupMember.memberEmail}>
+
+                                        </React.Fragment>
+                                    )
+                                }
                                 return (
                                     <React.Fragment key={groupMember.memberEmail}>
-
-                                    </React.Fragment>
-                                )
+                                        <TaskMemberAdd
+                                            memberEmail={groupMember.memberEmail}
+                                            memberName={groupMember.memberName}
+                                            addedMembers={addedMembers}
+                                            setAddedMembers={setAddedMembers}
+                                        />
+                                    </React.Fragment>)
                             }
-                            return (
-                                <React.Fragment key={groupMember.memberEmail}>
-                                    <TaskMemberAdd
-                                        memberEmail={groupMember.memberEmail}
-                                        memberName={groupMember.memberName}
-                                        addedMembers={addedMembers}
-                                        setAddedMembers={setAddedMembers}
-                                    />
-                                </React.Fragment>)
-                        }
-                        )}
-                    </div>}
+                            )}
+                        </div>}
 
 
 
-                </div>
+                    </div>
 
-                <div className="newtask__buttons">
-                    <button data-testid="newtaskmodal__create" className="newtask__button newtask__create" type="submit">
-                        {loading ? <LoadingSpinner type="button" /> : "Create"}
-                    </button>
-                    <button className="newtask__button newtask__cancel" type="button" onClick={() => setNewTaskModalStatus("closed")}>
-                        Cancel
-                    </button>
-                </div>
-            </form>
+                    <div className="newtask__buttons">
+                        <button data-testid="newtaskmodal__create" className="newtask__button newtask__create blue__button" type="submit">
+                            {loading ? <LoadingSpinner type="button" /> : "Create"}
+                        </button>
+                        <button className="newtask__button newtask__cancel cancel" type="button" onClick={() => setNewTaskModalStatus("closed")}>
+                            Cancel
+                        </button>
+                    </div>
+                </form>
 
-        </div>
+            </div>
+        </ModalWrapper>
+
     )
 }

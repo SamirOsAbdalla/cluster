@@ -19,11 +19,12 @@
 
 .invitemodal__top {
     display: flex;
-    color: white;
+    color: black;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
     gap: 1em;
+    padding-bottom: 1em;
 }
 
 .invitemodal__top h2 {
@@ -114,7 +115,7 @@
     align-self: flex-end;
     position: relative;
     top: -1.2em;
-    color: white;
+    color: black;
     width: 1.3em;
     height: 1.3em;
     left: 1em;
@@ -134,62 +135,30 @@
 }
 
 .invitemodal__add {
-    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #1a3377 0 -3px 0 inset;
-    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    justify-content: center;
     cursor: pointer;
-    background-color: #663edf;
-    color: white;
-    padding: 8px 14px;
-    font-size: .8em;
+    background-color: #0861fc;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #044fd1 0 -3px 0 inset;
+    font-size: 12px;
     border: none;
     border-radius: 5px;
-    transition: .2s;
+    padding: .6em 1.2em;
+    color: white;
+    transition: 0.2s;
+    font-weight: 700;
 }
 
 
 
 .invitemodal__add:hover {
-    background-color: #694cc0;
-    transform: scale(1.02)
-}
-
-.invitemodal__submit {
-    background-color: #3500d3;
-    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #1a3377 0 -3px 0 inset;
-
-    border: none;
-    border-radius: 5px;
-    padding: .6em 1.4em;
-    color: white;
-    transition: 0.2s;
-    font-weight: 700;
-    cursor: pointer;
-    width: 80px;
-}
-
-.invitemodal__submit:hover {
-    background-color: #2f05ac;
+    background-color: #0c5ae2;
     transform: scale(1.04)
 }
 
-.invitemodal__cancel {
-    background-color: #ffffff;
-    color: #ea2d49;
-    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(66, 50, 99, 0.3) 0 7px 13px -3px, #bebac6 0 -3px 0 inset;
 
-    border-radius: 5px;
-    padding: .6em 1.4em;
-    border: 1px solid #ea2d49;
-    transition: 0.2s;
-    font-weight: 700;
-    cursor: pointer;
-    width: 80px;
-}
-
-.invitemodal__cancel:hover {
-    transform: scale(1.04);
-    background-color: #dbd7e4;
-}
 
 .invitemodal__invitedlist {
     max-height: 200px;

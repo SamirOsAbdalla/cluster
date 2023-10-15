@@ -4,7 +4,7 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import React, { Dispatch, SetStateAction, useState } from 'react'
 import { TaskInterface } from "@/lib/mongo/models/TaskModel";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
-
+import ModalWrapper from "../ModalWrapper/ModalWrapper";
 interface Props {
     taskName: string
     taskId?: string
@@ -58,20 +58,26 @@ export default function DeleteTaskModal({ currentPage, tasksPerPage, setCurrentP
         setLoading(false)
     }
 
+    const closeModal = () => {
+        setDeleteTaskModalStatus("closed")
+    }
     return (
-        <div className="dtmodal__wrapper">
-            <AiFillCloseCircle onClick={() => setDeleteTaskModalStatus("closed")} className="dt__close" />
-            <div className="dt__heading">
-                Are you sure you want to delete <span>{taskName} </span>
+        <ModalWrapper closeModal={closeModal}>
+            <div className="modal">
+                <AiFillCloseCircle onClick={() => setDeleteTaskModalStatus("closed")} className="dt__close" />
+                <div className="dt__heading">
+                    Are you sure you want to delete <span>{taskName} </span>
+                </div>
+                <div className="dt__buttons">
+                    <button onClick={deleteTask} className="dt__button dt__confirm blue__button">
+                        {loading ? <LoadingSpinner type="button" /> : "Confirm"}
+                    </button>
+                    <button onClick={() => setDeleteTaskModalStatus("closed")} className="dt__cancel dt__button cancel">
+                        Cancel
+                    </button>
+                </div>
             </div>
-            <div className="dt__buttons">
-                <button onClick={deleteTask} className="dt__button dt__confirm">
-                    {loading ? <LoadingSpinner type="button" /> : "Confirm"}
-                </button>
-                <button onClick={() => setDeleteTaskModalStatus("closed")} className="dt__button dt__cancel">
-                    Cancel
-                </button>
-            </div>
-        </div>
+        </ModalWrapper>
+
     )
 }
