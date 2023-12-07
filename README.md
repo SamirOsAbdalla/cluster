@@ -52,18 +52,31 @@ they will of course have access to all of the group's tasks, member list, etc.
     <img src="https://raw.githubusercontent.com/SamirOsAbdalla/cluster/main/public/inbox.png" alt="inbox image">
 </a>
 
-## Tasks
+## Groups
 
-Any group member can create a task however once a task is created only the task creator
-can edit the task. Following task creation, a task creator can assign group members to a task.Clicking on a task on the home page takes a user to the group page that contains that task, while clicking on a task in the group page reveals more information about that task.
+This page has by far the most information to display but it is very easy to follow. The parts of the page
+are broken down below
+- Member's list
+- All of the tasks pertaining to that group
+- The task information when a specific task is clicked
 
-Task information includes comments, task creation details, and assigned member status' for that
-task. Each task member has a status of either "In Progress" or "Completed" for a task.
+### 1. Member's list
 
+The purpose of this component is as it sounds. However, if you are the creator of the group this is 
+where you would actually be able to kick people out of the group if you so desire (so much power).
 
+### 2. Group tasks
+All of the group tasks are displayed in this section. Once the user is done with a task, they can "complete"
+the task which will then show up on the task information page
 
+### 3. Task Information
+The purpose of this component is to give a succinct summary of the clicked task. From its creation date, comments, assigned members, etc., user's can get a quick feel of the essentials.
 
-## Attribution
+<a>
+    <img src="https://raw.githubusercontent.com/SamirOsAbdalla/cluster/main/public/taskinfo.png" alt="task info image">
+</a>
+
+# Attribution
 UFO Icon: https://thenounproject.com/icon/ufo-160183/
 
 Rocket Icon: https://www.flaticon.com/free-icons/rocket
