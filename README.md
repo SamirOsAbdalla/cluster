@@ -29,7 +29,11 @@ The home page for each member is comprised of two parts:
 
 "Urgent" is a modifier assigned to a task at task creation (and can be assigned after if the task creator wishes it). Urgent tasks are displayed on the home page to gives users insight as to what their most pressing tasks are.
 
+From the home page, the user can create a new group and invite members using the invited member's email.
 
+<a>
+    <img src="https://raw.githubusercontent.com/SamirOsAbdalla/cluster/main/public/groupcreation.png" alt="group image">
+</a>
 
 ## Groups
 
@@ -37,7 +41,6 @@ Each member can create their own group and invite others to join. Group creators
 can edit information about the group, such as its name, at any point. Clicking on a group
 takes the user to the group page where information about group members, group tasks, etc. are 
 displayed.
-
 
 
 ## Tasks
