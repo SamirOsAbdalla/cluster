@@ -11,13 +11,23 @@
 # Live Site URL
 https://www.clustersapp.net/
 
+# Sections
+
+<strong>Cluster</strong> is designed to be simple which lends itself to having clean 
+and easy-to-manage sections depending on what action the user wants to perform.
+
+- The initial <a href="#home">home</a> page
+- The <a href="#tasks">tasks</a> page
+- The <a href="#inbox">inbox</a> page
+- The current <a href="#groups">group's</a> page
 
 ## Home Page
 
-The home page for each member is filled with every group that they are a part of as well
-all of their urgent tasks. "Urgent" is a modifier assigned to a task at task creation
-(and can be assigned after if the task creator wishes it). Urgent tasks are displayed on the home
-page to gives users insight as to what their most pressing tasks are.
+The home page for each member is comprised of two parts:
+- The groups that the current user is a part of
+- The urgent tasks that the user currently has
+
+"Urgent" is a modifier assigned to a task at task creation (and can be assigned after if the task creator wishes it). Urgent tasks are displayed on the home page to gives users insight as to what their most pressing tasks are.
 
 
 
