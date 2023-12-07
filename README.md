@@ -56,11 +56,11 @@ they will of course have access to all of the group's tasks, member list, etc.
 
 This page has by far the most information to display but it is very easy to follow. The parts of the page
 are broken down below
-- Member's list
+- The group member list
 - All of the tasks pertaining to that group
 - The task information when a specific task is clicked
 
-### 1. Member's list
+### 1. Member list
 
 The purpose of this component is as it sounds. However, if you are the creator of the group this is 
 where you would actually be able to kick people out of the group if you so desire (so much power).
