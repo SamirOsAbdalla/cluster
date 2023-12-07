@@ -3,13 +3,12 @@
     <img src="https://raw.githubusercontent.com/SamirOsAbdalla/cluster/main/public/clusters.png" alt="cluster image">
   </a>
 </h1>
+<p align="center">
+  <strong>Cluster</strong> is an easy-to-use group and task manager that is perfect for 
+  small to medium group sizes.
+</p>
 
-# Cluster
-
-A group and task manager app where users can invite others to join a group and assign
-tasks to one another.
-
-## Live Site URL
+# Live Site URL
 https://www.clustersapp.net/
 
 
