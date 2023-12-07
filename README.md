@@ -1,3 +1,8 @@
+<h1 align="center">
+  <a>
+    <img src="https://raw.githubusercontent.com/SamirOsAbdalla/cluster/main/public/clusters.png" alt="cluster image">
+  </a>
+</h1>
 
 # Cluster
 
