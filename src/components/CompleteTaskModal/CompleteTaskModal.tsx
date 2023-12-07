@@ -16,8 +16,8 @@ interface Props {
 export default function CompleteTaskModal({ tasks, setTasks, taskInfo, memberEmail, setCompleteTaskModalStatus }: Props) {
     const [loading, setLoading] = useState<boolean>(false)
     const setButtonsDisabled = () => {
-        const confirmButton = document.querySelector(".ctmodal__confirm") as HTMLButtonElement
-        const cancelButton = document.querySelector(".ctmodal__cancel") as HTMLButtonElement
+        const confirmButton = document.querySelector(".confirm__ct") as HTMLButtonElement
+        const cancelButton = document.querySelector(".cancel__ct") as HTMLButtonElement
         confirmButton.disabled = true
         cancelButton.disabled = true
     }
@@ -64,6 +64,7 @@ export default function CompleteTaskModal({ tasks, setTasks, taskInfo, memberEma
     const closeModal = () => {
         setCompleteTaskModalStatus("closed")
     }
+
     return (
         <ModalWrapper closeModal={closeModal}>
             <div className="modal">
@@ -72,10 +73,10 @@ export default function CompleteTaskModal({ tasks, setTasks, taskInfo, memberEma
                     Are you sure <span>{taskInfo.taskName}</span> is completed?
                 </div>
                 <div className="ctmodal__buttons">
-                    <button className="blue__button" onClick={() => updateTaskMemberStatus(taskInfo.taskId)}>
+                    <button className="blue__button confirm__ct" onClick={() => updateTaskMemberStatus(taskInfo.taskId)}>
                         {loading ? <LoadingSpinner type="button" /> : "Confirm"}
                     </button>
-                    <button className="cancel" onClick={() => setCompleteTaskModalStatus("closed")}>
+                    <button className="cancel__ct" onClick={() => setCompleteTaskModalStatus("closed")}>
                         Cancel
                     </button>
                 </div>
