@@ -16,7 +16,7 @@ https://www.clustersapp.net/
 <strong>Cluster</strong> is designed to be simple which lends itself to having clean 
 and easy-to-manage sections depending on what action the user wants to perform.
 
-- The initial <a href="#home">home</a> page
+- The initial <a href="#home page">home</a> page
 - The <a href="#tasks">tasks</a> page
 - The <a href="#inbox">inbox</a> page
 - The current <a href="#groups">group's</a> page
@@ -35,13 +35,22 @@ From the home page, the user can create a new group and invite members using the
     <img src="https://raw.githubusercontent.com/SamirOsAbdalla/cluster/main/public/groupcreation.png" alt="group image">
 </a>
 
-## Groups
+## Tasks
 
-Each member can create their own group and invite others to join. Group creators
-can edit information about the group, such as its name, at any point. Clicking on a group
-takes the user to the group page where information about group members, group tasks, etc. are 
-displayed.
+The tasks page simply shows all of the current user's tasks no matter which group they are a part of.
+Its purpose is to provide an overall view of the work assigned to a given user without having to look
+through each of their groups.
 
+
+## Inbox
+
+Each user has an inbox that contains invites from other users to join a group. From here, the user
+can elect to either join the group or reject the invitation. If the user decides to join the group,
+they will of course have access to all of the group's tasks, member list, etc.
+
+<a>
+    <img src="https://raw.githubusercontent.com/SamirOsAbdalla/cluster/main/public/inbox.png" alt="inbox image">
+</a>
 
 ## Tasks
 
@@ -51,11 +60,6 @@ can edit the task. Following task creation, a task creator can assign group memb
 Task information includes comments, task creation details, and assigned member status' for that
 task. Each task member has a status of either "In Progress" or "Completed" for a task.
 
-
-
-## Inbox
-
-Each user has an inbox that contains invites from other users to join a group.
 
 
 
