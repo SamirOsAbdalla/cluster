@@ -13,7 +13,7 @@ interface Props {
     setEmail: Dispatch<SetStateAction<string>>
     setPassword: Dispatch<SetStateAction<string>>
 }
-export default function ({
+export default function DemoButtons({
     type,
     demo1Loading,
     demo2Loading,
