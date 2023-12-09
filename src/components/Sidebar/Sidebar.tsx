@@ -1,11 +1,9 @@
 "use client"
 import Link from 'next/link';
 import { RxDashboard } from 'react-icons/rx'
-import { BsFillPersonFill } from "react-icons/bs"
-import { BiTask, BiLogOut } from "react-icons/bi"
+import { BiTask } from "react-icons/bi"
 import { AiOutlineMail } from "react-icons/ai"
 import { GoGear } from "react-icons/go"
-import { FcFilmReel } from "react-icons/fc"
 import "./Sidebar.css"
 import LoginButton from '../LoginButton/LoginButton';
 import { useSession } from 'next-auth/react';
@@ -148,12 +146,12 @@ export default function Sidebar() {
                 />
                 <SidebarLink
                     href="/tasks"
-                    icon={<RxDashboard className="sidebar__link__icon" />}
+                    icon={<BiTask className="sidebar__link__icon" />}
                     text="Tasks"
                 />
                 <SidebarLink
                     href="/inbox"
-                    icon={<RxDashboard className="sidebar__link__icon" />}
+                    icon={<AiOutlineMail className="sidebar__link__icon" />}
                     text="Inbox"
                 />
             </div>
