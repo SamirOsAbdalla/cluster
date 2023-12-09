@@ -1,29 +1,28 @@
 "use client"
+import "./LoginForm.css"
 import {
-    AiOutlineMail,
-    AiOutlineEye,
-    AiOutlineEyeInvisible
-} from "react-icons/ai"
-import { RiLockPasswordLine } from "react-icons/ri"
-import { BsFillPersonFill, BsPerson } from "react-icons/bs"
-import { useState, useEffect } from "react"
+    useState,
+    useEffect
+} from "react"
 import { signIn } from "next-auth/react"
 import Link from 'next/link'
-import "./LoginForm.css"
 import { useRouter } from "next/navigation"
 import UserModel from "@/lib/mongo/models/UserModel"
 import ErrorMessage from "../ErrorMessage/ErrorMessage"
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner"
 import { FaUserAstronaut } from "react-icons/fa"
+import LoginHeader from "./LoginHeader"
+import FormInputs from "./FormInputs"
+import LoginFooter from "./LoginFooter"
+import DemoButtons from "./DemoButtons"
+import FormLoginButton from "./FormLoginButton"
+
+
 interface LoginProps {
     type: string
 }
-export default function LoginForm({ type }: LoginProps) {
-    const router = useRouter()
-    const [loading, setLoading] = useState<boolean>(false)
-    const [demo1Loading, setDemo1Loading] = useState<boolean>(false)
-    const [demo2Loading, setDemo2Loading] = useState<boolean>(false)
 
+const useLoginForm = () => {
     const [email, setEmail] = useState<string>("")
     const [firstName, setFirstName] = useState<string>("")
     const [lastName, setLastName] = useState<string>("")
@@ -33,6 +32,59 @@ export default function LoginForm({ type }: LoginProps) {
     useEffect(() => {
         setError("")
     }, [])
+
+    return {
+        email,
+        setEmail,
+        firstName,
+        setFirstName,
+        lastName,
+        setLastName,
+        error,
+        setError,
+        password,
+        setPassword
+    }
+}
+
+const useLoading = () => {
+    const [loading, setLoading] = useState<boolean>(false)
+    const [demo1Loading, setDemo1Loading] = useState<boolean>(false)
+    const [demo2Loading, setDemo2Loading] = useState<boolean>(false)
+
+    return {
+        loading,
+        setLoading,
+        demo1Loading,
+        setDemo1Loading,
+        demo2Loading,
+        setDemo2Loading
+    }
+}
+export default function LoginForm({ type }: LoginProps) {
+    const router = useRouter()
+
+    let {
+        loading,
+        setLoading,
+        demo1Loading,
+        setDemo1Loading,
+        demo2Loading,
+        setDemo2Loading
+    } = useLoading()
+
+    let {
+        email,
+        setEmail,
+        firstName,
+        setFirstName,
+        lastName,
+        setLastName,
+        error,
+        setError,
+        password,
+        setPassword
+    } = useLoginForm()
 
     const setButtonsDisabled = () => {
         const button1 = document.querySelector(".demouser__button1") as HTMLButtonElement
@@ -104,12 +156,12 @@ export default function LoginForm({ type }: LoginProps) {
             }
         }
     }
+
     return (
         <div className="login__form__wrapper">
             <div className="login__form__container">
                 <div className="login__picture__container">
                     <div className="login__logo__container">
-
                         <FaUserAstronaut className="login__logo" />
                     </div>
                 </div>
@@ -117,119 +169,37 @@ export default function LoginForm({ type }: LoginProps) {
                 {error == "userExists" && <ErrorMessage type="userExists" />}
                 {error == "login" && <ErrorMessage type="login" />}
 
-                {type == "login" ?
-                    <div className="login__header">
-                        <h1>Sign in</h1>
-                        <div>
-                            Please login to get started
-                        </div>
-                    </div> :
-                    <div className="login__header">
-                        <h1>Sign up</h1>
-                        <div>
-                            Please sign up to get started
-                        </div>
-                    </div>
-                }
-
+                <LoginHeader
+                    type={type}
+                />
                 <form onSubmit={handleSubmit} className="login__form">
-                    {type == "login" ?
-                        <></>
-                        :
-                        <div className="form__top">
-                            <div className="form__item">
-                                <BsPerson className="form__icon" />
-                                <input
-                                    value={firstName}
-                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => (setFirstName(e.target.value))}
-                                    placeholder="Enter first name"
-                                    type="text"
-                                    required
-                                    className="login__input" />
-                            </div>
-                            <div className="form__item">
-                                <BsPerson className="form__icon" />
-                                <input
-                                    value={lastName}
-                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => (setLastName(e.target.value))}
-                                    placeholder="Enter last name"
-                                    type="text"
-                                    className="login__input"
-                                    required />
-                            </div>
-                        </div>
-                    }
-                    <div className="form__item">
-                        <AiOutlineMail className="form__icon" />
-                        <input
-                            value={email}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => (setEmail(e.target.value))}
-                            placeholder="Enter email"
-                            type="email"
-                            className="login__input"
-                            required />
-                    </div>
-                    <div className="form__item">
-                        <RiLockPasswordLine className="form__icon" />
-                        <input
-                            value={password}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => (setPassword(e.target.value))}
-                            placeholder="Enter password"
-                            type="password"
-                            className="login__input"
-                            required />
-                    </div>
-                    {type == "login" ?
-                        <button onClick={() => {
-                            setLoading(true)
-                            setDemo1Loading(false)
-                            setDemo2Loading(false)
-                        }} type="submit" className="login__button">
-                            {loading ? <LoadingSpinner type="button" /> : "Login"}
-                        </button>
-                        :
-                        <button onClick={() => { setLoading(true) }} type="submit" className="login__button">
-                            {loading ? <LoadingSpinner type="button" /> : "Sign up"}
-                        </button>
-                    }
-                    {type == "login" ?
-                        <div className="demouser__buttons">
-                            <button onClick={
-                                () => {
-                                    setDemo1Loading(true)
-                                    setEmail("testuser1@gmail.com")
-                                    setPassword("test")
-                                }
-                            } className="demouser__button demouser__button1">
-                                {demo1Loading ? <LoadingSpinner type="button" /> : "Demo User 1"}
-                            </button>
-                            <button className="demouser__button demouser__button2"
-                                onClick={
-                                    () => {
-                                        setDemo2Loading(true)
-                                        setEmail("testuser2@gmail.com")
-                                        setPassword("test")
-                                    }
-                                }
-                            >
-                                {demo2Loading ? <LoadingSpinner type="button" /> : "Demo User 2"}
-                            </button>
-                        </div> :
-                        <></>}
+                    <FormInputs
+                        type={type}
+                        firstName={firstName} setFirstName={setFirstName}
+                        lastName={lastName} setLastName={setLastName}
+                        email={email} setEmail={setEmail}
+                        password={password} setPassword={setPassword}
+                    />
+                    <FormLoginButton
+                        type={type}
+                        loading={loading}
+                        setLoading={setLoading}
+                        setDemo1Loading={setDemo1Loading}
+                        setDemo2Loading={setDemo2Loading}
+                    />
+                    <DemoButtons
+                        type={type}
+                        setEmail={setEmail}
+                        setDemo1Loading={setDemo1Loading}
+                        setDemo2Loading={setDemo2Loading}
+                        demo1Loading={demo1Loading}
+                        demo2Loading={demo2Loading}
+                        setPassword={setPassword}
+                    />
                 </form>
-                {type == "login" ?
-                    <div className="signup">
-                        <span>Don&apos;t have an account?</span>
-                        <Link href="/signup" className="sign__link"> Sign up</Link>
-                    </div>
-                    :
-                    <div>
-                        <div className="signup">
-                            <span>Already have an account?</span>
-                            <Link href="/signIn" className="sign__link"> Sign in</Link>
-                        </div>
-                    </div>
-                }
+                <LoginFooter
+                    type={type}
+                />
             </div>
         </div>)
 }

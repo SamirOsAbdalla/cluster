@@ -4,9 +4,12 @@ import { BiLogOut } from "react-icons/bi"
 import { signIn, signOut } from "next-auth/react"
 import { useState } from "react"
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner"
+
 export default function LoginButton() {
+
     const [loading, setLoading] = useState<boolean>(false)
     const { data: session } = useSession()
+
     if (session && session.user) {
         return (
             <button className="sidebar__button sidebar__login" onClick={() => {

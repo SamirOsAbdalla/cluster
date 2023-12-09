@@ -1,36 +1,31 @@
 "use client"
-
-import React from 'react'
 import Link from 'next/link';
 import { RxDashboard } from 'react-icons/rx'
-import { BsFillPersonFill } from "react-icons/bs"
-import { BiTask, BiLogOut } from "react-icons/bi"
+import { BiTask } from "react-icons/bi"
 import { AiOutlineMail } from "react-icons/ai"
 import { GoGear } from "react-icons/go"
-import { FcFilmReel } from "react-icons/fc"
 import "./Sidebar.css"
 import LoginButton from '../LoginButton/LoginButton';
 import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
-import rocket from "../../../public/rocket.png"
-import { useState } from 'react';
-import { BsCamera } from 'react-icons/bs';
-import defaultImage from "../../../public/default.png"
-import { useEffect } from 'react';
+import {
+    useState,
+    useEffect
+} from 'react';
+import SidebarHeading from './SidebarHeading';
+import ProfilePicture from './ProfilePicture';
+import SidebarLink from './SidebarLink';
 
-const sidebarToggle = (e: React.MouseEvent<HTMLElement>) => {
-    const sidebar = document.querySelector(".sidebar__wrapper")
-    sidebar?.classList.toggle("active")
-}
-export default function Sidebar() {
+
+
+const useUserInfo = () => {
     const curSession = useSession()
     const { data: session, update: sessionUpdate } = useSession()
-    const name = curSession?.data?.user.name
 
     const userEmail = curSession?.data?.user.email
+    const name = curSession?.data?.user.name
     const [image, setImage] = useState<any>(null)
-    const pathname = usePathname()
 
     function handleUpdateSession(url: string) {
         sessionUpdate({
@@ -40,7 +35,6 @@ export default function Sidebar() {
             }
         })
     }
-
 
     useEffect(() => {
         const fetchUserPicture = async () => {
@@ -77,8 +71,26 @@ export default function Sidebar() {
         fetchUserPicture()
     }, [userEmail, handleUpdateSession])
 
+    return {
+        image,
+        setImage,
+        name,
+        userEmail
+    }
+}
+
+export default function Sidebar() {
 
 
+    const pathname = usePathname()
+
+
+    const {
+        image,
+        setImage,
+        name,
+        userEmail
+    } = useUserInfo()
 
 
     const changeImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -107,8 +119,6 @@ export default function Sidebar() {
                     //throw error
                 }
             }
-
-
         }
     }
 
@@ -121,55 +131,29 @@ export default function Sidebar() {
 
     return (
         <nav className="sidebar__wrapper">
-            <div className="sidebar__heading">
-                <div className="sidebar__heading__left">
+            <SidebarHeading />
 
-                    <h1 className='sidebar__title' >
-                        Cluster
-                    </h1>
-                    <div className="rocky__wrapper">
-                        <div className="rocky__container">
-                            <Image fill src={rocket} alt="rocket icon" />
-                        </div>
-                    </div>
-                </div>
-                <div className="sidebar__menu" onClick={(e) => sidebarToggle(e)}>
-                    <div className="sidebar__menu__burger"></div>
-                </div>
-            </div>
-
-            <div className="sidebar__profile">
-                <div className="sidebar__profile__picture">
-                    <div className="profile__im__container">
-                        <Image fill className="default__image" src={image ? image : defaultImage} alt="Default Picture" />
-                    </div>
-                    <input onChange={changeImage} type="file" accept="image/*" id="file" />
-                    <label className="upload__image" htmlFor='file'><BsCamera className="camera" /></label>
-                </div>
-                <div className="sidebar__profile__name">
-                    {name}
-                </div>
-            </div>
+            <ProfilePicture
+                image={image}
+                changeImage={changeImage}
+                name={name}
+            />
             <div className="sidebar__links">
-                <Link href="/" className="sidebar__link">
-                    <RxDashboard className="sidebar__link__icon" />
-                    <div className="sidebar__link__text">
-                        Dashboard
-                    </div>
-                </Link>
-                <Link href="/tasks" className="sidebar__link">
-                    <BiTask className="sidebar__link__icon" />
-                    <div className="sidebar__link__text">
-                        Tasks
-                    </div>
-                </Link>
-                <Link href="/inbox" className="sidebar__link">
-                    <AiOutlineMail className="sidebar__link__icon" />
-                    <div className="sidebar__link__text">
-                        Inbox
-                    </div>
-                </Link>
-
+                <SidebarLink
+                    href="/"
+                    icon={<RxDashboard className="sidebar__link__icon" />}
+                    text="Dashboard"
+                />
+                <SidebarLink
+                    href="/tasks"
+                    icon={<BiTask className="sidebar__link__icon" />}
+                    text="Tasks"
+                />
+                <SidebarLink
+                    href="/inbox"
+                    icon={<AiOutlineMail className="sidebar__link__icon" />}
+                    text="Inbox"
+                />
             </div>
             <LoginButton />
         </nav >
