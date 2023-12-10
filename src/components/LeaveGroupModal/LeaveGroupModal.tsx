@@ -17,8 +17,16 @@ interface Props {
     setCurrentPage: Dispatch<SetStateAction<number>>,
     groupsPerPage: number
 }
-export default function LeaveGroupModal({ currentGroup, leaveGroupModal, setLeaveGroupModal,
-    groups, setGroups, currentPage, setCurrentPage, groupsPerPage }: Props) {
+export default function LeaveGroupModal({
+    currentGroup,
+    leaveGroupModal,
+    setLeaveGroupModal,
+    groups,
+    setGroups,
+    currentPage,
+    setCurrentPage,
+    groupsPerPage
+}: Props) {
 
     let typecastedGroup = currentGroup as GroupInterface
     const data = useSession()
