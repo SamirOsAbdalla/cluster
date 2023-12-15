@@ -4,15 +4,69 @@ import { useState, useEffect } from 'react'
 import { CommentInterface } from '@/lib/mongo/models/CommentModel'
 import { useSession } from 'next-auth/react'
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
+import CommentInput from './CommentInput'
+import Comment from './Comment'
+
+
 interface Props {
     taskId: string
 }
 
-export default function CommentSection({ taskId }: Props) {
-
+const useComment = (taskId: string) => {
     const [currentComment, setCurrentComment] = useState<string>("")
     const [commentList, setCommentList] = useState<CommentInterface[]>([])
     const [loading, setLoading] = useState<boolean>(false)
+
+    useEffect(() => {
+        const fetchComments = async () => {
+            if (!taskId) {
+                return;
+            }
+
+            const fetchCommentBody = {
+                taskId
+            }
+            const fetchCommentResponse = await fetch("/api/comments/fetchComments", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(fetchCommentBody),
+            })
+
+            const fetchCommentResponseJSON = await fetchCommentResponse.json()
+
+            //check for empty array
+            if (!fetchCommentResponseJSON) {
+                //throw error
+            }
+            setCommentList(fetchCommentResponseJSON)
+
+        }
+        fetchComments()
+    }, [taskId])
+
+    return {
+        currentComment,
+        setCurrentComment,
+        loading,
+        setLoading,
+        commentList,
+        setCommentList
+    }
+}
+export default function CommentSection({ taskId }: Props) {
+
+    let {
+        currentComment,
+        setCurrentComment,
+        loading,
+        setLoading,
+        commentList,
+        setCommentList
+    } = useComment(taskId)
+
     const session = useSession()
     const userName = session.data?.user.name
     const userEmail = session.data?.user.email
@@ -62,35 +116,7 @@ export default function CommentSection({ taskId }: Props) {
 
 
 
-    useEffect(() => {
-        const fetchComments = async () => {
-            if (!taskId) {
-                return;
-            }
 
-            const fetchCommentBody = {
-                taskId
-            }
-            const fetchCommentResponse = await fetch("/api/comments/fetchComments", {
-                method: "POST",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(fetchCommentBody),
-            })
-
-            const fetchCommentResponseJSON = await fetchCommentResponse.json()
-
-            //check for empty array
-            if (!fetchCommentResponseJSON) {
-                //throw error
-            }
-            setCommentList(fetchCommentResponseJSON)
-
-        }
-        fetchComments()
-    }, [taskId])
 
 
     return (
@@ -98,43 +124,24 @@ export default function CommentSection({ taskId }: Props) {
             <div className="cs__header">
                 Comments
             </div>
-            {commentList.length > 0 && <div className="comments__list">
-                {commentList.map(comment => {
-                    return (
-                        <div className="comment" key={comment._id}>
-                            <div className="comment__top">
-                                <div className="comment__top__name">
-                                    {comment.creator}
-                                </div>
-                                <div>
-                                    {new Intl.DateTimeFormat("en-US", {
-                                        year: "numeric",
-                                        month: "2-digit",
-                                        day: "2-digit"
-                                    }).format(new Date(comment.dateCreated.toString()))
-                                    }
-                                </div>
-                            </div>
-                            <div>
-                                {comment.message}
-                            </div>
-                        </div>
-                    )
-                })}
-            </div>}
-            <div className="cs__form__wrapper">
-                <form onSubmit={handleSubmit}>
-                    <input
-                        value={currentComment}
-                        onChange={(e) => setCurrentComment(e.target.value)}
-                        placeholder="Add comment here..."
-                        className="csform__input"
-                    />
-                    <button className="csform__add" type="submit">
-                        {loading ? <LoadingSpinner type="button" /> : "Add Comment"}
-                    </button>
-                </form>
-            </div>
+            {commentList.length > 0 &&
+                <div className="comments__list">
+                    {commentList.map((comment) => {
+                        return (
+                            <Comment
+                                key={comment._id}
+                                comment={comment}
+                            />
+                        )
+                    })}
+                </div>
+            }
+            <CommentInput
+                loading={loading}
+                currentComment={currentComment}
+                setCurrentComment={setCurrentComment}
+                handleSubmit={handleSubmit}
+            />
         </div>
     )
 }
