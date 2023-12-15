@@ -1,10 +1,15 @@
 "use client"
 import { TaskInterface } from "@/lib/mongo/models/TaskModel"
 import "./CompleteTaskModal.css"
-import { Dispatch, SetStateAction, useState } from "react"
+import {
+    Dispatch,
+    SetStateAction,
+    useState
+} from "react"
 import { AiFillCloseCircle } from "react-icons/ai"
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner"
 import ModalWrapper from "../ModalWrapper/ModalWrapper"
+
 interface Props {
     tasks: TaskInterface[],
     setTasks: Dispatch<SetStateAction<TaskInterface[]>>
@@ -13,7 +18,14 @@ interface Props {
     memberEmail?: string
 }
 
-export default function CompleteTaskModal({ tasks, setTasks, taskInfo, memberEmail, setCompleteTaskModalStatus }: Props) {
+export default function CompleteTaskModal({
+    tasks,
+    setTasks,
+    taskInfo,
+    memberEmail,
+    setCompleteTaskModalStatus
+}: Props) {
+
     const [loading, setLoading] = useState<boolean>(false)
     const setButtonsDisabled = () => {
         const confirmButton = document.querySelector(".confirm__ct") as HTMLButtonElement

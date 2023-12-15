@@ -149,6 +149,7 @@ export default function LeaveGroupModal({
     const closeModal = () => {
         setLeaveGroupModal(false)
     }
+
     return (
         <ModalWrapper closeModal={closeModal}>
             <div className="modal leave__group">
