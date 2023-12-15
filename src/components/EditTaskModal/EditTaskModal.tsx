@@ -10,6 +10,7 @@ import TaskPriorityButtons from "../TaskPriorityButtons/TaskPriorityButtons"
 import { useSession } from "next-auth/react"
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner"
 import ModalWrapper from "../ModalWrapper/ModalWrapper"
+import ModalItem from "./ModalItem"
 
 interface Props {
     tasks: TaskInterface[]
@@ -137,26 +138,18 @@ export default function EditTaskModal({ tasks, setTasks, currentTask, setTaskEdi
                 <form onSubmit={handleTaskEditSubmit}>
                     <AiFillCloseCircle className="etmodal__close" onClick={() => setTaskEditModalStatus("closed")} />
                     <div className="etmodal__title">Edit Task</div>
-                    <div className="etmodal__item">
-                        <div>
-                            Task Name
-                        </div>
-                        <input
-                            value={editTaskName}
-                            onChange={(e) => setEditTaskName(e.target.value)}
-                            placeholder={currentTask.name}
-                        />
-                    </div>
-                    <div className="etmodal__item">
-                        <div>
-                            Task Description
-                        </div>
-                        <input
-                            value={editTaskDescription}
-                            onChange={(e) => setEditTaskDescription(e.target.value)}
-                            placeholder={currentTask.description}
-                        />
-                    </div>
+                    <ModalItem
+                        text="Task Name"
+                        value={editTaskName}
+                        changeHandler={setEditTaskName}
+                        placeholder={currentTask.name}
+                    />
+                    <ModalItem
+                        text="Task Description"
+                        value={editTaskDescription}
+                        changeHandler={setEditTaskDescription}
+                        placeholder={currentTask.description}
+                    />
                     <div className="et__middle">
                         <div className="et__middle__add">
                             <div>
