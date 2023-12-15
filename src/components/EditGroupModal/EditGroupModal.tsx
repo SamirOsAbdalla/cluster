@@ -2,12 +2,18 @@
 
 import "./EditGroupModal.css"
 import { AiFillCloseCircle } from "react-icons/ai";
-import { Dispatch, SetStateAction, useState } from "react";
+import {
+    Dispatch,
+    SetStateAction,
+    useState
+} from "react";
 
 import React from 'react'
 import { GroupInterface } from "@/lib/mongo/models/GroupModel";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import ModalWrapper from "../ModalWrapper/ModalWrapper";
+import EditField from "./EditField";
+
 interface Props {
     editGroupModalStatus: "open" | "closed"
     setEditGroupModalStatus: Dispatch<SetStateAction<"open" | "closed">>
@@ -15,11 +21,20 @@ interface Props {
     setGroups: Dispatch<SetStateAction<GroupInterface[]>>
     currentGroup: GroupInterface | null
 }
-export default function EditGroupModal({ groups, setGroups, editGroupModalStatus, setEditGroupModalStatus, currentGroup }: Props) {
+
+export default function EditGroupModal({
+    groups,
+    setGroups,
+    editGroupModalStatus,
+    setEditGroupModalStatus,
+    currentGroup
+}: Props) {
     let typecastedGroup = currentGroup as GroupInterface
     const [nameInputValue, setNameInputValue] = useState<string>("")
     const [descriptionInputValue, setDescriptionInputValue] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
+
+
     const editGroup = async () => {
         if (nameInputValue == "" && descriptionInputValue == "") {
             setEditGroupModalStatus("closed")
@@ -86,37 +101,30 @@ export default function EditGroupModal({ groups, setGroups, editGroupModalStatus
     return (
         <ModalWrapper closeModal={closeModal}>
             <div className="modal">
-                <AiFillCloseCircle onClick={() => setEditGroupModalStatus("closed")} className="editgroupmodal__close" />
+                <AiFillCloseCircle
+                    onClick={() => setEditGroupModalStatus("closed")}
+                    className="editgroupmodal__close"
+                />
 
                 <div className="editgroupmodal__heading">
                     <p>Edit Group</p>
                 </div>
 
                 <div className="editgroupmodal__fields">
-                    <div className="editgroupmodal__field">
-                        <div className="editgroup__text">
-                            Project Name
-                        </div>
-                        <input
-                            value={nameInputValue}
-                            onChange={(e) => setNameInputValue(e.target.value)}
-                            className="editgroupmodal__input editgroupmodal__input__name"
-                            type="text"
-                            placeholder={`${typecastedGroup?.name}`}
-                        />
-                    </div>
-                    <div className="editgroupmodal__field">
-                        <div className="editgroup__text">
-                            Project Description
-                        </div>
-                        <input
-                            value={descriptionInputValue}
-                            onChange={(e) => setDescriptionInputValue(e.target.value)}
-                            className="editgroupmodal__input editgroupmodal__input__description"
-                            type="text"
-                            placeholder={`${typecastedGroup?.description}`}
-                        />
-                    </div>
+                    <EditField
+                        text="Project Name"
+                        type="name"
+                        value={nameInputValue}
+                        changeHandler={setNameInputValue}
+                        placeholder={`${typecastedGroup?.name}`}
+                    />
+                    <EditField
+                        text="Project Description"
+                        type="description"
+                        value={descriptionInputValue}
+                        changeHandler={setDescriptionInputValue}
+                        placeholder={`${typecastedGroup?.description}`}
+                    />
                 </div>
                 <div className="editgroupmodal__buttons">
                     <button onClick={editGroup} className="editgroupmodal__button__save blue__button">
@@ -128,6 +136,5 @@ export default function EditGroupModal({ groups, setGroups, editGroupModalStatus
                 </div>
             </div>
         </ModalWrapper>
-
     )
 }
